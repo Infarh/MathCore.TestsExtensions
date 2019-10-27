@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using MathCore.Tests.Annotations;
 
@@ -7,12 +8,109 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     /// <summary>Объект проверки коллекций вещественных чисел</summary>
     public class DoubleCollectionAssertChecker
     {
+        /// <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
+        public sealed class EqualityCheckerWithAccuracy : IDisposable
+        {
+            /// <summary>Проверяемая коллекция значение</summary>
+            private readonly ICollection<double> _ActualValues;
+            /// <summary>Значениея, с которыми требуется провести сравнение</summary>
+            private readonly ICollection<double> _ExpectedValues;
+            /// <summary>Проверка на неравенство</summary>
+            private readonly bool _Not;
+
+            private bool _IsChecked;
+
+            /// <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
+            /// <param name="ActualValues">Проверяемая коллекция</param>
+            /// <param name="ExpectedValues">Требуемые значения</param>
+            /// <param name="Not">Проверять на неравенство</param>
+            internal EqualityCheckerWithAccuracy(ICollection<double> ActualValues, double[] ExpectedValues, bool Not = false)
+            {
+                _ActualValues = ActualValues;
+                _ExpectedValues = ExpectedValues;
+                _Not = Not;
+            }
+
+            /// <summary>Проверка с задаваемой точностью</summary>
+            /// <param name="Accuracy">Точность сравнения</param>
+            /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            public void WithAccuracy(double Accuracy, string Message = null)
+            {
+                _IsChecked = true;
+
+                IEnumerator<double> expected_collection_enumerator = null;
+                IEnumerator<double> actual_collection_enumerator = null;
+
+                try
+                {
+                    expected_collection_enumerator = _ExpectedValues.GetEnumerator();
+                    actual_collection_enumerator = _ActualValues.GetEnumerator();
+
+                    var index = 0;
+                    Service.CheckSeparator(ref Message);
+
+                    if (_Not)
+                        while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+                        {
+                            var expected = expected_collection_enumerator.Current;
+                            var actual = actual_collection_enumerator.Current;
+                            var delta = Math.Abs(expected - actual);
+                            Assert.AreNotEqual(
+                                expected, actual, Accuracy,
+                                "{0}error[{1}]: ожидалось({2}), получено({3}), accuracy:{4}, err:{5:e3}; rel.err:{6}",
+                                Message, index++, expected, actual, Accuracy, delta, delta / expected);
+                        }
+                    else
+                        while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+                        {
+                            var expected = expected_collection_enumerator.Current;
+                            var actual = actual_collection_enumerator.Current;
+                            var delta = Math.Abs(expected - actual);
+                            Assert.AreEqual(
+                                expected, actual, Accuracy,
+                                "{0}error[{1}]: ожидалось({2}), получено({3}), accuracy:{4}, err:{5:e3}; rel.err:{6}",
+                                Message, index++, expected, actual, Accuracy, delta, delta / expected);
+                        }
+                }
+                finally
+                {
+                    expected_collection_enumerator?.Dispose();
+                    actual_collection_enumerator?.Dispose();
+                }
+            }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
+            void IDisposable.Dispose()
+            {
+                if (_IsChecked) return;
+                Assert.Fail($"Проверка на {(_Not ? "не" : null)}равенство не выполнена");
+            }
+        }
+
         /// <summary>Проверяемая коллекция</summary>
         [NotNull] private readonly ICollection<double> _ActualCollection;
 
         /// <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
         /// <param name="ActualCollection"></param>
         internal DoubleCollectionAssertChecker([NotNull] ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
+
+        /// <summary>Проверка значений коллекции на равенство</summary>
+        /// <param name="ExpectedValues">Ожидаемые значения</param>
+        /// <returns>Объект сравнения с задаваемой точностью</returns>
+        public EqualityCheckerWithAccuracy ValuesAreEqualTo([NotNull] params double[] ExpectedValues)
+        {
+            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedValues.Length);
+            return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues);
+        }
+
+        /// <summary>Проверка значений коллекции на равенство</summary>
+        /// <param name="ExpectedValues">Ожидаемые значения</param>
+        /// <returns>Объект сравнения с задаваемой точностью</returns>
+        public EqualityCheckerWithAccuracy ValuesAreNotEqualTo([NotNull] params double[] ExpectedValues)
+        {
+            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedValues.Length);
+            return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues, Not: true);
+        }
 
         /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
         /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
@@ -100,7 +198,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             var index = 0;
             foreach (var actual_value in _ActualCollection)
-                Assert.AreEqual(ExpectedValue, actual_value, 
+                Assert.AreEqual(ExpectedValue, actual_value,
                     "{0}error[{1}]:{2:e2}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value));
         }
 
@@ -112,7 +210,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             var index = 0;
             foreach (var actual_value in _ActualCollection)
-                Assert.AreEqual(ExpectedValue, actual_value, Accuracy, 
+                Assert.AreEqual(ExpectedValue, actual_value, Accuracy,
                     "{0}error[{1}]:{2:e2}, eps:{3}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value), Accuracy);
         }
 
@@ -128,7 +226,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             var index = 0;
             Service.CheckSeparator(ref Message);
-            foreach (var actual_value in _ActualCollection) 
+            foreach (var actual_value in _ActualCollection)
                 Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
 
@@ -148,5 +246,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             foreach (var actual_value in _ActualCollection)
                 Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
+
+
     }
 }
