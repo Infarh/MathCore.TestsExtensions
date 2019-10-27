@@ -1,60 +1,131 @@
-﻿using System;
+﻿using MathCore.Tests.Annotations;
+using System;
 
-// ReSharper disable once CheckNamespace
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
+    /// <summary>Объект проверки двумерного массива вещественных чисел</summary>
     public class DoubleDemensionArrayAssertChecker
     {
+        /// <summary>Проверяемый массив</summary>
         private readonly double[,] _ActualArray;
 
-        public DoubleDemensionArrayAssertChecker(double[,] ActualArray) => _ActualArray = ActualArray;
+        /// <summary>Инициализация нового объекта проверки</summary>
+        /// <param name="ActualArray">Проверяемый массив</param>
+        internal DoubleDemensionArrayAssertChecker(double[,] ActualArray) => _ActualArray = ActualArray;
 
-        public void AreEquals(double[,] ExpectedArray)
+        /// <summary>По размеру и поэлементно массив эквивалентен ожидаемому массиву</summary>
+        /// <param name="ExpectedArray">Ожидаемая коллекция значений</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+
+        public void IsEqualTo(double[,] ExpectedArray, string Message = null)
         {
-            Assert.AreEqual(ExpectedArray.GetLength(0), _ActualArray.GetLength(0), "Размеры массивов не совпадают");
-            Assert.AreEqual(ExpectedArray.GetLength(1), _ActualArray.GetLength(1), "Размеры массивов не совпадают");
+            Service.CheckSeparator(ref Message);
+            Assert.AreEqual(ExpectedArray.GetLength(0), _ActualArray.GetLength(0), "{0}{1}", Message, "Размеры массивов не совпадают");
+            Assert.AreEqual(ExpectedArray.GetLength(1), _ActualArray.GetLength(1), "{0}{1}", Message, "Размеры массивов не совпадают");
 
             for (var i = 0; i < _ActualArray.GetLength(0); i++)
                 for (var j = 0; j < _ActualArray.GetLength(1); j++)
                 {
                     var expected = ExpectedArray[i, j];
                     var actual = _ActualArray[i, j];
-                    Assert.AreEqual(expected, actual, $"Несовпадение по индексу [{i},{j}], ожидалось:{expected}; получено:{actual}; error:{Math.Abs(expected - actual):e3}; rel_error:{Math.Abs(expected - actual) / expected}");
+                    Assert.AreEqual(expected, actual,
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; error:{5:e3}; rel_error:{6}", 
+                        Message, i, j, expected, actual, Math.Abs(expected - actual), Math.Abs(expected - actual) / expected);
                 }
         }
 
-        public void AreEquals(double[,] ExpectedArray, double delta)
+        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+        /// <param name="ExpectedArray">Ожидаемая коллекция значений</param>
+        /// <param name="Accuracy">Точность сравнения</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void IsEqualTo(double[,] ExpectedArray, double Accuracy, string Message = null)
         {
-            Assert.AreEqual(ExpectedArray.GetLength(0), _ActualArray.GetLength(0), "Размеры массивов не совпадают");
-            Assert.AreEqual(ExpectedArray.GetLength(1), _ActualArray.GetLength(1), "Размеры массивов не совпадают");
+            Service.CheckSeparator(ref Message);
+            Assert.AreEqual(ExpectedArray.GetLength(0), _ActualArray.GetLength(0), "{0}{1}", Message, "Размеры массивов не совпадают");
+            Assert.AreEqual(ExpectedArray.GetLength(1), _ActualArray.GetLength(1), "{0}{1}", Message, "Размеры массивов не совпадают");
 
             for (var i = 0; i < _ActualArray.GetLength(0); i++)
                 for (var j = 0; j < _ActualArray.GetLength(1); j++)
                 {
                     var expected = ExpectedArray[i, j];
                     var actual = _ActualArray[i, j];
-                    Assert.AreEqual(expected, actual, delta, $"Несовпадение по индексу [{i},{j}], ожидалось:{expected}; получено:{actual}; delta:{delta}; error:{Math.Abs(expected - actual):e2}; rel_error:{Math.Abs(expected - actual) / expected}");
+                    Assert.AreEqual(expected, actual, Accuracy,
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; error:{6:e2}; rel_error:{7}", 
+                        Message, i, j, expected, actual, Accuracy, Math.Abs(expected - actual), Math.Abs(expected - actual) / expected);
                 }
         }
 
-        public void AllEquals(double Value)
+        /// <summary>Все элементы массива равны ожидаемому значению</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreEqualTo(double ExpectedValue, string Message = null)
         {
-            var index = -1;
-            foreach (var v in _ActualArray)
-            {
-                index++;
-                Assert.AreEqual(Value, v, $"index:{index}; error:{Math.Abs(Value - v):e2}");
-            }
+            Service.CheckSeparator(ref Message);
+            for (var i = 0; i < _ActualArray.GetLength(0); i++)
+                for (var j = 0; j < _ActualArray.GetLength(1); j++)
+                {
+                    var actual = _ActualArray[i, j];
+                    Assert.AreEqual(ExpectedValue, actual,
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; error:{5:e3}; rel_error:{6}",
+                        Message, i, j, ExpectedValue, actual, Math.Abs(ExpectedValue - actual), Math.Abs(ExpectedValue - actual) / ExpectedValue);
+                }
         }
 
-        public void AllEquals(double Value, double delta)
+        /// <summary>Все элементы массива равны ожидаемому значению</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Accuracy">Точность сравнения</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
         {
-            var index = -1;
-            foreach (var v in _ActualArray)
-            {
-                index++;
-                Assert.AreEqual(Value, v, delta, $"index:{index}; delta:{delta}; error:{Math.Abs(Value - v):e2}");
-            }
+            Service.CheckSeparator(ref Message);
+            for (var i = 0; i < _ActualArray.GetLength(0); i++)
+                for (var j = 0; j < _ActualArray.GetLength(1); j++)
+                {
+                    var actual = _ActualArray[i, j];
+                    Assert.AreEqual(ExpectedValue, actual, Accuracy,
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; error:{6:e2}; rel_error:{7}",
+                        Message, i, j, ExpectedValue, actual, Accuracy, Math.Abs(ExpectedValue - actual), Math.Abs(ExpectedValue - actual) / ExpectedValue);
+                }
+        }
+
+        /// <summary>Критерий проверки элементов коллекции</summary>
+        /// <param name="ActualValue">Проверяемое значение</param>
+        /// <returns>Истина, если элемент соответствует критерию проверки</returns>
+        public delegate bool ElementChecker(double ActualValue);
+
+        /// <summary>Все элементы коллекции удовлетворяют условию</summary>
+        /// <param name="Condition">Условие проверки всех элементов</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
+        {
+            Service.CheckSeparator(ref Message);
+            for (var i = 0; i < _ActualArray.GetLength(0); i++)
+                for (var j = 0; j < _ActualArray.GetLength(1); j++)
+                {
+                    var actual = _ActualArray[i, j];
+                    Assert.IsTrue(Condition(actual), "{0}err[{1},{2}]:{3}", Message, i, j, actual);
+                }
+        }
+
+        /// <summary>Позиционынй критерий проверки элементов коллекции</summary>
+        /// <param name="ActualValue">Проверяемое значение</param>
+        /// <param name="i">Индекс строки</param>
+        /// <param name="j">Индекс столбца</param>
+        /// <returns>Истина, если элемент соответствует критерию проверки</returns>
+        public delegate bool PositionElementChecker(double ActualValue, int i, int j);
+
+        /// <summary>Все элементы коллекции удовлетворяют условию</summary>
+        /// <param name="Condition">Условие проверки всех элементов</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
+        {
+            Service.CheckSeparator(ref Message);
+            for (var i = 0; i < _ActualArray.GetLength(0); i++)
+                for (var j = 0; j < _ActualArray.GetLength(1); j++)
+                {
+                    var actual = _ActualArray[i, j];
+                    Assert.IsTrue(Condition(actual, i, j), "{0}err[{1},{2}]:{3}", Message, i, j, actual);
+                }
         }
     }
 }

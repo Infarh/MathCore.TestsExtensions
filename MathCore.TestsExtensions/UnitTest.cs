@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MathCore.Tests.Annotations;
 using DST = System.Diagnostics.DebuggerStepThroughAttribute;
 
-namespace MathCore.Tests
+namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Базовый класс модульного теста</summary>
     public class UnitTest
@@ -15,7 +15,7 @@ namespace MathCore.Tests
         /// <summary>Целое случайное число из указанного диапазона с равномерным распределением</summary>
         /// <param name="Min">Минимальная граница диапазона (входит)</param>
         /// <param name="Max">Максимальная граница диапазона (не входит)</param>
-        /// <returns></returns>
+        /// <returns>Случайное целое число</returns>
         protected int GetRNDInt(int Min, int Max) => _RndGenerator.Next(Min, Max);
 
         /// <summary>Случайное вещественное число с равномерным распределением в указанном диапазоне</summary>
@@ -28,12 +28,12 @@ namespace MathCore.Tests
         /// <param name="Count">Размер массива</param>
         /// <param name="Min">Нижняя граница интервала</param>
         /// <param name="Max">Верхняя граница интервала</param>
-        /// <returns></returns>
+        /// <returns>Массив случайных чисел в заданном интервале</returns>
         [NotNull]
         protected double[] GetRNDDoubleArray(int Count, double Min = 0, double Max = 1)
         {
             if(Count < 0) throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число элементов массива не может быть меньше нуля");
-            if (Count == 0) return new double[0];
+            if (Count == 0) return Array.Empty<double>();
             var result = new double[Count];
 
             for (var i = 0; i < Count; i++)
@@ -46,12 +46,12 @@ namespace MathCore.Tests
         /// <param name="Count">Размер массива</param>
         /// <param name="Min">Нижняя граница интервала (входит)</param>
         /// <param name="Max">Верхняя граница интервала (не входи)</param>
-        /// <returns></returns>
+        /// <returns>Массив целых случайных чисел</returns>
         [NotNull]
         protected int[] GetRNDIntArray(int Count, int Min = 0, int Max = 1)
         {
             if (Count < 0) throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число элементов массива не может быть меньше нуля");
-            if (Count == 0) return new int[0];
+            if (Count == 0) return Array.Empty<int>();
             var result = new int[Count];
 
             for (var i = 0; i < Count; i++)

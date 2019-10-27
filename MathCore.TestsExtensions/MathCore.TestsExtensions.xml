@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>MathCore.TestsExtentions</name>
+        <name>MathCore.TestsExtensions</name>
     </assembly>
     <members>
         <member name="T:MathCore.Tests.Annotations.CanBeNullAttribute">

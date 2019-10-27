@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using MathCore.Tests.Annotations;
 
-// ReSharper disable once CheckNamespace
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
+    /// <summary>Объект проверки коллекций вещественных чисел</summary>
     public class DoubleCollectionAssertChecker
     {
+        /// <summary>Проверяемая коллекция</summary>
         [NotNull] private readonly ICollection<double> _ActualCollection;
 
-        public DoubleCollectionAssertChecker([NotNull] ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
+        /// <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
+        /// <param name="ActualCollection"></param>
+        internal DoubleCollectionAssertChecker([NotNull] ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
 
-        public void AreEqualValues([NotNull] params double[] ExpectedValues) => AreEquals(ExpectedValues);
+        /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
+        /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
+        public void ValuesAreEqual([NotNull] params double[] ExpectedValues) => IsEqualTo(ExpectedValues);
 
-        public void AreEquals([NotNull] ICollection<double> ExpectedCollection)
+        /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
+        public void ValuesAreEqual(string Message, [NotNull] params double[] ExpectedValues) => IsEqualTo(ExpectedValues);
+
+        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void IsEqualTo([NotNull] ICollection<double> ExpectedCollection, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).AreEqual(ExpectedCollection.Count);
+            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
+
             IEnumerator<double> expected_collection_enumerator = null;
             IEnumerator<double> actual_collection_enumerator = null;
             try
@@ -23,13 +37,17 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator = ExpectedCollection.GetEnumerator();
                 actual_collection_enumerator = _ActualCollection.GetEnumerator();
 
-                var index = -1;
+                var index = 0;
+                Service.CheckSeparator(ref Message);
                 while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
                 {
-                    index++;
                     var expected = expected_collection_enumerator.Current;
                     var actual = actual_collection_enumerator.Current;
-                    Assert.AreEqual(expected, actual, $"Несовпадение по индексу {index}, ожидалось:{expected}; получено:{actual}; error:{Math.Abs(expected - actual):e3}; rel_error:{Math.Abs(expected - actual)/expected}");
+                    var delta = Math.Abs(expected - actual);
+                    Assert.AreEqual(
+                        expected, actual,
+                        "{0}error[{1}]: ожидалось({2}), получено({3}), err:{4:e3}; rel.err:{5}",
+                        Message, index++, expected, actual, delta, delta / expected);
                 }
             }
             finally
@@ -39,9 +57,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             }
         }
 
-        public void AreEquals([NotNull] ICollection<double> ExpectedCollection, double Delta)
+        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+        /// <param name="Accuracy">Точность сравнения</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void IsEqualTo([NotNull] ICollection<double> ExpectedCollection, double Accuracy, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).AreEqual(ExpectedCollection.Count);
+            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совмадают");
+
             IEnumerator<double> expected_collection_enumerator = null;
             IEnumerator<double> actual_collection_enumerator = null;
             try
@@ -50,12 +73,17 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 actual_collection_enumerator = _ActualCollection.GetEnumerator();
 
                 var index = -1;
+                Service.CheckSeparator(ref Message);
                 while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
                 {
                     index++;
                     var expected = expected_collection_enumerator.Current;
                     var actual = actual_collection_enumerator.Current;
-                    Assert.AreEqual(expected, actual, Delta, $"Несовпадение по индексу {index}, ожидалось:{expected}; получено:{actual}; delta:{Delta}; error:{Math.Abs(expected - actual):e2}; rel_error:{Math.Abs(expected - actual) / expected}");
+                    var delta = Math.Abs(expected - actual);
+                    Assert.AreEqual(
+                        expected, actual, Accuracy,
+                        "{0}error[{1}]: ожидалось({2}), получено({3}), eps:{4}, err:{5:e3}; rel.err:{6}",
+                        Message, index, expected, actual, Accuracy, delta, delta / expected);
                 }
             }
             finally
@@ -65,44 +93,60 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             }
         }
 
-        public void AllEquals(double Value)
+        /// <summary>Все элементы коллекции равны заданному значению</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreEqualTo(double ExpectedValue, string Message = null)
         {
-            var index = -1;
-            foreach (var v in _ActualCollection)
-            {
-                index++;
-                Assert.AreEqual(Value, v, $"index:{index}; error:{Math.Abs(Value - v):e2}");
-            }
+            var index = 0;
+            foreach (var actual_value in _ActualCollection)
+                Assert.AreEqual(ExpectedValue, actual_value, 
+                    "{0}error[{1}]:{2:e2}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value));
         }
 
-        public void All([NotNull] Func<double, bool> Check)
+        /// <summary>Все элементы коллекции равны заданному значению</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Accuracy"></param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
         {
-            var index = -1;
-            foreach (var v in _ActualCollection)
-            {
-                index++;
-                if(!Check(v)) throw new AssertFailedException($"index:{index}; value:{v}");
-            }
+            var index = 0;
+            foreach (var actual_value in _ActualCollection)
+                Assert.AreEqual(ExpectedValue, actual_value, Accuracy, 
+                    "{0}error[{1}]:{2:e2}, eps:{3}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value), Accuracy);
         }
 
-        public void All([NotNull] Func<double, int, bool> Check)
+        /// <summary>Критерий проверки элементов коллекции</summary>
+        /// <param name="ActualValue">Проверяемое значение</param>
+        /// <returns>Истина, если элемент соответствует критерию проверки</returns>
+        public delegate bool ElementChecker(double ActualValue);
+
+        /// <summary>Все элементы коллекции удовлетворяют условию</summary>
+        /// <param name="Condition">Условие проверки всех элементов</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
         {
-            var index = -1;
-            foreach (var v in _ActualCollection)
-            {
-                index++;
-                if (!Check(v, index)) throw new AssertFailedException($"index:{index}; value:{v}");
-            }
+            var index = 0;
+            Service.CheckSeparator(ref Message);
+            foreach (var actual_value in _ActualCollection) 
+                Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
 
-        public void AllEquals(double Value, double Delta)
+        /// <summary>Позиционынй критерий проверки элементов коллекции</summary>
+        /// <param name="ActualValue">Проверяемое значение</param>
+        /// <param name="ItemIndex">Индекс проверяемого элемента в коллекции</param>
+        /// <returns>Истина, если элемент соответствует критерию проверки</returns>
+        public delegate bool PositionElementChecker(double ActualValue, int ItemIndex);
+
+        /// <summary>Все элементы коллекции удовлетворяют условию</summary>
+        /// <param name="Condition">Условие проверки всех элементов</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
         {
-            var index = -1;
-            foreach (var v in _ActualCollection)
-            {
-                index++;
-                Assert.AreEqual(Value, v, Delta, $"index:{index}; delta:{Delta}; error:{Math.Abs(Value - v):e2}");
-            }
+            var index = 0;
+            Service.CheckSeparator(ref Message);
+            foreach (var actual_value in _ActualCollection)
+                Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
     }
 }
