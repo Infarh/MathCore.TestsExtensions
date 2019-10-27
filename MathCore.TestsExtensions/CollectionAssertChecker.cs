@@ -22,7 +22,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
+            Assert.That
+               .Value(_ActualCollection.Count)
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
@@ -59,7 +61,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityComparer Comparer, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
+            Assert.That
+               .Value(_ActualCollection.Count)
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;

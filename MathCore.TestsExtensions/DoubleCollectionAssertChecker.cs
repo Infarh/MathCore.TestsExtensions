@@ -99,7 +99,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public EqualityCheckerWithAccuracy ValuesAreEqualTo([NotNull] params double[] ExpectedValues)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedValues.Length);
+            Assert.That
+               .Value(_ActualCollection.Count)
+               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}"); ;
+
             return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues);
         }
 
@@ -108,7 +111,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public EqualityCheckerWithAccuracy ValuesAreNotEqualTo([NotNull] params double[] ExpectedValues)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedValues.Length);
+            Assert.That
+               .Value(_ActualCollection.Count)
+               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}"); ;
+
             return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues, Not: true);
         }
 
@@ -126,7 +132,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqualTo([NotNull] ICollection<double> ExpectedCollection, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
+            Assert.That
+               .Value(_ActualCollection.Count)
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
 
             IEnumerator<double> expected_collection_enumerator = null;
             IEnumerator<double> actual_collection_enumerator = null;
