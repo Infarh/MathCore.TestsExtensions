@@ -237,5 +237,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public CompareCheckerWithAccuracy LessOrEqual(double ExpectedValue) =>
             new CompareCheckerWithAccuracy(_ActualValue, ExpectedValue, IsEquals: true, IsLessChecking: true);
+
+        public void IsNotNaN(string Message = null) => Assert.IsFalse(double.IsNaN(_ActualValue), Message);
+
+        public void IsNaN(string Message = null) => Assert.IsTrue(double.IsNaN(_ActualValue), Message);
     }
 }

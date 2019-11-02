@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using MathCore.Tests.Annotations;
@@ -158,6 +159,12 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 actual_collection_enumerator?.Dispose();
             }
         }
+
+        public AssertDoubleEqualsChecker Max(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Max(Selector));
+
+        public AssertDoubleEqualsChecker Min(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Min(Selector));
+
+        public AssertDoubleEqualsChecker Average(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Average(Selector));
     }
 
     /// <summary>Объект проверки коллекции</summary>
@@ -275,5 +282,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             }
 
         }
+
+        public AssertDoubleEqualsChecker Max(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Max(Selector));
+
+        public AssertDoubleEqualsChecker Min(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Min(Selector));
+
+        public AssertDoubleEqualsChecker Average(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Average(Selector));
     }
 }

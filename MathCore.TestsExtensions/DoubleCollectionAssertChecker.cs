@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MathCore.Tests.Annotations;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
@@ -255,6 +256,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
 
+        public AssertDoubleEqualsChecker Max() => Assert.That.Value(_ActualCollection.Max());
 
+        public AssertDoubleEqualsChecker Min() => Assert.That.Value(_ActualCollection.Min());
+
+        public AssertDoubleEqualsChecker Average() => Assert.That.Value(_ActualCollection.Average());
     }
 }

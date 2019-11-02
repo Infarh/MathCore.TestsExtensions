@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MathCore.Tests.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using MathCore.Tests.Annotations;
 using DST = System.Diagnostics.DebuggerStepThroughAttribute;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
@@ -32,7 +32,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         protected double[] GetRNDDoubleArray(int Count, double Min = 0, double Max = 1)
         {
-            if(Count < 0) throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число элементов массива не может быть меньше нуля");
+            if (Count < 0) throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число элементов массива не может быть меньше нуля");
             if (Count == 0) return Array.Empty<double>();
             var result = new double[Count];
 
@@ -80,6 +80,4 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [DST, NotNull]
         public static IComparer GetComparer(double Tolerance = 1e-14) => new ToleranceComparer(Tolerance);
     }
-
-    
 }
