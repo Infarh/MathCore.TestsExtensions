@@ -12,12 +12,12 @@
 
         /// <summary>Проверка вещественного значения</summary>
         /// <param name="that">Объект-помощник проверки</param>
-        /// <param name="ActualValue">Првоеряемое значение</param>
+        /// <param name="ActualValue">Проверяемое значение</param>
         /// <returns>Объект проверки вещественных значений</returns>
         public static AssertDoubleEqualsChecker Value(this Assert that, double ActualValue) => new AssertDoubleEqualsChecker(ActualValue);
 
         /// <summary>Проверка целочисленного значения</summary>
-        /// <param name="that">Объект-помошник проверки</param>
+        /// <param name="that">Объект-помощник проверки</param>
         /// <param name="ActualValue">Проверяемое значение</param>
         /// <returns>Объект проверки целочисленных значений</returns>
         public static AssertIntEqualsChecker Value(this Assert that, int ActualValue) => new AssertIntEqualsChecker(ActualValue);

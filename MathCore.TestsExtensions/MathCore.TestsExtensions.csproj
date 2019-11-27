@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>
     <Company />
     <Description>Библиотека средств помощи в процессе тестирования</Description>
-    <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Infarh/MathCore.TestsExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest</PackageTags>
