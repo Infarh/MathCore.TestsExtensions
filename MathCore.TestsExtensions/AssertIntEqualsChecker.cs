@@ -8,7 +8,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверяемое значение</summary>
         private readonly int _ActualValue;
 
-        /// <summary>Инициализация нового объекта вроверки целого числа</summary>
+        /// <summary>Инициализация нового объекта проверки целого числа</summary>
         /// <param name="ExpectedValue">Проверяемое целое число</param>
         internal AssertIntEqualsChecker(int ExpectedValue) => _ActualValue = ExpectedValue;
 

@@ -160,11 +160,18 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             }
         }
 
+        /// <summary>Максимальное значение в коллекции</summary>
+        /// <param name="Selector"></param>
+        /// <returns></returns>
         public AssertDoubleEqualsChecker Max(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Max(Selector));
 
         public AssertDoubleEqualsChecker Min(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Min(Selector));
 
         public AssertDoubleEqualsChecker Average(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Average(Selector));
+
+        public void Contains(T item) => Assert.IsTrue(_ActualCollection.Contains(item));
+
+        public void NotContains(T item) => Assert.IsTrue(!_ActualCollection.Contains(item));
     }
 
     /// <summary>Объект проверки коллекции</summary>
