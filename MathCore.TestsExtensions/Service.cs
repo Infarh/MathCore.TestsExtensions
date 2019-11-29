@@ -8,7 +8,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     /// <summary>Сервисные методы</summary>
     internal static class Service
     {
-        /// <summary>Добавить разделитель к сообщению в конце в случае налачия сообщения</summary>
+        /// <summary>Добавить разделитель к сообщению в конце в случае наличия сообщения</summary>
         /// <param name="Str">Строка сообщения</param>
         /// <param name="Separator">Разделитель</param>
         /// <returns>Доработанная строка сообщения</returns>

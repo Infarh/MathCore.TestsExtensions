@@ -78,7 +78,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 _IsLessChecking = IsLessChecking;
             }
 
-            /// <summary>Срвенение с задаваеомой точностью</summary>
+            /// <summary>Сравнение с задаваемой точностью</summary>
             /// <param name="Accuracy">Точность сравнения</param>
             /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
             public void WithAccuracy(double Accuracy, string Message = null)
@@ -147,7 +147,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Message.AddSeparator(), Math.Abs(ExpectedValue - _ActualValue));
 
         /// <summary>Проверка на неравенство</summary>
-        /// <param name="ExpectedValue">Неожидаемое значение</param>
+        /// <param name="ExpectedValue">Не ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void IsNotEqual(double ExpectedValue, string Message = null) =>
             Assert.AreNotEqual(ExpectedValue, _ActualValue,
@@ -155,7 +155,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Message.AddSeparator(), Math.Abs(ExpectedValue - _ActualValue));
 
         /// <summary>Проверка на неравенство</summary>
-        /// <param name="ExpectedValue">Неожидаемое значение</param>
+        /// <param name="ExpectedValue">Не ожидаемое значение</param>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void IsNotEqual(double ExpectedValue, double Accuracy, string Message = null) =>
