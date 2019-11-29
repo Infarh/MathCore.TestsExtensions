@@ -429,12 +429,17 @@
             <param name="ExpectedValue">Ожидаемое значение</param>
             <returns>Объект сравнения с задаваемой точностью</returns>
         </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertDoubleEqualsChecker.IsNotNaN(System.String)">
+            <summary>Проверить, что значение не является не-числом</summary>
+            <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertDoubleEqualsChecker.IsNaN(System.String)">
+            <summary>Проверить, что значение является не-числом</summary>
+            <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
+        </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1">
             <summary>Объект проверки значения</summary>
             <typeparam name="T">Тип проверяемого значения</typeparam>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1._ActualValue">
-            <summary>Проверяемое значение</summary>
         </member>
         <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Value">
             <summary>Проверяемое значение</summary>
@@ -501,12 +506,19 @@
             <returns>Текущий объект проверки</returns>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.As``1">
-            <summary>ОБъект является объектом более специфичного типа</summary>
+            <summary>Объект является объектом более специфичного типа</summary>
             <typeparam name="TExpectedType">Тип наследника</typeparam>
             <returns>Объект проверки типа наследника</returns>
         </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.As``2(System.Func{``0,``1})">
+            <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
+            <typeparam name="TExpectedType">Тип наследника</typeparam>
+            <typeparam name="TValue">Тип значения</typeparam>
+            <param name="Selector">Метод определения значения</param>
+            <returns>Объект проверки производного значения</returns>
+        </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.op_Implicit(Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker{`0})~`0">
-            <summary>Оператор неявного приведения типа объектапроверки к объекту проверяемого значения, разорачивающий значение</summary>
+            <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
             <param name="Checker">Объект проверки</param>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions">
@@ -522,12 +534,12 @@
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Double)">
             <summary>Проверка вещественного значения</summary>
             <param name="that">Объект-помощник проверки</param>
-            <param name="ActualValue">Првоеряемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
             <returns>Объект проверки вещественных значений</returns>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Int32)">
             <summary>Проверка целочисленного значения</summary>
-            <param name="that">Объект-помошник проверки</param>
+            <param name="that">Объект-помощник проверки</param>
             <param name="ActualValue">Проверяемое значение</param>
             <returns>Объект проверки целочисленных значений</returns>
         </member>
@@ -538,7 +550,7 @@
             <summary>Проверяемое значение</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertIntEqualsChecker.#ctor(System.Int32)">
-            <summary>Инициализация нового объекта вроверки целого числа</summary>
+            <summary>Инициализация нового объекта проверки целого числа</summary>
             <param name="ExpectedValue">Проверяемое целое число</param>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertIntEqualsChecker.IsEqual(System.Int32,System.String)">
@@ -641,6 +653,11 @@
             <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
             <param name="Comparer">Объект проверки элементов коллекции</param>
             <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker`1.Max(System.Func{`0,System.Double})">
+            <summary>Максимальное значение в коллекции</summary>
+            <param name="Selector"></param>
+            <returns></returns>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker">
             <summary>Объект проверки коллекции</summary>

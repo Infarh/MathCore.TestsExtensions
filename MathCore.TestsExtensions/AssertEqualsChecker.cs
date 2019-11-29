@@ -11,31 +11,28 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public sealed class AssertEqualsChecker<T>
     {
         /// <summary>Проверяемое значение</summary>
-        private readonly T _ActualValue;
-
-        /// <summary>Проверяемое значение</summary>
-        public T Value => _ActualValue;
+        public T Value { get; }
 
         /// <summary>Инициализация нового объекта проверки значения</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
-        internal AssertEqualsChecker(T ActualValue) => _ActualValue = ActualValue;
+        internal AssertEqualsChecker(T ActualValue) => Value = ActualValue;
 
         /// <summary>Проверка значения на эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqual(T ExpectedValue, string Message = null) => 
-            Assert.AreEqual(ExpectedValue, _ActualValue,
-                "{0}Актуальное значение {1} не соовтетствует ожидаемому {2}",
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+            Assert.AreEqual(ExpectedValue, Value,
+                "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
+                Message.AddSeparator(), Value, ExpectedValue);
 
         /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Comparer">Объект сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqual(T ExpectedValue, IEqualityComparer<T> Comparer, string Message = null) =>
-            Assert.IsTrue(Comparer.Equals(_ActualValue, ExpectedValue),
-                "{0}Актуальное значение {1} не соовтетствует ожидаемому {2}",
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+            Assert.IsTrue(Comparer.Equals(Value, ExpectedValue),
+                "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
+                Message.AddSeparator(), Value, ExpectedValue);
 
         /// <summary>Метод сравнения значений</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
@@ -48,38 +45,38 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Comparer">Метод сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqual(T ExpectedValue, EqualityComparer Comparer, string Message = null) =>
-            Assert.IsTrue(Comparer(ExpectedValue, _ActualValue),
-                "{0}Актуальное значение {1} не соовтетствует ожидаемому {2}",
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+            Assert.IsTrue(Comparer(ExpectedValue, Value),
+                "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
+                Message.AddSeparator(), Value, ExpectedValue);
 
         /// <summary>Проверка значения на идентичность ожидаемому (при сравнении ссылок)</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsReferenceEquals(T ExpectedValue, string Message = null) =>
-            Assert.IsTrue(ReferenceEquals(_ActualValue, ExpectedValue),
+            Assert.IsTrue(ReferenceEquals(Value, ExpectedValue),
                 "{0}Объект актуального значения {1} не является ожидаемым {2} при сравнении ссылок",
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+                Message.AddSeparator(), Value, ExpectedValue);
 
         /// <summary>Проверка значения на не эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Не ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsNotEqual(T ExpectedValue, string Message = null) => 
-            Assert.AreNotEqual(ExpectedValue, _ActualValue,
+            Assert.AreNotEqual(ExpectedValue, Value,
                 "{0}Актуальное значение {1} соовтетствует ожидаемому {2}",
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+                Message.AddSeparator(), Value, ExpectedValue);
 
         /// <summary>Проверка значения на не идентичность ожидаемому (при сравнении ссылок)</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsNotReferenceEquals(T ExpectedValue, string Message = null) => 
-            Assert.IsFalse(ReferenceEquals(_ActualValue, ExpectedValue),
+            Assert.IsFalse(ReferenceEquals(Value, ExpectedValue),
                 "{0}Объект актуального значения {1} является ожидаемым {2} при сравнении ссылок",
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+                Message.AddSeparator(), Value, ExpectedValue);
 
         /// <summary>Ссылка на значение должна быть пустой</summary>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsNull(string Message = null) => 
-            Assert.IsNull(_ActualValue, "{0}Ссылка на {1} не является пустой", Message.AddSeparator(), _ActualValue);
+            Assert.IsNull(Value, "{0}Ссылка на {1} не является пустой", Message.AddSeparator(), Value);
 
         /// <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
@@ -87,8 +84,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         public T IsNotNull(string Message = null)
         {
-            Assert.IsNotNull(_ActualValue, "{0}Ссылка является пустой", Message.AddSeparator());
-            return _ActualValue;
+            Assert.IsNotNull(Value, "{0}Ссылка является пустой", Message.AddSeparator());
+            return Value;
         }
 
         /// <summary>Значение является значением указанного типа</summary>
@@ -97,7 +94,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         public AssertEqualsChecker<T> Is(Type ExpectedType)
         {
-            Assert.IsInstanceOfType(_ActualValue, ExpectedType);
+            Assert.IsInstanceOfType(Value, ExpectedType);
             return this;
         }
 
@@ -107,22 +104,34 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         public AssertEqualsChecker<T> Is<TExpectedType>()
         {
-            Assert.IsInstanceOfType(_ActualValue, typeof(TExpectedType));
+            Assert.IsInstanceOfType(Value, typeof(TExpectedType));
             return this;
         }
 
-        /// <summary>ОБъект является объектом более специфичного типа</summary>
+        /// <summary>Объект является объектом более специфичного типа</summary>
         /// <typeparam name="TExpectedType">Тип наследника</typeparam>
         /// <returns>Объект проверки типа наследника</returns>
         [NotNull]
         public AssertEqualsChecker<TExpectedType> As<TExpectedType>() where TExpectedType : class, T
         {
-            Assert.IsInstanceOfType(_ActualValue, typeof(TExpectedType));
-            return new AssertEqualsChecker<TExpectedType>((TExpectedType)_ActualValue);
+            Assert.IsInstanceOfType(Value, typeof(TExpectedType));
+            return new AssertEqualsChecker<TExpectedType>((TExpectedType)Value);
         }
 
-        /// <summary>Оператор неявного приведения типа объектапроверки к объекту проверяемого значения, разорачивающий значение</summary>
+        /// <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
+        /// <typeparam name="TExpectedType">Тип наследника</typeparam>
+        /// <typeparam name="TValue">Тип значения</typeparam>
+        /// <param name="Selector">Метод определения значения</param>
+        /// <returns>Объект проверки производного значения</returns>
+        [NotNull]
+        public AssertEqualsChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector) where TExpectedType : class, T
+        {
+            Assert.IsInstanceOfType(Value, typeof(TExpectedType));
+            return new AssertEqualsChecker<TValue>(Selector((TExpectedType)Value));
+        }
+
+        /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
         /// <param name="Checker">Объект проверки</param>
-        public static implicit operator T(AssertEqualsChecker<T> Checker) => Checker._ActualValue;
+        public static implicit operator T(AssertEqualsChecker<T> Checker) => Checker.Value;
     }
 }
