@@ -134,7 +134,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <typeparam name="TValue">Тип вложенного значения</typeparam>
         /// <param name="Selector">Метод определения вложенного значения</param>
         /// <returns>Объект проверки вложенного значения</returns>
-        public AssertEqualsChecker<TValue> Value<TValue>(Func<T, TValue> Selector) => new AssertEqualsChecker<TValue>(Selector(ActualValue));
+        public AssertEqualsChecker<TValue> Where<TValue>(Func<T, TValue> Selector) => new AssertEqualsChecker<TValue>(Selector(ActualValue));
 
         /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
         /// <param name="Checker">Объект проверки</param>
