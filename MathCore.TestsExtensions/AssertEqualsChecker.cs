@@ -90,31 +90,54 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
         /// <summary>Значение является значением указанного типа</summary>
         /// <param name="ExpectedType">Ожидаемый тип значения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Текущий объект проверки</returns>
         [NotNull]
-        public AssertEqualsChecker<T> Is(Type ExpectedType)
+        public AssertEqualsChecker<T> Is(Type ExpectedType, string Message = null)
         {
-            Assert.IsInstanceOfType(ActualValue, ExpectedType);
+            Assert.IsInstanceOfType(
+                ActualValue,
+                ExpectedType,
+                "{0}Значение {1} не является значением типа {2}",
+                Message.AddSeparator(),
+                ActualValue?.GetType(),
+                ExpectedType);
             return this;
         }
 
         /// <summary>Значение является значением указанного типа</summary>
         /// <typeparam name="TExpectedType">Ожидаемый тип значения</typeparam>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Текущий объект проверки</returns>
         [NotNull]
-        public AssertEqualsChecker<T> Is<TExpectedType>()
+        public AssertEqualsChecker<T> Is<TExpectedType>(string Message = null)
         {
-            Assert.IsInstanceOfType(ActualValue, typeof(TExpectedType));
+            var expected_type = typeof(TExpectedType);
+            Assert.IsInstanceOfType(
+                ActualValue, 
+                expected_type, 
+                "{0}Значение {1} не является значением типа {2}",
+                Message.AddSeparator(),
+                ActualValue?.GetType(),
+                expected_type);
             return this;
         }
 
         /// <summary>Объект является объектом более специфичного типа</summary>
         /// <typeparam name="TExpectedType">Тип наследника</typeparam>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Объект проверки типа наследника</returns>
         [NotNull]
-        public AssertEqualsChecker<TExpectedType> As<TExpectedType>() where TExpectedType : class, T
+        public AssertEqualsChecker<TExpectedType> As<TExpectedType>(string Message = null) where TExpectedType : class, T
         {
-            Assert.IsInstanceOfType(ActualValue, typeof(TExpectedType));
+            var expected_type = typeof(TExpectedType);
+            Assert.IsInstanceOfType(
+                ActualValue,
+                expected_type,
+                "{0}Значение {1} не является значением типа {2}",
+                Message.AddSeparator(),
+                ActualValue?.GetType(),
+                expected_type);
             return new AssertEqualsChecker<TExpectedType>((TExpectedType)ActualValue);
         }
 
@@ -122,11 +145,19 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <typeparam name="TExpectedType">Тип наследника</typeparam>
         /// <typeparam name="TValue">Тип значения</typeparam>
         /// <param name="Selector">Метод определения значения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Объект проверки производного значения</returns>
         [NotNull]
-        public AssertEqualsChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector) where TExpectedType : class, T
+        public AssertEqualsChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector, string Message = null) where TExpectedType : class, T
         {
-            Assert.IsInstanceOfType(ActualValue, typeof(TExpectedType));
+            var expected_type = typeof(TExpectedType);
+            Assert.IsInstanceOfType(
+                ActualValue,
+                expected_type,
+                "{0}Значение {1} не является значением типа {2}",
+                Message.AddSeparator(),
+                ActualValue?.GetType(),
+                expected_type);
             return new AssertEqualsChecker<TValue>(Selector((TExpectedType)ActualValue));
         }
 

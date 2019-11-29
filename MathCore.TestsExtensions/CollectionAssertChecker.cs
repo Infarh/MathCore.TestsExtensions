@@ -177,11 +177,13 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
         /// <summary>Проверка, что коллекция содержит указанный элемент</summary>
         /// <param name="item">Элемент, который должен быть найден в коллекции</param>
-        public void Contains(T item) => Assert.IsTrue(_ActualCollection.Contains(item));
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void Contains(T item, string Message = null) => Assert.IsTrue(_ActualCollection.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
 
         /// <summary>Проверка, что указанного элемента нет в коллекции</summary>
         /// <param name="item">Элемент, которого не должно быть в коллекции</param>
-        public void NotContains(T item) => Assert.IsTrue(!_ActualCollection.Contains(item));
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public void NotContains(T item, string Message = null) => Assert.IsTrue(!_ActualCollection.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
     }
 
     /// <summary>Объект проверки коллекции</summary>
