@@ -10,11 +10,11 @@
     <PackageProjectUrl>https://github.com/Infarh/MathCore.TestsExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest</PackageTags>
-    <AssemblyVersion>0.0.1.5</AssemblyVersion>
-    <FileVersion>0.0.1.5</FileVersion>
+    <AssemblyVersion>0.0.1.6</AssemblyVersion>
+    <FileVersion>0.0.1.6</FileVersion>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
-    <Version>0.1.5</Version>
-    <PackageReleaseNotes>Добавлен метод, упрощающий проверку вложенных значений, исправление ошибок в коментариях</PackageReleaseNotes>
+    <Version>0.1.6</Version>
+    <PackageReleaseNotes>Добавлена возможность указания сообщения в методы проверки</PackageReleaseNotes>
     <LangVersion>8</LangVersion>
     <Copyright>shmachilin@yandex.ru</Copyright>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>

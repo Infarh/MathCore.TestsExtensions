@@ -495,29 +495,33 @@
             <param name="Message">Сообщение, выводимое в случае неудачи</param>
             <returns>Значение, гарантированно не являющееся пустой ссылкой</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Is(System.Type)">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Is(System.Type,System.String)">
             <summary>Значение является значением указанного типа</summary>
             <param name="ExpectedType">Ожидаемый тип значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
             <returns>Текущий объект проверки</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Is``1">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Is``1(System.String)">
             <summary>Значение является значением указанного типа</summary>
             <typeparam name="TExpectedType">Ожидаемый тип значения</typeparam>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
             <returns>Текущий объект проверки</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.As``1">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.As``1(System.String)">
             <summary>Объект является объектом более специфичного типа</summary>
             <typeparam name="TExpectedType">Тип наследника</typeparam>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
             <returns>Объект проверки типа наследника</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.As``2(System.Func{``0,``1})">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.As``2(System.Func{``0,``1},System.String)">
             <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
             <typeparam name="TExpectedType">Тип наследника</typeparam>
             <typeparam name="TValue">Тип значения</typeparam>
             <param name="Selector">Метод определения значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
             <returns>Объект проверки производного значения</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Value``1(System.Func{`0,``0})">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Where``1(System.Func{`0,``0})">
             <summary>Проверка вложенного значения</summary>
             <typeparam name="TValue">Тип вложенного значения</typeparam>
             <param name="Selector">Метод определения вложенного значения</param>
@@ -675,13 +679,15 @@
             <param name="Selector">Метод оценки элемента коллекции</param>
             <returns>Объект проверки вещественного значения</returns>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker`1.Contains(`0)">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker`1.Contains(`0,System.String)">
             <summary>Проверка, что коллекция содержит указанный элемент</summary>
             <param name="item">Элемент, который должен быть найден в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
         </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker`1.NotContains(`0)">
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker`1.NotContains(`0,System.String)">
             <summary>Проверка, что указанного элемента нет в коллекции</summary>
             <param name="item">Элемент, которого не должно быть в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker">
             <summary>Объект проверки коллекции</summary>
