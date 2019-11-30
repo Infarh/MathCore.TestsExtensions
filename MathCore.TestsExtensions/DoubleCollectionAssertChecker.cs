@@ -14,7 +14,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             /// <summary>Проверяемая коллекция значение</summary>
             private readonly ICollection<double> _ActualValues;
-            /// <summary>Значениея, с которыми требуется провести сравнение</summary>
+            /// <summary>Значения, с которыми требуется провести сравнение</summary>
             private readonly ICollection<double> _ExpectedValues;
             /// <summary>Проверка на неравенство</summary>
             private readonly bool _Not;
@@ -239,7 +239,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
 
-        /// <summary>Позиционынй критерий проверки элементов коллекции</summary>
+        /// <summary>Позиционный критерий проверки элементов коллекции</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
         /// <param name="ItemIndex">Индекс проверяемого элемента в коллекции</param>
         /// <returns>Истина, если элемент соответствует критерию проверки</returns>
@@ -256,10 +256,16 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
         }
 
+        /// <summary>Максимальное значение в коллекции</summary>
+        /// <returns>Объект проверки вещественного значения</returns>
         public AssertDoubleEqualsChecker Max() => Assert.That.Value(_ActualCollection.Max());
 
+        /// <summary>Минимальное значение в коллекции</summary>
+        /// <returns>Объект проверки вещественного значения</returns>
         public AssertDoubleEqualsChecker Min() => Assert.That.Value(_ActualCollection.Min());
 
+        /// <summary>Среднее значение в коллекции</summary>
+        /// <returns>Объект проверки вещественного значения</returns>
         public AssertDoubleEqualsChecker Average() => Assert.That.Value(_ActualCollection.Average());
     }
 }

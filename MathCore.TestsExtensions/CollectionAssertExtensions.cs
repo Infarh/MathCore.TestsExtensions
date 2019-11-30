@@ -16,7 +16,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="assert">Объект-помощник проверки</param>
         /// <param name="ActualArray">Проверяемый двумерный массив</param>
         /// <returns>Объект проверки</returns>
-        public static DoubleDemensionArrayAssertChecker Collection(this CollectionAssert assert, double[,] ActualArray) => new DoubleDemensionArrayAssertChecker(ActualArray);
+        public static DoubleDimensionArrayAssertChecker Collection(this CollectionAssert assert, double[,] ActualArray) => new DoubleDimensionArrayAssertChecker(ActualArray);
 
         /// <summary>Проверка коллекции</summary>
         /// <typeparam name="T">Тип элементов коллекции</typeparam>
