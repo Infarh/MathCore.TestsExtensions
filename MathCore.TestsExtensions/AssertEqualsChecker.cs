@@ -167,6 +167,18 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <returns>Объект проверки вложенного значения</returns>
         public AssertEqualsChecker<TValue> Where<TValue>(Func<T, TValue> Selector) => new AssertEqualsChecker<TValue>(Selector(ActualValue));
 
+        /// <summary>Проверка вложенного значения</summary>
+        /// <typeparam name="TValue">Тип вложенного значения</typeparam>
+        /// <param name="Selector">Метод определения вложенного значения</param>
+        /// <param name="Checker">Метод проверки вложенного значения</param>
+        /// <returns>Объект проверки текущего значения</returns>
+        public AssertEqualsChecker<T> Where<TValue>(Func<T, TValue> Selector, Action<AssertEqualsChecker<TValue>> Checker)
+        {
+            var value_checker = new AssertEqualsChecker<TValue>(Selector(ActualValue));
+            Checker(value_checker);
+            return this;
+        }
+
         /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
         /// <param name="Checker">Объект проверки</param>
         public static implicit operator T(AssertEqualsChecker<T> Checker) => Checker.ActualValue;

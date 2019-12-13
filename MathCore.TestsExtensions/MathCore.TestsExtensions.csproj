@@ -33,4 +33,8 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="rd /s /q $(TargetDir)\publish" />
+  </Target>
+
 </Project>

@@ -5,12 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathCore.TestsExtensions", "MathCore.TestsExtensions\MathCore.TestsExtensions.csproj", "{0F039156-E6CB-4EFB-A863-13A1AC2DD4AE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{915F6C7F-0759-4CE0-BC6D-509B9FBC7677}"
-	ProjectSection(SolutionItems) = preProject
-		..\license.txt = ..\license.txt
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCore.TestsExtensions.Tests", "Tests\MathCore.TestsExtensions.Tests\MathCore.TestsExtensions.Tests.csproj", "{10093BD2-D872-4383-B075-92850E009647}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathCore.TestsExtensions.Tests", "Tests\MathCore.TestsExtensions.Tests\MathCore.TestsExtensions.Tests.csproj", "{10093BD2-D872-4383-B075-92850E009647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
