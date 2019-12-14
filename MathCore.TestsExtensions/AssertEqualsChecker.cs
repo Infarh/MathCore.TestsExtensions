@@ -95,6 +95,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         public AssertEqualsChecker<T> Is(Type ExpectedType, string Message = null)
         {
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue,
                 ExpectedType,
@@ -113,6 +114,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public AssertEqualsChecker<T> Is<TExpectedType>(string Message = null)
         {
             var expected_type = typeof(TExpectedType);
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue, 
                 expected_type, 
@@ -131,6 +133,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public AssertEqualsChecker<TExpectedType> As<TExpectedType>(string Message = null) where TExpectedType : class, T
         {
             var expected_type = typeof(TExpectedType);
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue,
                 expected_type,
@@ -151,6 +154,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public AssertEqualsChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector, string Message = null) where TExpectedType : class, T
         {
             var expected_type = typeof(TExpectedType);
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue,
                 expected_type,
