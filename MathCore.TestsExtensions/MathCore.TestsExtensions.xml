@@ -527,6 +527,13 @@
             <param name="Selector">Метод определения вложенного значения</param>
             <returns>Объект проверки вложенного значения</returns>
         </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.Where``1(System.Func{`0,``0},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker{``0}})">
+            <summary>Проверка вложенного значения</summary>
+            <typeparam name="TValue">Тип вложенного значения</typeparam>
+            <param name="Selector">Метод определения вложенного значения</param>
+            <param name="Checker">Метод проверки вложенного значения</param>
+            <returns>Объект проверки текущего значения</returns>
+        </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker`1.op_Implicit(Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker{`0})~`0">
             <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
             <param name="Checker">Объект проверки</param>
@@ -616,6 +623,16 @@
             <param name="ExpectedValue">Опорное значение</param>
             <param name="Accuracy">Точность сравнения</param>
             <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ChildAssertEqualsChecker`2">
+            <summary>Объект проверки дочернего значения</summary>
+            <typeparam name="TValue">Тип дочернего значения</typeparam>
+            <typeparam name="TBaseValue">Тип  базового значения</typeparam>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ChildAssertEqualsChecker`2.Check(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.AssertEqualsChecker{`0}})">
+            <summary>Проверка дочернего значения</summary>
+            <param name="Checker">Метод проверки дочернего значения</param>
+            <returns>Объект проверки базового значения</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertChecker`1">
             <summary>Объект проверки коллекции</summary>
