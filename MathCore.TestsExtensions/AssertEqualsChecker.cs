@@ -130,7 +130,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Объект проверки типа наследника</returns>
         [NotNull]
-        public AssertEqualsChecker<TExpectedType> As<TExpectedType>(string Message = null) where TExpectedType : class, T
+        public AssertEqualsChecker<TExpectedType> As<TExpectedType>(string Message = null) where TExpectedType : T
         {
             var expected_type = typeof(TExpectedType);
             IsNotNull(Message);

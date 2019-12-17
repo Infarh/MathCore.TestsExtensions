@@ -282,6 +282,45 @@
             starting from web root (~)
             </summary>
         </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker">
+            <summary>Объект проверки действия</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker._Action">
+            <summary>Проверяемое действие</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker.#ctor(System.Action)">
+            <summary>Инициализация нового объекта проверки действия</summary>
+            <param name="action">Проверяемое действие</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker.Throw``1(System.String)">
+            <summary>Проверка, что метод вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException"></exception>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker`1">
+            <summary>Объект проверки параметрического действия</summary>
+            <typeparam name="TValue">Тип параметра действия</typeparam>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker`1._Action">
+            <summary>Проверяемое действие</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker`1._Value">
+            <summary>Параметр действия</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker`1.#ctor(System.Action{`0},`0)">
+            <summary>Инициализация нового объекта проверки действия</summary>
+            <param name="action">Проверяемое действие</param>
+            <param name="value">Параметр действия</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertActionChecker`1.Throw``1(System.String)">
+            <summary>Проверка, что метод вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException"></exception>
+        </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertDoubleEqualsChecker">
             <summary>Объект проверки равенства/неравенства чисел с плавающей запятой двойной точности</summary>
         </member>
@@ -559,6 +598,75 @@
             <param name="that">Объект-помощник проверки</param>
             <param name="ActualValue">Проверяемое значение</param>
             <returns>Объект проверки целочисленных значений</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Action)">
+            <summary>Проверка действия</summary>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="action">Проверяемое действие</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Action{``0},``0)">
+            <summary>Проверка действия</summary>
+            <typeparam name="TValue">Тип параметра действия</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="action">Проверяемое действие</param>
+            <param name="value">Параметр</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Func{``0})">
+            <summary>Проверка функции</summary>
+            <typeparam name="TResult">Тип результата функции</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="function">Проверяемая функция</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``2(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Func{``0,``1},``0)">
+            <summary>Проверка функции</summary>
+            <typeparam name="TResult">Тип результата функции</typeparam>
+            <typeparam name="TValue">Тип параметра функции</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="function">Проверяемая функция</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`1">
+            <summary>Объект проверки функции</summary>
+            <typeparam name="TResult">Тип значения функции</typeparam>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`1._Function">
+            <summary>Проверяемая функция</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`1.#ctor(System.Func{`0})">
+            <summary>Инициализация нового объекта проверки функции</summary>
+            <param name="function">Проверяемое действие</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`1.Throw``1(System.String)">
+            <summary>Проверка, что функция вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`2">
+            <summary>Объект проверки параметрической функции</summary>
+            <typeparam name="TValue">Тип параметра функции</typeparam>
+            <typeparam name="TResult">Тип значения функции</typeparam>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`2._Function">
+            <summary>Проверяемая функция</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`2._Value">
+            <summary>Параметр функции</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`2.#ctor(System.Func{`0,`1},`0)">
+            <summary>Инициализация нового объекта проверки функции</summary>
+            <param name="function">Проверяемая функция</param>
+            <param name="value">Параметр функции</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`2.Throw``1(System.String)">
+            <summary>Проверка, что функция вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException"></exception>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertIntEqualsChecker">
             <summary>Объект проверки равенства/неравенства целых чисел</summary>
