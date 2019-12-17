@@ -15,7 +15,7 @@ namespace MathCore.TestsExtensions.Tests
             Assert.That.Value(list)
                .AssertThat(l => l.IsNotNull())
                .Where(l => l.Count).Check(Count => Count.IsEqual(0))
-               .Where(l => l.Capacity).Check(Capacity => Capacity.IsEqual(2));
+               .Where(l => l.Capacity).Check(Capacity => Capacity.IsEqual(0));
         }
     }
 }
