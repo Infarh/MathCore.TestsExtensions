@@ -26,5 +26,12 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             Assert.IsFalse(Checker.ActualValue, "{0}Значение не истинно", Message.AddSeparator());
             return Checker;
         }
+
+        /// <summary>Проверка значения как коллекции элементов</summary>
+        /// <param name="Checker">Объект проверки одиночного значения</param>
+        /// <typeparam name="T">Тип проверяемого значения, которое является коллекцией объектов типа <typeparamref name="TItem"/></typeparam>
+        /// <typeparam name="TItem">Тип элементов проверяемой коллекции</typeparam>
+        /// <returns>Объект проверки коллекции</returns>
+        public static CollectionChecker<TItem> Are<T, TItem>(this ValueChecker<T> Checker) where T : ICollection<TItem> => new CollectionChecker<TItem>(Checker.ActualValue);
     }
 }

@@ -1077,6 +1077,13 @@
             <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
             <returns>Исходный объект проверки логического значения</returns>
         </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Are``2(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0})">
+            <summary>Проверка значения как коллекции элементов</summary>
+            <param name="Checker">Объект проверки одиночного значения</param>
+            <typeparam name="T">Тип проверяемого значения, которое является коллекцией объектов типа <typeparamref name="TItem"/></typeparam>
+            <typeparam name="TItem">Тип элементов проверяемой коллекции</typeparam>
+            <returns>Объект проверки коллекции</returns>
+        </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.Service">
             <summary>Сервисные методы</summary>
         </member>
