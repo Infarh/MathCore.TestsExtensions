@@ -5,16 +5,16 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     /// <summary>Объект проверки дочернего значения</summary>
     /// <typeparam name="TValue">Тип дочернего значения</typeparam>
     /// <typeparam name="TBaseValue">Тип  базового значения</typeparam>
-    public sealed class ChildAssertEqualsChecker<TValue, TBaseValue> : AssertEqualsChecker<TValue>
+    public sealed class NestedValueChecker<TValue, TBaseValue> : ValueChecker<TValue>
     {
-        private readonly AssertEqualsChecker<TBaseValue> _BaseChecker;
+        private readonly ValueChecker<TBaseValue> _BaseChecker;
 
-        internal ChildAssertEqualsChecker(TValue ActualValue, AssertEqualsChecker<TBaseValue> BaseChecker) : base(ActualValue) => _BaseChecker = BaseChecker;
+        internal NestedValueChecker(TValue ActualValue, ValueChecker<TBaseValue> BaseChecker) : base(ActualValue) => _BaseChecker = BaseChecker;
 
         /// <summary>Проверка дочернего значения</summary>
         /// <param name="Checker">Метод проверки дочернего значения</param>
         /// <returns>Объект проверки базового значения</returns>
-        public AssertEqualsChecker<TBaseValue> Check(Action<AssertEqualsChecker<TValue>> Checker)
+        public ValueChecker<TBaseValue> Check(Action<ValueChecker<TValue>> Checker)
         {
             Checker(this);
             return _BaseChecker;

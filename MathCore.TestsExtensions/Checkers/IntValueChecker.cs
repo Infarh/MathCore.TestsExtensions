@@ -3,14 +3,14 @@
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки равенства/неравенства целых чисел</summary>
-    public  sealed class AssertIntEqualsChecker
+    public  sealed class IntValueChecker
     {
         /// <summary>Проверяемое значение</summary>
         private readonly int _ActualValue;
 
         /// <summary>Инициализация нового объекта проверки целого числа</summary>
         /// <param name="ExpectedValue">Проверяемое целое число</param>
-        internal AssertIntEqualsChecker(int ExpectedValue) => _ActualValue = ExpectedValue;
+        internal IntValueChecker(int ExpectedValue) => _ActualValue = ExpectedValue;
 
         /// <summary>Проверка, что проверяемое значение равно ожидаемому</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>

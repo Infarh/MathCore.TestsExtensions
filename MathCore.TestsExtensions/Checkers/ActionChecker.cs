@@ -3,21 +3,20 @@
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки действия</summary>
-    public class AssertActionChecker
+    public class ActionChecker
     {
         /// <summary>Проверяемое действие</summary>
         private readonly Action _Action;
 
         /// <summary>Инициализация нового объекта проверки действия</summary>
         /// <param name="action">Проверяемое действие</param>
-        internal AssertActionChecker(Action action) => _Action = action ?? throw new ArgumentNullException(nameof(action));
+        internal ActionChecker(Action action) => _Action = action ?? throw new ArgumentNullException(nameof(action));
 
         /// <summary>Проверка, что метод вызывает исключение указанного типа</summary>
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <typeparam name="TException">Тип генерируемого исключения</typeparam>
         /// <returns>Объект проверки исключения</returns>
-        /// <exception cref="AssertFailedException"></exception>
-        public AssertEqualsChecker<TException> Throw<TException>(string Message = null) where TException : Exception
+        public ValueChecker<TException> Throw<TException>(string Message = null) where TException : Exception
         {
             try
             {
@@ -33,7 +32,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
     /// <summary>Объект проверки параметрического действия</summary>
     /// <typeparam name="TValue">Тип параметра действия</typeparam>
-    public class AssertActionChecker<TValue>
+    public class ActionChecker<TValue>
     {
         /// <summary>Проверяемое действие</summary>
         private readonly Action<TValue> _Action;
@@ -44,7 +43,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Инициализация нового объекта проверки действия</summary>
         /// <param name="action">Проверяемое действие</param>
         /// <param name="value">Параметр действия</param>
-        internal AssertActionChecker(Action<TValue> action, TValue value)
+        internal ActionChecker(Action<TValue> action, TValue value)
         {
             _Action = action ?? throw new ArgumentNullException(nameof(action));
             _Value = value;
@@ -55,7 +54,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <typeparam name="TException">Тип генерируемого исключения</typeparam>
         /// <returns>Объект проверки исключения</returns>
         /// <exception cref="AssertFailedException"></exception>
-        public AssertEqualsChecker<TException> Throw<TException>(string Message = null) where TException : Exception
+        public ValueChecker<TException> Throw<TException>(string Message = null) where TException : Exception
         {
             try
             {

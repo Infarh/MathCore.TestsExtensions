@@ -7,7 +7,7 @@ using MathCore.Tests.Annotations;
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки коллекций вещественных чисел</summary>
-    public class DoubleCollectionAssertChecker
+    public class DoubleCollectionChecker
     {
         /// <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
         public sealed class EqualityCheckerWithAccuracy : IDisposable
@@ -93,7 +93,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
         /// <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
         /// <param name="ActualCollection"></param>
-        internal DoubleCollectionAssertChecker([NotNull] ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
+        internal DoubleCollectionChecker([NotNull] ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
 
         /// <summary>Проверка значений коллекции на равенство</summary>
         /// <param name="ExpectedValues">Ожидаемые значения</param>
@@ -258,14 +258,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
         /// <summary>Максимальное значение в коллекции</summary>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Max() => Assert.That.Value(_ActualCollection.Max());
+        public DoubleValueChecker Max() => Assert.That.Value(_ActualCollection.Max());
 
         /// <summary>Минимальное значение в коллекции</summary>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Min() => Assert.That.Value(_ActualCollection.Min());
+        public DoubleValueChecker Min() => Assert.That.Value(_ActualCollection.Min());
 
         /// <summary>Среднее значение в коллекции</summary>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Average() => Assert.That.Value(_ActualCollection.Average());
+        public DoubleValueChecker Average() => Assert.That.Value(_ActualCollection.Average());
     }
 }

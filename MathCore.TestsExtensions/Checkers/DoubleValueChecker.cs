@@ -5,7 +5,7 @@ using MathCore.Tests.Annotations;
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки равенства/неравенства чисел с плавающей запятой двойной точности</summary>
-    public sealed class AssertDoubleEqualsChecker
+    public sealed class DoubleValueChecker
     {
         /// <summary>Объект проверки равенства чисел с заданной точностью</summary>
         public sealed class EqualityCheckerWithAccuracy : IDisposable
@@ -117,7 +117,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
         /// <summary>Инициализация нового объекта сравнения чисел с плавающей запятой</summary>
         /// <param name="ExpectedValue">Проверяемое значение</param>
-        internal AssertDoubleEqualsChecker(double ExpectedValue) => _ActualValue = ExpectedValue;
+        internal DoubleValueChecker(double ExpectedValue) => _ActualValue = ExpectedValue;
 
         /// <summary>Проверка значения на равенство</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>

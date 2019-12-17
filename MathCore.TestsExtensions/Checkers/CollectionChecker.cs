@@ -9,14 +9,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки коллекции</summary>
     /// <typeparam name="T">Тип элементов коллекции</typeparam>
-    public class CollectionAssertChecker<T>
+    public class CollectionChecker<T>
     {
         /// <summary>Проверяемая коллекция</summary>
         private readonly ICollection<T> _ActualCollection;
 
         /// <summary>Инициализация нового объекта проверки коллекции</summary>
         /// <param name="ActualCollection">Проверяемая коллекция</param>
-        internal CollectionAssertChecker(ICollection<T> ActualCollection) => _ActualCollection = ActualCollection;
+        internal CollectionChecker(ICollection<T> ActualCollection) => _ActualCollection = ActualCollection;
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
@@ -163,17 +163,17 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Максимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Max(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Max(Selector));
+        public DoubleValueChecker Max(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Max(Selector));
 
         /// <summary>Минимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Min(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Min(Selector));
+        public DoubleValueChecker Min(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Min(Selector));
 
         /// <summary>Среднее значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Average(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Average(Selector));
+        public DoubleValueChecker Average(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Average(Selector));
 
         /// <summary>Проверка, что коллекция содержит указанный элемент</summary>
         /// <param name="item">Элемент, который должен быть найден в коллекции</param>
@@ -187,14 +187,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     }
 
     /// <summary>Объект проверки коллекции</summary>
-    public class CollectionAssertChecker
+    public class CollectionChecker
     {
         /// <summary>Проверяемая коллекция</summary>
         private readonly ICollection _ActualCollection;
 
         /// <summary>Инициализация нового объекта проверки коллекции</summary>
         /// <param name="ActualCollection">Проверяемая коллекция</param>
-        internal CollectionAssertChecker(ICollection ActualCollection) => _ActualCollection = ActualCollection;
+        internal CollectionChecker(ICollection ActualCollection) => _ActualCollection = ActualCollection;
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
@@ -305,16 +305,16 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Минимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Max(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Max(Selector));
+        public DoubleValueChecker Max(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Max(Selector));
 
         /// <summary>Минимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Min(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Min(Selector));
+        public DoubleValueChecker Min(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Min(Selector));
 
         /// <summary>Среднее значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public AssertDoubleEqualsChecker Average(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Average(Selector));
+        public DoubleValueChecker Average(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Average(Selector));
     }
 }

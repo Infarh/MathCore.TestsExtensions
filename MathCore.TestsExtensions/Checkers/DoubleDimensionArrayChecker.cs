@@ -4,14 +4,14 @@ using System;
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки двумерного массива вещественных чисел</summary>
-    public class DoubleDimensionArrayAssertChecker
+    public class DoubleDimensionArrayChecker
     {
         /// <summary>Проверяемый массив</summary>
         private readonly double[,] _ActualArray;
 
         /// <summary>Инициализация нового объекта проверки</summary>
         /// <param name="ActualArray">Проверяемый массив</param>
-        internal DoubleDimensionArrayAssertChecker(double[,] ActualArray) => _ActualArray = ActualArray;
+        internal DoubleDimensionArrayChecker(double[,] ActualArray) => _ActualArray = ActualArray;
 
         /// <summary>По размеру и поэлементно массив эквивалентен ожидаемому массиву</summary>
         /// <param name="ExpectedArray">Ожидаемая коллекция значений</param>
