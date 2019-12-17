@@ -25,12 +25,6 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <returns>Объект проверки целочисленных значений</returns>
         public static IntValueChecker Value(this Assert that, int ActualValue) => new IntValueChecker(ActualValue);
 
-        /// <summary>Проверка логического значения</summary>
-        /// <param name="that">Объект-помощник проверки</param>
-        /// <param name="ActualValue">Проверяемое значение</param>
-        /// <returns>Объект проверки логических значений</returns>
-        public static BoolValueChecker Value(this Assert that, bool ActualValue) => new BoolValueChecker(ActualValue);
-        
         /// <summary>Проверка действия</summary>
         /// <param name="that">Объект-помощник проверки</param>
         /// <param name="action">Проверяемое действие</param>

@@ -12,10 +12,10 @@
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest</PackageTags>
     <AssemblyVersion>0.0.1.11</AssemblyVersion>
-    <FileVersion>0.0.1.11</FileVersion>
+    <FileVersion>0.0.1.12</FileVersion>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
-    <Version>0.1.11</Version>
-    <PackageReleaseNotes>Добавлено средство для проверки логических значений</PackageReleaseNotes>
+    <Version>0.1.12</Version>
+    <PackageReleaseNotes>Переработан способ проверки логических значений</PackageReleaseNotes>
     <LangVersion>8</LangVersion>
     <Copyright>shmachilin@yandex.ru</Copyright>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
