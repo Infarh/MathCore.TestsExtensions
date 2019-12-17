@@ -626,6 +626,7 @@
             <typeparam name="TValue">Тип параметра функции</typeparam>
             <param name="that">Объект-помощник проверки</param>
             <param name="function">Проверяемая функция</param>
+            <param name="value">Значение, передаваемое в функцию</param>
             <returns>Объект проверки исключения</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFunctionChecker`1">

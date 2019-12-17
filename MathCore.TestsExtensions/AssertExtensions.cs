@@ -51,6 +51,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <typeparam name="TValue">Тип параметра функции</typeparam>
         /// <param name="that">Объект-помощник проверки</param>
         /// <param name="function">Проверяемая функция</param>
+        /// <param name="value">Значение, передаваемое в функцию</param>
         /// <returns>Объект проверки исключения</returns>
         public static AssertFunctionChecker<TValue, TResult> Method<TValue, TResult>(this Assert that, Func<TValue, TResult> function, TValue value) => new AssertFunctionChecker<TValue, TResult>(function, value);
     }
