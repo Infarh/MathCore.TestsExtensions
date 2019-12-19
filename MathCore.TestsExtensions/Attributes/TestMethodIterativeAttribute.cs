@@ -11,6 +11,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Число итераций повторения теста</summary>
         private readonly int _IterationsCount;
 
+        /// <summary>Остановить процесс выполнения теста при первом сбое</summary>
+        public bool StopAtFirstFail { get; set; }
+
         /// <summary>Инициализация итерационного теста</summary>
         /// <param name="IterationsCount">Число итераций</param>
         public TestMethodIterativeAttribute(int IterationsCount) => _IterationsCount = IterationsCount;
@@ -19,11 +22,12 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public override TestResult[] Execute(ITestMethod TestMethod)
         {
             var results = new List<TestResult>();
+            var stop_at_first_fail = this.StopAtFirstFail;
             for (var count = 0; count < _IterationsCount; count++)
             {
                 var test_results = base.Execute(TestMethod);
                 results.AddRange(test_results);
-                if (test_results.Any(r => r.TestFailureException != null)) break;
+                if (stop_at_first_fail && test_results.Any(r => r.TestFailureException != null)) break;
             }
 
             return results.ToArray();

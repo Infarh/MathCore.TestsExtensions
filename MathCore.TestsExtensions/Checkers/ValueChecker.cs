@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ConvertToAutoPropertyWhenPossible
@@ -137,14 +138,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             var expected_type = typeof(TExpectedType);
             IsNotNull(Message);
-            Assert.IsInstanceOfType(
-                ActualValue,
-                expected_type,
-                "{0}Значение {1} не является значением типа {2}",
-                Message.AddSeparator(),
-                ActualValue?.GetType(),
-                expected_type);
-            return new ValueChecker<TExpectedType>((TExpectedType)ActualValue);
+            if (expected_type.GetTypeInfo().IsAssignableFrom(ActualValue.GetType().GetTypeInfo()))
+                return new ValueChecker<TExpectedType>((TExpectedType) ActualValue);
+            throw new AssertFailedException($"{Message.AddSeparator()}Значение {ActualValue?.GetType()} не является значением типа {expected_type}");
         }
 
         /// <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>

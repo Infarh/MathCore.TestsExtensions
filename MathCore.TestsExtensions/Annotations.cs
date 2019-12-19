@@ -394,4 +394,8 @@ namespace MathCore.Tests.Annotations
 
         [NotNull] public string BasePath { get; }
     }
+
+    /// <summary>Является регулярным выражением</summary>
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public sealed class RegexPatternAttribute : Attribute { }
 }

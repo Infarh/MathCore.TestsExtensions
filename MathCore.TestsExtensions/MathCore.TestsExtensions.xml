@@ -282,11 +282,46 @@
             starting from web root (~)
             </summary>
         </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute">
+            <summary>Итерационный тестовый класс</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute._IterationsCount">
+            <summary>Число итераций</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.StopAtFirstFail">
+            <summary>Остановить процесс выполнения теста при первом сбое</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.#ctor(System.Int32)">
+            <summary>Инициализация итерационного теста</summary>
+            <param name="IterationsCount">Число итераций</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.GetTestMethodAttribute(Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute">
+            <summary>Итерационное выполнение теста с заданием числа итераций для набора статистики</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute._IterationsCount">
+            <summary>Число итераций повторения теста</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.StopAtFirstFail">
+            <summary>Остановить процесс выполнения теста при первом сбое</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.#ctor(System.Int32)">
+            <summary>Инициализация итерационного теста</summary>
+            <param name="IterationsCount">Число итераций</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.Execute(Microsoft.VisualStudio.TestTools.UnitTesting.ITestMethod)">
+            <inheritdoc />
+        </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker">
             <summary>Объект проверки действия</summary>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker._Action">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.Action">
             <summary>Проверяемое действие</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.#ctor(System.Action)">
             <summary>Инициализация нового объекта проверки действия</summary>
@@ -302,11 +337,14 @@
             <summary>Объект проверки параметрического действия</summary>
             <typeparam name="TValue">Тип параметра действия</typeparam>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1._Action">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Action">
             <summary>Проверяемое действие</summary>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1._Value">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Value">
             <summary>Параметр действия</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.#ctor(System.Action{`0},`0)">
             <summary>Инициализация нового объекта проверки действия</summary>
@@ -324,8 +362,11 @@
             <summary>Объект проверки коллекции</summary>
             <typeparam name="T">Тип элементов коллекции</typeparam>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1._ActualCollection">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.ActualValue">
             <summary>Проверяемая коллекция</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.#ctor(System.Collections.Generic.ICollection{`0})">
             <summary>Инициализация нового объекта проверки коллекции</summary>
@@ -563,7 +604,7 @@
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker">
             <summary>Объект проверки двумерного массива вещественных чисел</summary>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker._ActualArray">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ActualValue">
             <summary>Проверяемый массив</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.#ctor(System.Double[0:,0:])">
@@ -670,8 +711,11 @@
             <param name="Accuracy">Точность сравнения</param>
             <param name="Message">Сообщение, выводимое в случае неудачи</param>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker._ActualValue">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.ActualValue">
             <summary>Сравниваемое значение</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.#ctor(System.Double)">
             <summary>Инициализация нового объекта сравнения чисел с плавающей запятой</summary>
@@ -773,8 +817,11 @@
             <summary>Объект проверки функции</summary>
             <typeparam name="TResult">Тип значения функции</typeparam>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1._Function">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.Function">
             <summary>Проверяемая функция</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.#ctor(System.Func{`0})">
             <summary>Инициализация нового объекта проверки функции</summary>
@@ -791,11 +838,14 @@
             <typeparam name="TValue">Тип параметра функции</typeparam>
             <typeparam name="TResult">Тип значения функции</typeparam>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2._Function">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Function">
             <summary>Проверяемая функция</summary>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2._Value">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Value">
             <summary>Параметр функции</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.#ctor(System.Func{`0,`1},`0)">
             <summary>Инициализация нового объекта проверки функции</summary>
@@ -812,8 +862,11 @@
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker">
             <summary>Объект проверки равенства/неравенства целых чисел</summary>
         </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker._ActualValue">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.ActualValue">
             <summary>Проверяемое значение</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.#ctor(System.Int32)">
             <summary>Инициализация нового объекта проверки целого числа</summary>
@@ -889,6 +942,9 @@
         </member>
         <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.ActualValue">
             <summary>Проверяемое значение</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.#ctor(`0)">
             <summary>Инициализация нового объекта проверки значения</summary>
@@ -1077,6 +1133,13 @@
             <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
             <returns>Исходный объект проверки логического значения</returns>
         </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Is(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.Boolean,System.String)">
+            <summary>Проверка значения на ложно</summary>
+            <param name="Checker">Объект проверки логического значения</param>
+            <param name="Value">Значение для проверки</param>
+            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
+            <returns>Исходный объект проверки логического значения</returns>
+        </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Are``2(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0})">
             <summary>Проверка значения как коллекции элементов</summary>
             <param name="Checker">Объект проверки одиночного значения</param>
@@ -1132,6 +1195,13 @@
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer">
             <summary>Объект сравнения вещественных чисел с указанной точностью</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer._Tolerance">
+            <summary>Точность сравнения</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer.Tolerance">
+            <summary>Точность сравнения</summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">Если значение точности меньше нуля</exception>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer.#ctor(System.Double)">
             <summary>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</summary>
