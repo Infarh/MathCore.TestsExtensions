@@ -282,6 +282,9 @@
             starting from web root (~)
             </summary>
         </member>
+        <member name="T:MathCore.Tests.Annotations.RegexPatternAttribute">
+            <summary>Является регулярным выражением</summary>
+        </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute">
             <summary>Итерационный тестовый класс</summary>
         </member>
@@ -1118,6 +1121,15 @@
             <param name="ActualCollection">Проверяемая коллекция</param>
             <returns>Объект проверки</returns>
         </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssertExtensions">
+            <summary>Методы-расширения для объекта проверки строк</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert,System.String)">
+            <summary>Проверка строки</summary>
+            <param name="that">Объект проверки</param>
+            <param name="ActualValue">Проверяемая строка</param>
+            <returns>Объект проверки строк</returns>
+        </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions">
             <summary>Методы-расширения для объекта проверки значения</summary>
         </member>
@@ -1146,6 +1158,55 @@
             <typeparam name="T">Тип проверяемого значения, которое является коллекцией объектов типа <typeparamref name="TItem"/></typeparam>
             <typeparam name="TItem">Тип элементов проверяемой коллекции</typeparam>
             <returns>Объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.StartWith(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка начинается с указанного префикса</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedPrefix">Ожидаемый префикс</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.EndWith(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка заканчивается указанной подстрокой</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedSuffix">Ожидаемое окончание</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Contains(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка содержит ожидаемую подстроку</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedSubstring">Ожидаемая подстрока</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Matches(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Ожидаемое регулярное выражение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Matches(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.Text.RegularExpressions.Regex,System.String)">
+            <summary>Проверка, что строка соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Ожидаемое регулярное выражение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.DoesNotMatch(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка НЕ соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Регулярное выражение, которому не должна соответствовать строка</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.DoesNotMatch(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.Text.RegularExpressions.Regex,System.String)">
+            <summary>Проверка, что строка НЕ соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Регулярное выражение, которому не должна соответствовать строка</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.Service">
             <summary>Сервисные методы</summary>
