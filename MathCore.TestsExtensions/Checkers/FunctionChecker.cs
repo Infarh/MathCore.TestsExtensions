@@ -9,11 +9,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public class FunctionChecker<TResult>
     {
         /// <summary>Проверяемая функция</summary>
-        private readonly Func<TResult> _Function;
+        public Func<TResult> Function { get; }
+
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
 
         /// <summary>Инициализация нового объекта проверки функции</summary>
         /// <param name="function">Проверяемое действие</param>
-        internal FunctionChecker(Func<TResult> function) => _Function = function ?? throw new ArgumentNullException(nameof(function));
+        internal FunctionChecker(Func<TResult> function) => Function = function ?? throw new ArgumentNullException(nameof(function));
 
         /// <summary>Проверка, что функция вызывает исключение указанного типа</summary>
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
@@ -23,7 +26,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             try
             {
-                _ = _Function();
+                _ = Function();
             }
             catch (Exception exception)
             {
@@ -39,18 +42,21 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public class FunctionChecker<TValue, TResult>
     {
         /// <summary>Проверяемая функция</summary>
-        private readonly Func<TValue, TResult> _Function;
+        public Func<TValue, TResult> Function { get; }
 
         /// <summary>Параметр функции</summary>
-        private readonly TValue _Value;
+        public TValue Value { get; }
+
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
 
         /// <summary>Инициализация нового объекта проверки функции</summary>
         /// <param name="function">Проверяемая функция</param>
         /// <param name="value">Параметр функции</param>
         internal FunctionChecker(Func<TValue, TResult> function, TValue value)
         {
-            _Function = function ?? throw new ArgumentNullException(nameof(function));
-            _Value = value;
+            Function = function ?? throw new ArgumentNullException(nameof(function));
+            Value = value;
         }
 
         /// <summary>Проверка, что функция вызывает исключение указанного типа</summary>
@@ -62,7 +68,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             try
             {
-                _ = _Function(_Value);
+                _ = Function(Value);
             }
             catch (Exception exception)
             {

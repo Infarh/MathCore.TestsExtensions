@@ -6,11 +6,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public class ActionChecker
     {
         /// <summary>Проверяемое действие</summary>
-        private readonly Action _Action;
+        public Action Action { get; }
+
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
 
         /// <summary>Инициализация нового объекта проверки действия</summary>
         /// <param name="action">Проверяемое действие</param>
-        internal ActionChecker(Action action) => _Action = action ?? throw new ArgumentNullException(nameof(action));
+        internal ActionChecker(Action action) => Action = action ?? throw new ArgumentNullException(nameof(action));
 
         /// <summary>Проверка, что метод вызывает исключение указанного типа</summary>
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
@@ -20,7 +23,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             try
             {
-                _Action();
+                Action();
             }
             catch (Exception exception)
             {
@@ -35,18 +38,21 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public class ActionChecker<TValue>
     {
         /// <summary>Проверяемое действие</summary>
-        private readonly Action<TValue> _Action;
+        public Action<TValue> Action { get; }
 
         /// <summary>Параметр действия</summary>
-        private readonly TValue _Value;
+        public TValue Value { get; }
+
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
 
         /// <summary>Инициализация нового объекта проверки действия</summary>
         /// <param name="action">Проверяемое действие</param>
         /// <param name="value">Параметр действия</param>
         internal ActionChecker(Action<TValue> action, TValue value)
         {
-            _Action = action ?? throw new ArgumentNullException(nameof(action));
-            _Value = value;
+            Action = action ?? throw new ArgumentNullException(nameof(action));
+            Value = value;
         }
 
         /// <summary>Проверка, что метод вызывает исключение указанного типа</summary>
@@ -58,7 +64,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             try
             {
-                _Action(_Value);
+                Action(Value);
             }
             catch (Exception exception)
             {

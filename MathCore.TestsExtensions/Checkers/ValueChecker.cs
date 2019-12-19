@@ -13,6 +13,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверяемое значение</summary>
         public T ActualValue { get; }
 
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
+
         /// <summary>Инициализация нового объекта проверки значения</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
         internal ValueChecker(T ActualValue) => this.ActualValue = ActualValue;

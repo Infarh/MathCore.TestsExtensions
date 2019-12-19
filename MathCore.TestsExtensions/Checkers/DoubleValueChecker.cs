@@ -113,46 +113,49 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         }
 
         /// <summary>Сравниваемое значение</summary>
-        private readonly double _ActualValue;
+        public double ActualValue { get; }
+
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
 
         /// <summary>Инициализация нового объекта сравнения чисел с плавающей запятой</summary>
         /// <param name="ExpectedValue">Проверяемое значение</param>
-        internal DoubleValueChecker(double ExpectedValue) => _ActualValue = ExpectedValue;
+        internal DoubleValueChecker(double ExpectedValue) => ActualValue = ExpectedValue;
 
         /// <summary>Проверка значения на равенство</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <returns>Объект сравнения с задаваемой точностью</returns>
-        public EqualityCheckerWithAccuracy IsEqualTo(double ExpectedValue) => new EqualityCheckerWithAccuracy(_ActualValue, ExpectedValue);
+        public EqualityCheckerWithAccuracy IsEqualTo(double ExpectedValue) => new EqualityCheckerWithAccuracy(ActualValue, ExpectedValue);
 
         /// <summary>Проверка значения на неравенство</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <returns>Объект сравнения с задаваемой точностью</returns>
-        public EqualityCheckerWithAccuracy IsNotEqualTo(double ExpectedValue) => new EqualityCheckerWithAccuracy(_ActualValue, ExpectedValue, true);
+        public EqualityCheckerWithAccuracy IsNotEqualTo(double ExpectedValue) => new EqualityCheckerWithAccuracy(ActualValue, ExpectedValue, true);
 
         /// <summary>Сравнение с ожидаемым значением</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void IsEqual(double ExpectedValue, string Message = null) =>
-            Assert.AreEqual(ExpectedValue, _ActualValue,
+            Assert.AreEqual(ExpectedValue, ActualValue,
                 "{0}error:{1:e2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - _ActualValue));
+                Message.AddSeparator(), Math.Abs(ExpectedValue - ActualValue));
 
         /// <summary>Сравнение с ожидаемым значением с задаваемой точностью</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Accuracy">Точность</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void IsEqual(double ExpectedValue, double Accuracy, string Message = null) =>
-            Assert.AreEqual(ExpectedValue, _ActualValue, Accuracy,
+            Assert.AreEqual(ExpectedValue, ActualValue, Accuracy,
                 "{0}error:{1:e2}", 
-                Message.AddSeparator(), Math.Abs(ExpectedValue - _ActualValue));
+                Message.AddSeparator(), Math.Abs(ExpectedValue - ActualValue));
 
         /// <summary>Проверка на неравенство</summary>
         /// <param name="ExpectedValue">Не ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void IsNotEqual(double ExpectedValue, string Message = null) =>
-            Assert.AreNotEqual(ExpectedValue, _ActualValue,
+            Assert.AreNotEqual(ExpectedValue, ActualValue,
                 "{0}error:{1:e2}", 
-                Message.AddSeparator(), Math.Abs(ExpectedValue - _ActualValue));
+                Message.AddSeparator(), Math.Abs(ExpectedValue - ActualValue));
 
         /// <summary>Проверка на неравенство</summary>
         /// <param name="ExpectedValue">Не ожидаемое значение</param>
@@ -160,90 +163,90 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void IsNotEqual(double ExpectedValue, double Accuracy, string Message = null) =>
             Assert.AreNotEqual(
-                ExpectedValue, _ActualValue, Accuracy,
+                ExpectedValue, ActualValue, Accuracy,
                 "{0}error:{1:e2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - _ActualValue));
+                Message.AddSeparator(), Math.Abs(ExpectedValue - ActualValue));
 
         /// <summary>Проверка, что значение больше заданного</summary>
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void GreaterThan(double ExpectedValue, string Message = null) =>
-            Assert.IsTrue(_ActualValue > ExpectedValue,
+            Assert.IsTrue(ActualValue > ExpectedValue,
                 "{0}Значение {1} должно быть больше {2}", 
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+                Message.AddSeparator(), ActualValue, ExpectedValue);
 
         /// <summary>Проверка, что значение больше, либо равно заданному</summary>
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void GreaterOrEqualsThan(double ExpectedValue, string Message = null) =>
-            Assert.IsTrue(_ActualValue >= ExpectedValue,
+            Assert.IsTrue(ActualValue >= ExpectedValue,
                 "{0}Нарушено условие ({1} >= {2}). delta:{3:e2}", 
-                Message.AddSeparator(), _ActualValue, ExpectedValue, ExpectedValue - _ActualValue);
+                Message.AddSeparator(), ActualValue, ExpectedValue, ExpectedValue - ActualValue);
 
         /// <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void GreaterOrEqualsThan(double ExpectedValue, double Accuracy, string Message = null) =>
-            Assert.IsTrue(_ActualValue - ExpectedValue <= Accuracy,
+            Assert.IsTrue(ActualValue - ExpectedValue <= Accuracy,
                 "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4:e2}", 
-                Message.AddSeparator(), _ActualValue, ExpectedValue, Accuracy, ExpectedValue - _ActualValue);
+                Message.AddSeparator(), ActualValue, ExpectedValue, Accuracy, ExpectedValue - ActualValue);
 
         /// <summary>Проверка, что значение меньше заданного</summary>
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void LessThan(double ExpectedValue, string Message = null) =>
-            Assert.IsTrue(_ActualValue < ExpectedValue,
+            Assert.IsTrue(ActualValue < ExpectedValue,
                 "{0}Значение {1} должно быть меньше {2}", 
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+                Message.AddSeparator(), ActualValue, ExpectedValue);
 
         /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void LessOrEqualsThan(double ExpectedValue, string Message = null) =>
-            Assert.IsTrue(_ActualValue < ExpectedValue,
+            Assert.IsTrue(ActualValue < ExpectedValue,
                 "{0}Значение {1} должно быть меньше {2}", 
-                Message.AddSeparator(), _ActualValue, ExpectedValue);
+                Message.AddSeparator(), ActualValue, ExpectedValue);
 
         /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         public void LessOrEqualsThan(double ExpectedValue, double Accuracy, string Message = null) =>
-            Assert.IsTrue(ExpectedValue - _ActualValue <= Accuracy,
+            Assert.IsTrue(ExpectedValue - ActualValue <= Accuracy,
                 "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4:e2}", 
-                Message.AddSeparator(), _ActualValue, ExpectedValue, Accuracy, ExpectedValue - _ActualValue);
+                Message.AddSeparator(), ActualValue, ExpectedValue, Accuracy, ExpectedValue - ActualValue);
 
         /// <summary>Значение больше (строго), чем указанное с задаваемой точностью</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public CompareCheckerWithAccuracy Greater(double ExpectedValue) =>
-            new CompareCheckerWithAccuracy(_ActualValue, ExpectedValue, IsEquals: false, IsLessChecking: false);
+            new CompareCheckerWithAccuracy(ActualValue, ExpectedValue, IsEquals: false, IsLessChecking: false);
 
         /// <summary>Значение больше, чем указанное с задаваемой точностью</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public CompareCheckerWithAccuracy GreaterOrEqual(double ExpectedValue) =>
-            new CompareCheckerWithAccuracy(_ActualValue, ExpectedValue, IsEquals: true, IsLessChecking: false);
+            new CompareCheckerWithAccuracy(ActualValue, ExpectedValue, IsEquals: true, IsLessChecking: false);
 
         /// <summary>Значение меньше (строго), чем указанное с задаваемой точностью</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public CompareCheckerWithAccuracy Less(double ExpectedValue) =>
-            new CompareCheckerWithAccuracy(_ActualValue, ExpectedValue, IsEquals: false, IsLessChecking: true);
+            new CompareCheckerWithAccuracy(ActualValue, ExpectedValue, IsEquals: false, IsLessChecking: true);
 
         /// <summary>Значение меньше, чем указанное с задаваемой точностью</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <returns>Объект сравнения с задаваемой точностью</returns>
         public CompareCheckerWithAccuracy LessOrEqual(double ExpectedValue) =>
-            new CompareCheckerWithAccuracy(_ActualValue, ExpectedValue, IsEquals: true, IsLessChecking: true);
+            new CompareCheckerWithAccuracy(ActualValue, ExpectedValue, IsEquals: true, IsLessChecking: true);
 
         /// <summary>Проверить, что значение не является не-числом</summary>
         /// <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
-        public void IsNotNaN(string Message = null) => Assert.IsFalse(double.IsNaN(_ActualValue), Message);
+        public void IsNotNaN(string Message = null) => Assert.IsFalse(double.IsNaN(ActualValue), Message);
 
         /// <summary>Проверить, что значение является не-числом</summary>
         /// <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
-        public void IsNaN(string Message = null) => Assert.IsTrue(double.IsNaN(_ActualValue), Message);
+        public void IsNaN(string Message = null) => Assert.IsTrue(double.IsNaN(ActualValue), Message);
     }
 }

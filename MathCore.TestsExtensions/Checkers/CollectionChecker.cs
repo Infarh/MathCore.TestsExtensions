@@ -12,11 +12,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public class CollectionChecker<T>
     {
         /// <summary>Проверяемая коллекция</summary>
-        private readonly ICollection<T> _ActualCollection;
+        public ICollection<T> ActualValue { get; }
+
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public CollectionAssert And => CollectionAssert.That;
 
         /// <summary>Инициализация нового объекта проверки коллекции</summary>
         /// <param name="ActualCollection">Проверяемая коллекция</param>
-        internal CollectionChecker(ICollection<T> ActualCollection) => _ActualCollection = ActualCollection;
+        internal CollectionChecker(ICollection<T> ActualCollection) => ActualValue = ActualCollection;
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
@@ -24,15 +27,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, string Message = null)
         {
             Assert.That
-               .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
+               .Value(ActualValue.Count)
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {ActualValue.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
             try
             {
                 expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-                actual_collection_enumerator = _ActualCollection.GetEnumerator();
+                actual_collection_enumerator = ActualValue.GetEnumerator();
 
                 var index = 0;
                 Service.CheckSeparator(ref Message);
@@ -63,15 +66,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityComparer Comparer, string Message = null)
         {
             Assert.That
-               .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
+               .Value(ActualValue.Count)
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {ActualValue.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
             try
             {
                 expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-                actual_collection_enumerator = _ActualCollection.GetEnumerator();
+                actual_collection_enumerator = ActualValue.GetEnumerator();
 
                 var index = 0;
                 Service.CheckSeparator(ref Message);
@@ -102,14 +105,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityPositionalComparer Comparer, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
+            Assert.That.Value(ActualValue.Count).IsEqual(ExpectedCollection.Count);
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
             try
             {
                 expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-                actual_collection_enumerator = _ActualCollection.GetEnumerator();
+                actual_collection_enumerator = ActualValue.GetEnumerator();
 
                 var index = 0;
                 Service.CheckSeparator(ref Message);
@@ -133,14 +136,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, IEqualityComparer<T> Comparer, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
+            Assert.That.Value(ActualValue.Count).IsEqual(ExpectedCollection.Count);
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
             try
             {
                 expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-                actual_collection_enumerator = _ActualCollection.GetEnumerator();
+                actual_collection_enumerator = ActualValue.GetEnumerator();
 
                 var index = 0;
                 Service.CheckSeparator(ref Message);
@@ -163,27 +166,27 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Максимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Max(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Max(Selector));
+        public DoubleValueChecker Max(Func<T, double> Selector) => Assert.That.Value(ActualValue.Max(Selector));
 
         /// <summary>Минимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Min(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Min(Selector));
+        public DoubleValueChecker Min(Func<T, double> Selector) => Assert.That.Value(ActualValue.Min(Selector));
 
         /// <summary>Среднее значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Average(Func<T, double> Selector) => Assert.That.Value(_ActualCollection.Average(Selector));
+        public DoubleValueChecker Average(Func<T, double> Selector) => Assert.That.Value(ActualValue.Average(Selector));
 
         /// <summary>Проверка, что коллекция содержит указанный элемент</summary>
         /// <param name="item">Элемент, который должен быть найден в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void Contains(T item, string Message = null) => Assert.IsTrue(_ActualCollection.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
+        public void Contains(T item, string Message = null) => Assert.IsTrue(ActualValue.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
 
         /// <summary>Проверка, что указанного элемента нет в коллекции</summary>
         /// <param name="item">Элемент, которого не должно быть в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void NotContains(T item, string Message = null) => Assert.IsTrue(!_ActualCollection.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
+        public void NotContains(T item, string Message = null) => Assert.IsTrue(!ActualValue.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
     }
 
     /// <summary>Объект проверки коллекции</summary>
