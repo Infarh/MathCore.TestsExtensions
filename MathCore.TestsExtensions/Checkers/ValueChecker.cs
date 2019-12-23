@@ -92,6 +92,16 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             return ActualValue;
         }
 
+        /// <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        /// <returns>Исходный объект проверки значений</returns>
+        [NotNull]
+        public ValueChecker<T> AsNotNull(string Message = null)
+        {
+            IsNotNull(Message);
+            return this;
+        }
+
         /// <summary>Значение является значением указанного типа</summary>
         /// <param name="ExpectedType">Ожидаемый тип значения</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>

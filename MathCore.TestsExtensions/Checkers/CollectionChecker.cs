@@ -183,10 +183,21 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void Contains(T item, string Message = null) => Assert.IsTrue(ActualValue.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
 
+        /// <summary>Проверка, что коллекция содержит элемент, удовлетворяющий указанному критерию</summary>
+        /// <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
+        /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        public void Contains(Func<T, bool> Predicate, string Message = null) => Assert.IsTrue(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+
         /// <summary>Проверка, что указанного элемента нет в коллекции</summary>
         /// <param name="item">Элемент, которого не должно быть в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void NotContains(T item, string Message = null) => Assert.IsTrue(!ActualValue.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
+
+        /// <summary>Проверка, что коллекция НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
+        /// <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
+        /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        public void NotContains(Func<T, bool> Predicate, string Message = null) => Assert.IsFalse(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+
     }
 
     /// <summary>Объект проверки коллекции</summary>
