@@ -63,7 +63,21 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Объект сравнения вещественных чисел с указанной точностью</summary>
         public class ToleranceComparer : IComparer<double>, IComparer
         {
-            private readonly double _Tolerance;
+            /// <summary>Точность сравнения</summary>
+            private double _Tolerance;
+
+            /// <summary>Точность сравнения</summary>
+            /// <exception cref="ArgumentOutOfRangeException">Если значение точности меньше нуля</exception>
+            public double Tolerance
+            {
+                get => _Tolerance;
+                set
+                {
+                    if(value < 0) 
+                        throw new ArgumentOutOfRangeException(nameof(value), "Значение точности должно быть больше, либо равно 0");
+                    _Tolerance = value;
+                }
+            }
 
             /// <summary>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</summary>
             /// <param name="Tolerance">Точность сравнения</param>
@@ -78,6 +92,6 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Tolerance">Точность сравнения чисел</param>
         /// <returns>Объект сравнения чисел с заданной точностью</returns>
         [DST, NotNull]
-        public static IComparer GetComparer(double Tolerance = 1e-14) => new ToleranceComparer(Tolerance);
+        public static ToleranceComparer GetComparer(double Tolerance = 1e-14) => new ToleranceComparer(Tolerance);
     }
 }

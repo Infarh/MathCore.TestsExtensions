@@ -10,19 +10,19 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="assert">Объект-помощник проверки</param>
         /// <param name="ActualCollection">Проверяемая коллекция</param>
         /// <returns>Объект проверки</returns>
-        public static DoubleCollectionAssertChecker Collection(this CollectionAssert assert, ICollection<double> ActualCollection) => new DoubleCollectionAssertChecker(ActualCollection);
+        public static DoubleCollectionChecker Collection(this CollectionAssert assert, ICollection<double> ActualCollection) => new DoubleCollectionChecker(ActualCollection);
 
         /// <summary>Проверка двумерного массива вещественных чисел</summary>
         /// <param name="assert">Объект-помощник проверки</param>
         /// <param name="ActualArray">Проверяемый двумерный массив</param>
         /// <returns>Объект проверки</returns>
-        public static DoubleDimensionArrayAssertChecker Collection(this CollectionAssert assert, double[,] ActualArray) => new DoubleDimensionArrayAssertChecker(ActualArray);
+        public static DoubleDimensionArrayChecker Collection(this CollectionAssert assert, double[,] ActualArray) => new DoubleDimensionArrayChecker(ActualArray);
 
         /// <summary>Проверка коллекции</summary>
         /// <typeparam name="T">Тип элементов коллекции</typeparam>
         /// <param name="assert">Объект-помощник проверки</param>
         /// <param name="ActualCollection">Проверяемая коллекция</param>
         /// <returns>Объект проверки</returns>
-        public static CollectionAssertChecker<T> Collection<T>(this CollectionAssert assert, ICollection<T> ActualCollection) => new CollectionAssertChecker<T>(ActualCollection);
+        public static CollectionChecker<T> Collection<T>(this CollectionAssert assert, ICollection<T> ActualCollection) => new CollectionChecker<T>(ActualCollection);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ConvertToAutoPropertyWhenPossible
@@ -8,14 +9,17 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки значения</summary>
     /// <typeparam name="T">Тип проверяемого значения</typeparam>
-    public class AssertEqualsChecker<T>
+    public class ValueChecker<T>
     {
         /// <summary>Проверяемое значение</summary>
         public T ActualValue { get; }
 
+        /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        public Assert And => Assert.That;
+
         /// <summary>Инициализация нового объекта проверки значения</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
-        internal AssertEqualsChecker(T ActualValue) => this.ActualValue = ActualValue;
+        internal ValueChecker(T ActualValue) => this.ActualValue = ActualValue;
 
         /// <summary>Проверка значения на эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
@@ -88,13 +92,24 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             return ActualValue;
         }
 
+        /// <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        /// <returns>Исходный объект проверки значений</returns>
+        [NotNull]
+        public ValueChecker<T> AsNotNull(string Message = null)
+        {
+            IsNotNull(Message);
+            return this;
+        }
+
         /// <summary>Значение является значением указанного типа</summary>
         /// <param name="ExpectedType">Ожидаемый тип значения</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Текущий объект проверки</returns>
         [NotNull]
-        public AssertEqualsChecker<T> Is(Type ExpectedType, string Message = null)
+        public ValueChecker<T> Is(Type ExpectedType, string Message = null)
         {
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue,
                 ExpectedType,
@@ -110,9 +125,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Текущий объект проверки</returns>
         [NotNull]
-        public AssertEqualsChecker<T> Is<TExpectedType>(string Message = null)
+        public ValueChecker<T> Is<TExpectedType>(string Message = null)
         {
             var expected_type = typeof(TExpectedType);
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue, 
                 expected_type, 
@@ -128,17 +144,13 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Объект проверки типа наследника</returns>
         [NotNull]
-        public AssertEqualsChecker<TExpectedType> As<TExpectedType>(string Message = null) where TExpectedType : class, T
+        public ValueChecker<TExpectedType> As<TExpectedType>(string Message = null) where TExpectedType : T
         {
             var expected_type = typeof(TExpectedType);
-            Assert.IsInstanceOfType(
-                ActualValue,
-                expected_type,
-                "{0}Значение {1} не является значением типа {2}",
-                Message.AddSeparator(),
-                ActualValue?.GetType(),
-                expected_type);
-            return new AssertEqualsChecker<TExpectedType>((TExpectedType)ActualValue);
+            IsNotNull(Message);
+            if (expected_type.GetTypeInfo().IsAssignableFrom(ActualValue.GetType().GetTypeInfo()))
+                return new ValueChecker<TExpectedType>((TExpectedType) ActualValue);
+            throw new AssertFailedException($"{Message.AddSeparator()}Значение {ActualValue?.GetType()} не является значением типа {expected_type}");
         }
 
         /// <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
@@ -148,9 +160,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Объект проверки производного значения</returns>
         [NotNull]
-        public AssertEqualsChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector, string Message = null) where TExpectedType : class, T
+        public ValueChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector, string Message = null) where TExpectedType : class, T
         {
             var expected_type = typeof(TExpectedType);
+            IsNotNull(Message);
             Assert.IsInstanceOfType(
                 ActualValue,
                 expected_type,
@@ -158,29 +171,38 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Message.AddSeparator(),
                 ActualValue?.GetType(),
                 expected_type);
-            return new AssertEqualsChecker<TValue>(Selector((TExpectedType)ActualValue));
+            return new ValueChecker<TValue>(Selector((TExpectedType)ActualValue));
         }
 
         /// <summary>Проверка вложенного значения</summary>
         /// <typeparam name="TValue">Тип вложенного значения</typeparam>
         /// <param name="Selector">Метод определения вложенного значения</param>
         /// <returns>Объект проверки вложенного значения</returns>
-        public ChildAssertEqualsChecker<TValue, T> Where<TValue>(Func<T, TValue> Selector) => new ChildAssertEqualsChecker<TValue, T>(Selector(ActualValue), this);
+        public NestedValueChecker<TValue, T> Where<TValue>(Func<T, TValue> Selector) => new NestedValueChecker<TValue, T>(Selector(ActualValue), this);
 
         /// <summary>Проверка вложенного значения</summary>
         /// <typeparam name="TValue">Тип вложенного значения</typeparam>
         /// <param name="Selector">Метод определения вложенного значения</param>
         /// <param name="Checker">Метод проверки вложенного значения</param>
         /// <returns>Объект проверки текущего значения</returns>
-        public AssertEqualsChecker<T> Where<TValue>(Func<T, TValue> Selector, Action<AssertEqualsChecker<TValue>> Checker)
+        public ValueChecker<T> Where<TValue>(Func<T, TValue> Selector, Action<ValueChecker<TValue>> Checker)
         {
-            var value_checker = new AssertEqualsChecker<TValue>(Selector(ActualValue));
+            var value_checker = new ValueChecker<TValue>(Selector(ActualValue));
             Checker(value_checker);
+            return this;
+        }
+
+        /// <summary>Набор проверок</summary>
+        /// <param name="Checker">Метод проведения проверок</param>
+        /// <returns>Исходный объект проверки</returns>
+        public ValueChecker<T> AssertThat(Action<ValueChecker<T>> Checker)
+        {
+            Checker(this);
             return this;
         }
 
         /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
         /// <param name="Checker">Объект проверки</param>
-        public static implicit operator T(AssertEqualsChecker<T> Checker) => Checker.ActualValue;
+        public static implicit operator T(ValueChecker<T> Checker) => Checker.ActualValue;
     }
 }
