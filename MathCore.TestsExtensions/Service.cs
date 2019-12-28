@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MathCore.Tests.Annotations;
+﻿using MathCore.Tests.Annotations;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {

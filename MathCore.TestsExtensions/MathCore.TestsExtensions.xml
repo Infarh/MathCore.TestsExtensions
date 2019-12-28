@@ -359,7 +359,7 @@
             <param name="Message">Сообщение, выводимое в случае ошибки</param>
             <typeparam name="TException">Тип генерируемого исключения</typeparam>
             <returns>Объект проверки исключения</returns>
-            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException"></exception>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">Возникает в случае, если тестируемый метод не сгенерировал никакого исключения</exception>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1">
             <summary>Объект проверки коллекции</summary>
@@ -431,10 +431,20 @@
             <param name="item">Элемент, который должен быть найден в коллекции</param>
             <param name="Message">Сообщение, выводимое в случае неудачи</param>
         </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Contains(System.Func{`0,System.Boolean},System.String)">
+            <summary>Проверка, что коллекция содержит элемент, удовлетворяющий указанному критерию</summary>
+            <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.NotContains(`0,System.String)">
             <summary>Проверка, что указанного элемента нет в коллекции</summary>
             <param name="item">Элемент, которого не должно быть в коллекции</param>
             <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.NotContains(System.Func{`0,System.Boolean},System.String)">
+            <summary>Проверка, что коллекция НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
+            <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker">
             <summary>Объект проверки коллекции</summary>
@@ -860,7 +870,7 @@
             <param name="Message">Сообщение, выводимое в случае ошибки</param>
             <typeparam name="TException">Тип генерируемого исключения</typeparam>
             <returns>Объект проверки исключения</returns>
-            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException"></exception>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">Возникает в случае, если тестируемая функция не сгенерировала исключения</exception>
         </member>
         <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker">
             <summary>Объект проверки равенства/неравенства целых чисел</summary>
@@ -934,6 +944,14 @@
             <typeparam name="TValue">Тип дочернего значения</typeparam>
             <typeparam name="TBaseValue">Тип  базового значения</typeparam>
         </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2._BaseChecker">
+            <summary>Базовый объект проверки значения</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`1})">
+            <summary>Инициализация нового объекта проверки вложенного значения</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="BaseChecker">Базовый объект проверки значения</param>
+        </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2.Check(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
             <summary>Проверка дочернего значения</summary>
             <param name="Checker">Метод проверки дочернего значения</param>
@@ -999,6 +1017,11 @@
             <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
             <param name="Message">Сообщение, выводимое в случае неудачи</param>
             <returns>Значение, гарантированно не являющееся пустой ссылкой</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.AsNotNull(System.String)">
+            <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+            <returns>Исходный объект проверки значений</returns>
         </member>
         <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Is(System.Type,System.String)">
             <summary>Значение является значением указанного типа</summary>
