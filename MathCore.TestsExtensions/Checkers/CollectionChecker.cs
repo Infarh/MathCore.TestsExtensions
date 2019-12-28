@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedType.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {

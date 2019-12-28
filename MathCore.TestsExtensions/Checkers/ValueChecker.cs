@@ -4,6 +4,8 @@ using System.Reflection;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ConvertToAutoPropertyWhenPossible
+// ReSharper disable UnusedMethodReturnValue.Global
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -24,19 +26,27 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка значения на эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqual(T ExpectedValue, string Message = null) => 
-            Assert.AreEqual(ExpectedValue, ActualValue,
+        [NotNull]
+        public virtual ValueChecker<T> IsEqual(T ExpectedValue, string Message = null)
+        {
+            Assert.AreEqual(
+                ExpectedValue, ActualValue,
                 "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
                 Message.AddSeparator(), ActualValue, ExpectedValue);
+            return this;
+        }
 
         /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Comparer">Объект сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqual(T ExpectedValue, IEqualityComparer<T> Comparer, string Message = null) =>
-            Assert.IsTrue(Comparer.Equals(ActualValue, ExpectedValue),
-                "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
-                Message.AddSeparator(), ActualValue, ExpectedValue);
+        [NotNull]
+        public ValueChecker<T> IsEqual(T ExpectedValue, IEqualityComparer<T> Comparer, string Message = null)
+        {
+            if(!Comparer.Equals(ActualValue, ExpectedValue))
+                throw new AssertFailedException($"{Message.AddSeparator()}Актуальное значение {ActualValue} не соответствует ожидаемому {ExpectedValue}");
+            return this;
+        }
 
         /// <summary>Метод сравнения значений</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
@@ -48,34 +58,50 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Comparer">Метод сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqual(T ExpectedValue, EqualityComparer Comparer, string Message = null) =>
-            Assert.IsTrue(Comparer(ExpectedValue, ActualValue),
-                "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
-                Message.AddSeparator(), ActualValue, ExpectedValue);
+        [NotNull]
+        public ValueChecker<T> IsEqual(T ExpectedValue, EqualityComparer Comparer, string Message = null)
+        {
+            if(!Comparer(ExpectedValue, ActualValue))
+                throw new AssertFailedException($"{Message.AddSeparator()}Актуальное значение {ActualValue} не соответствует ожидаемому {ExpectedValue}");
+            return this;
+        }
 
         /// <summary>Проверка значения на идентичность ожидаемому (при сравнении ссылок)</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsReferenceEquals(T ExpectedValue, string Message = null) =>
-            Assert.IsTrue(ReferenceEquals(ActualValue, ExpectedValue),
-                "{0}Объект актуального значения {1} не является ожидаемым {2} при сравнении ссылок",
-                Message.AddSeparator(), ActualValue, ExpectedValue);
+        [NotNull]
+        public ValueChecker<T> IsReferenceEquals(T ExpectedValue, string Message = null)
+        {
+            if(!ReferenceEquals(ActualValue, ExpectedValue))
+                throw new AssertFailedException(
+                    $"{Message.AddSeparator()}Объект актуального значения {ActualValue} не является ожидаемым {ExpectedValue} при сравнении ссылок");
+            return this;
+        }
 
         /// <summary>Проверка значения на не эквивалентность ожидаемому</summary>
         /// <param name="ExpectedValue">Не ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsNotEqual(T ExpectedValue, string Message = null) => 
-            Assert.AreNotEqual(ExpectedValue, ActualValue,
-                "{0}Актуальное значение {1} соовтетствует ожидаемому {2}",
+        [NotNull]
+        public virtual ValueChecker<T> IsNotEqual(T ExpectedValue, string Message = null)
+        {
+            Assert.AreNotEqual(
+                ExpectedValue, ActualValue,
+                "{0}Актуальное значение {1} соответствует ожидаемому {2}",
                 Message.AddSeparator(), ActualValue, ExpectedValue);
+            return this;
+        }
 
         /// <summary>Проверка значения на не идентичность ожидаемому (при сравнении ссылок)</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsNotReferenceEquals(T ExpectedValue, string Message = null) => 
-            Assert.IsFalse(ReferenceEquals(ActualValue, ExpectedValue),
-                "{0}Объект актуального значения {1} является ожидаемым {2} при сравнении ссылок",
-                Message.AddSeparator(), ActualValue, ExpectedValue);
+        [NotNull]
+        public ValueChecker<T> IsNotReferenceEquals(T ExpectedValue, string Message = null)
+        {
+            if(ReferenceEquals(ActualValue, ExpectedValue))
+                throw new AssertFailedException(
+                    $"{Message.AddSeparator()}Объект актуального значения {ActualValue} является ожидаемым {ExpectedValue} при сравнении ссылок");
+            return this;
+        }
 
         /// <summary>Ссылка на значение должна быть пустой</summary>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
@@ -160,7 +186,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <returns>Объект проверки производного значения</returns>
         [NotNull]
-        public ValueChecker<TValue> As<TExpectedType, TValue>(Func<TExpectedType, TValue> Selector, string Message = null) where TExpectedType : class, T
+        public ValueChecker<TValue> As<TExpectedType, TValue>([NotNull] Func<TExpectedType, TValue> Selector, string Message = null) where TExpectedType : class, T
         {
             var expected_type = typeof(TExpectedType);
             IsNotNull(Message);
@@ -178,14 +204,16 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <typeparam name="TValue">Тип вложенного значения</typeparam>
         /// <param name="Selector">Метод определения вложенного значения</param>
         /// <returns>Объект проверки вложенного значения</returns>
-        public NestedValueChecker<TValue, T> Where<TValue>(Func<T, TValue> Selector) => new NestedValueChecker<TValue, T>(Selector(ActualValue), this);
+        [NotNull]
+        public NestedValueChecker<TValue, T> Where<TValue>([NotNull] Func<T, TValue> Selector) => new NestedValueChecker<TValue, T>(Selector(ActualValue), this);
 
         /// <summary>Проверка вложенного значения</summary>
         /// <typeparam name="TValue">Тип вложенного значения</typeparam>
         /// <param name="Selector">Метод определения вложенного значения</param>
         /// <param name="Checker">Метод проверки вложенного значения</param>
         /// <returns>Объект проверки текущего значения</returns>
-        public ValueChecker<T> Where<TValue>(Func<T, TValue> Selector, Action<ValueChecker<TValue>> Checker)
+        [NotNull]
+        public ValueChecker<T> Where<TValue>([NotNull] Func<T, TValue> Selector, [NotNull] Action<ValueChecker<TValue>> Checker)
         {
             var value_checker = new ValueChecker<TValue>(Selector(ActualValue));
             Checker(value_checker);
@@ -195,9 +223,26 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Набор проверок</summary>
         /// <param name="Checker">Метод проведения проверок</param>
         /// <returns>Исходный объект проверки</returns>
-        public ValueChecker<T> AssertThat(Action<ValueChecker<T>> Checker)
+        [NotNull]
+        public ValueChecker<T> AssertThat([NotNull] Action<ValueChecker<T>> Checker)
         {
             Checker(this);
+            return this;
+        }
+
+        /// <summary>Проверка вложенной коллекции</summary>
+        /// <param name="Selector">Метод определения вложенной коллекции</param>
+        /// <param name="Checker">Метод проверки вложенной коллекции</param>
+        /// <typeparam name="TItem">Тип элементов вложенной коллекции</typeparam>
+        /// <returns>Исходный объект проверки</returns>
+        [NotNull]
+        public ValueChecker<T> WhereAll<TItem>([NotNull] Func<T, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>> Checker)
+        {
+            foreach (var item in Selector(ActualValue))
+            {
+                var item_checker = new ValueChecker<TItem>(item);
+                Checker(item_checker);
+            }
             return this;
         }
 
