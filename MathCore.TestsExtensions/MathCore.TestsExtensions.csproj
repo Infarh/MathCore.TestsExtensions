@@ -11,11 +11,11 @@
     <PackageProjectUrl>https://github.com/Infarh/MathCore.TestsExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest, MSTest</PackageTags>
-    <AssemblyVersion>0.0.1.16</AssemblyVersion>
-    <FileVersion>0.0.1.16</FileVersion>
+    <AssemblyVersion>0.0.1.17</AssemblyVersion>
+    <FileVersion>0.0.1.17</FileVersion>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
-    <Version>0.1.16</Version>
-    <PackageReleaseNotes>Доработка методов проверки коллекции и проверки на Null</PackageReleaseNotes>
+    <Version>0.1.17</Version>
+    <PackageReleaseNotes>Мелкие исправления</PackageReleaseNotes>
     <Copyright>shmachilin@yandex.ru</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
