@@ -100,7 +100,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedValue">Опорное значение</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         [NotNull]
-        public static ValueChecker<double> LessThen([NotNull] this ValueChecker<double> Checker, double ExpectedValue, string Message = null)
+        public static ValueChecker<double> LessThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, string Message = null)
         {
             if (!(Checker.ActualValue < ExpectedValue))
                 throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue:e2}");
