@@ -16,9 +16,7 @@
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
     <Version>0.1.16</Version>
     <PackageReleaseNotes>Доработка методов проверки коллекции и проверки на Null</PackageReleaseNotes>
-    <LangVersion>8</LangVersion>
     <Copyright>shmachilin@yandex.ru</Copyright>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -33,9 +31,5 @@
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="rd /s /q $(TargetDir)\publish" />
-  </Target>
 
 </Project>
