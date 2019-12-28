@@ -4,12 +4,8 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Testing # on .NET Core for ${{ matrix.os }}
-    runs-on: [ubuntu-latest]
-#     runs-on: ${{ matrix.os }}
-#     strategy:
-#       matrix:
-#         os: [ubuntu-latest, windows-latest, macOS-latest]
+    name: Testing
+    runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v1
@@ -20,7 +16,7 @@ jobs:
           dotnet-version: 3.1.100
           
       - name: Building
-        run: dotnet build --nologo --configuration Debug
+        run: dotnet build -c Debug
           
       - name: Run Tests
-        run: dotnet test --nologo
+        run: dotnet test
