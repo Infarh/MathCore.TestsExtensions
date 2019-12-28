@@ -1,4 +1,6 @@
-﻿namespace Microsoft.VisualStudio.TestTools.UnitTesting
+﻿using MathCore.Tests.Annotations;
+
+namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Методы-расширения для объекта проверки строк</summary>
     public static class StringAssertExtensions
@@ -7,6 +9,7 @@
         /// <param name="that">Объект проверки</param>
         /// <param name="ActualValue">Проверяемая строка</param>
         /// <returns>Объект проверки строк</returns>
-        public static ValueChecker<string> Value(StringAssert that, string ActualValue) => new ValueChecker<string>(ActualValue);
+        [NotNull]
+        public static ValueChecker<string> Value([NotNull] StringAssert that, string ActualValue) => new ValueChecker<string>(ActualValue);
     }
 }
