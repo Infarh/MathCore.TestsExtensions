@@ -1,5 +1,5 @@
 ﻿using System;
-using MathCore.Tests.Annotations;
+
 // ReSharper disable UnusedMember.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting

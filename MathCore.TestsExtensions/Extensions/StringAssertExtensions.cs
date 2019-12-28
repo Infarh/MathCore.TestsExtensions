@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.VisualStudio.TestTools.UnitTesting
+﻿namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Методы-расширения для объекта проверки строк</summary>
     public static class StringAssertExtensions

@@ -29,6 +29,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="MathCore.TestsExtensions.csproj.DotSettings" />
+    <None Remove="MathCore.TestsExtensions.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
 

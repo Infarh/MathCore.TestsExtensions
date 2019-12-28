@@ -7,8 +7,12 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     /// <typeparam name="TBaseValue">Тип  базового значения</typeparam>
     public sealed class NestedValueChecker<TValue, TBaseValue> : ValueChecker<TValue>
     {
+        /// <summary>Базовый объект проверки значения</summary>
         private readonly ValueChecker<TBaseValue> _BaseChecker;
 
+        /// <summary>Инициализация нового объекта проверки вложенного значения</summary>
+        /// <param name="ActualValue">Проверяемое значение</param>
+        /// <param name="BaseChecker">Базовый объект проверки значения</param>
         internal NestedValueChecker(TValue ActualValue, ValueChecker<TBaseValue> BaseChecker) : base(ActualValue) => _BaseChecker = BaseChecker;
 
         /// <summary>Проверка дочернего значения</summary>

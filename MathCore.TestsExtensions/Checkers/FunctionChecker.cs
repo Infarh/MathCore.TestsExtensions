@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -63,7 +61,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
         /// <typeparam name="TException">Тип генерируемого исключения</typeparam>
         /// <returns>Объект проверки исключения</returns>
-        /// <exception cref="AssertFailedException"></exception>
+        /// <exception cref="AssertFailedException">Возникает в случае, если тестируемая функция не сгенерировала исключения</exception>
         public ValueChecker<TException> Throw<TException>(string Message = null) where TException : Exception
         {
             try
@@ -72,7 +70,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             }
             catch (Exception exception)
             {
-                return Assert.That.Value(exception).As<TException>("Получено исключение, отличное от ожидаемого");
+                return Assert.That.Value(exception).As<TException>($"{Message.AddSeparator()}Получено исключение, отличное от ожидаемого");
             }
             throw new AssertFailedException(Message.AddSeparator());
         }
