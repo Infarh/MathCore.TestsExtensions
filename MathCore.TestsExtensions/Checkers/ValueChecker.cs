@@ -246,6 +246,24 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             return this;
         }
 
+        /// <summary>Проверка вложенной коллекции</summary>
+        /// <param name="Selector">Позиционный метод определения вложенной коллекции</param>
+        /// <param name="Checker">Метод проверки вложенной коллекции</param>
+        /// <typeparam name="TItem">Тип элементов вложенной коллекции</typeparam>
+        /// <returns>Исходный объект проверки</returns>
+        [NotNull]
+        public ValueChecker<T> WhereAll<TItem>([NotNull] Func<T, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>, int> Checker)
+        {
+            var item_index = 0;
+            foreach (var item in Selector(ActualValue))
+            {
+                var item_checker = new ValueChecker<TItem>(item);
+                Checker(item_checker, item_index);
+                item_index++;
+            }
+            return this;
+        }
+
         /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
         /// <param name="Checker">Объект проверки</param>
         public static implicit operator T(ValueChecker<T> Checker) => Checker.ActualValue;

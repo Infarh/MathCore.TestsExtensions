@@ -11,11 +11,9 @@
     <PackageProjectUrl>https://github.com/Infarh/MathCore.TestsExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest, MSTest</PackageTags>
-    <AssemblyVersion>0.0.1.18</AssemblyVersion>
-    <FileVersion>0.0.1.18</FileVersion>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
-    <Version>0.1.18</Version>
-    <PackageReleaseNotes>Убраны специальные классы проверки значений. Функциональность перенесена в методы-расширения над ValueChecker&lt;T&gt;</PackageReleaseNotes>
+    <Version>0.1.19</Version>
+    <PackageReleaseNotes>Добавлен атрибут модульного теста на основе данных с поддержкой итерационного запуска</PackageReleaseNotes>
     <Copyright>shmachilin@yandex.ru</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
