@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+// ReSharper disable UnusedType.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
-    /// <summary>Итерационное выполнение теста с заданием числа итераций для набора статистики</summary>
+    /// <summary>Итерационное выполнение теста на основе данных с заданием числа итераций для набора статистики</summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public class TestMethodIterativeAttribute : TestMethodAttribute
+    public class DataTestMethodIterativeAttribute : TestMethodAttribute
     {
         /// <summary>Число итераций повторения теста</summary>
         private readonly int _IterationsCount;
@@ -14,9 +15,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Остановить процесс выполнения теста при первом сбое</summary>
         public bool StopAtFirstFail { get; set; }
 
-        /// <summary>Инициализация итерационного теста</summary>
+        /// <summary>Инициализация итерационного теста на основе данных</summary>
         /// <param name="IterationsCount">Число итераций</param>
-        public TestMethodIterativeAttribute(int IterationsCount) => _IterationsCount = IterationsCount;
+        public DataTestMethodIterativeAttribute(int IterationsCount) => _IterationsCount = IterationsCount;
 
         /// <inheritdoc />
         public override TestResult[] Execute(ITestMethod TestMethod)
