@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MathCore.Tests.Annotations;
+// ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
 

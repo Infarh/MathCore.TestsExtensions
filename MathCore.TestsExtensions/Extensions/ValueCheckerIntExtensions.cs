@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using MathCore.Tests.Annotations;
+// ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -15,12 +17,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         /// <returns>Объект проверки целочисленного значения</returns>
         [NotNull]
-        public static ValueChecker<int> IsEqual([NotNull] this ValueChecker<int> Checker, int ExpectedValue, double Accuracy, string Message = null)
+        public static ValueChecker<int> IsEqual([NotNull] this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string Message = null)
         {
             Assert.AreEqual(
                 ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}error:{1}, eps:{2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - Checker.ActualValue), Accuracy);
+                "{0}err:{1}(rel:{2}), eps:{3}",
+                Message.AddSeparator(), 
+                Math.Abs(ExpectedValue - Checker.ActualValue),
+                ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
+                Accuracy);
             return Checker;
         }
 
@@ -31,12 +36,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         /// <returns>Объект проверки целочисленного значения</returns>
         [NotNull]
-        public static ValueChecker<int> IsNotEqual([NotNull] this ValueChecker<int> Checker, int ExpectedValue, double Accuracy, string Message = null)
+        public static ValueChecker<int> IsNotEqual([NotNull] this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string Message = null)
         {
             Assert.AreNotEqual(
                 ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}error:{1}, eps:{2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - Checker.ActualValue), Accuracy);
+                "{0}err:{1}(rel:{2}), eps:{3}",
+                Message.AddSeparator(),
+                 Math.Abs(ExpectedValue - Checker.ActualValue),
+                ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
+                Accuracy);
             return Checker;
         }
 

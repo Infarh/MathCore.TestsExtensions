@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Globalization;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -39,21 +42,25 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             if (_IsLessChecking)
                 if (_IsEquals)
                     Assert.IsTrue(_ExpectedValue - _ActualValue <= Accuracy,
-                        "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4:e2}",
-                        Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, _ExpectedValue - _ActualValue);
+                        "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4}",
+                        Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, 
+                        (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
                 else
                     Assert.IsTrue(_ExpectedValue - _ActualValue < Accuracy,
-                        "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4:e2}",
-                        Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, _ExpectedValue - _ActualValue);
+                        "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4}",
+                        Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, 
+                        (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
 
             else if (_IsEquals)
                 Assert.IsTrue(_ActualValue - _ExpectedValue <= Accuracy,
-                    "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4:e2}",
-                    Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, _ExpectedValue - _ActualValue);
+                    "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4}",
+                    Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, 
+                    (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
             else
                 Assert.IsTrue(_ActualValue - _ExpectedValue < Accuracy,
-                    "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4:e2}",
-                    Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, _ExpectedValue - _ActualValue);
+                    "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4}",
+                    Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy,
+                    (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]

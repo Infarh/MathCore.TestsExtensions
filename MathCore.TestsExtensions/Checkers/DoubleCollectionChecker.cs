@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using MathCore.Tests.Annotations;
+// ReSharper disable ArgumentsStyleLiteral
+// ReSharper disable UnusedMember.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -101,7 +105,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.That
                .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}"); ;
+               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}");
 
             return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues);
         }
@@ -113,7 +117,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.That
                .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}"); ;
+               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}");
 
             return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues, Not: true);
         }
@@ -125,7 +129,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        public void ValuesAreEqual(string Message, [NotNull] params double[] ExpectedValues) => IsEqualTo(ExpectedValues);
+        public void ValuesAreEqual(string Message, [NotNull] params double[] ExpectedValues) => IsEqualTo(ExpectedValues, Message);
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
@@ -134,7 +138,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.That
                .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}");
 
             IEnumerator<double> expected_collection_enumerator = null;
             IEnumerator<double> actual_collection_enumerator = null;
@@ -152,8 +156,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     var delta = Math.Abs(expected - actual);
                     Assert.AreEqual(
                         expected, actual,
-                        "{0}error[{1}]: ожидалось({2}), получено({3}), err:{4:e3}; rel.err:{5}",
-                        Message, index++, expected, actual, delta, delta / expected);
+                        "{0}error[{1}]: ожидалось({2}), получено({3}), err:{4}(rel:{5})",
+                        Message, index++, expected, actual,
+                        delta.ToString("e3", CultureInfo.InvariantCulture),
+                        (delta / expected).ToString(CultureInfo.InvariantCulture));
                 }
             }
             finally
@@ -169,7 +175,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public void IsEqualTo([NotNull] ICollection<double> ExpectedCollection, double Accuracy, string Message = null)
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совмадают");
+            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совпадают");
 
             IEnumerator<double> expected_collection_enumerator = null;
             IEnumerator<double> actual_collection_enumerator = null;
@@ -188,8 +194,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     var delta = Math.Abs(expected - actual);
                     Assert.AreEqual(
                         expected, actual, Accuracy,
-                        "{0}error[{1}]: ожидалось({2}), получено({3}), eps:{4}, err:{5:e3}; rel.err:{6}",
-                        Message, index, expected, actual, Accuracy, delta, delta / expected);
+                        "{0}error[{1}]: ожидалось({2}), получено({3}), eps:{4}, err:{5}(rel:{6})",
+                        Message, index, expected, actual, Accuracy,
+                        delta.ToString("e3", CultureInfo.InvariantCulture),
+                        (delta / expected).ToString(CultureInfo.InvariantCulture));
                 }
             }
             finally
@@ -219,7 +227,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             var index = 0;
             foreach (var actual_value in _ActualCollection)
                 Assert.AreEqual(ExpectedValue, actual_value, Accuracy,
-                    "{0}error[{1}]:{2:e2}, eps:{3}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value), Accuracy);
+                    "{0}error[{1}]:{2}({3}), eps:{4}",
+                    Message.AddSeparator(), index++,
+                    Math.Abs(ExpectedValue - actual_value).ToString("e2", CultureInfo.InvariantCulture),
+                    ((ExpectedValue - actual_value) / ExpectedValue).ToString("e3", CultureInfo.InvariantCulture),
+                    Accuracy);
         }
 
         /// <summary>Критерий проверки элементов коллекции</summary>

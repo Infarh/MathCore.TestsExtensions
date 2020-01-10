@@ -1,5 +1,8 @@
 ﻿using MathCore.Tests.Annotations;
 using System;
+using System.Globalization;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedMember.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -29,8 +32,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     var expected = ExpectedArray[i, j];
                     var actual = ActualValue[i, j];
                     Assert.AreEqual(expected, actual,
-                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; error:{5:e3}; rel_error:{6}", 
-                        Message, i, j, expected, actual, Math.Abs(expected - actual), Math.Abs(expected - actual) / expected);
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; err:{5}(rel:{6})", 
+                        Message, i, j, expected, actual, 
+                        Math.Abs(expected - actual).ToString("e3", CultureInfo.InvariantCulture),
+                        (Math.Abs(expected - actual) / expected).ToString(CultureInfo.InvariantCulture));
                 }
         }
 
@@ -50,8 +55,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     var expected = ExpectedArray[i, j];
                     var actual = ActualValue[i, j];
                     Assert.AreEqual(expected, actual, Accuracy,
-                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; error:{6:e2}; rel_error:{7}", 
-                        Message, i, j, expected, actual, Accuracy, Math.Abs(expected - actual), Math.Abs(expected - actual) / expected);
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; err:{6}(rel:{7})", 
+                        Message, i, j, expected, actual, Accuracy,
+                        Math.Abs(expected - actual).ToString("e3", CultureInfo.InvariantCulture),
+                        (Math.Abs(expected - actual) / expected).ToString(CultureInfo.InvariantCulture));
                 }
         }
 
@@ -66,8 +73,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 {
                     var actual = ActualValue[i, j];
                     Assert.AreEqual(ExpectedValue, actual,
-                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; error:{5:e3}; rel_error:{6}",
-                        Message, i, j, ExpectedValue, actual, Math.Abs(ExpectedValue - actual), Math.Abs(ExpectedValue - actual) / ExpectedValue);
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; err:{5}(rel:{6})",
+                        Message, i, j, ExpectedValue, actual,
+                        Math.Abs(ExpectedValue - actual).ToString("e3", CultureInfo.InvariantCulture),
+                        (Math.Abs(ExpectedValue - actual) / ExpectedValue).ToString(CultureInfo.InvariantCulture));
                 }
         }
 
@@ -83,8 +92,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 {
                     var actual = ActualValue[i, j];
                     Assert.AreEqual(ExpectedValue, actual, Accuracy,
-                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; error:{6:e2}; rel_error:{7}",
-                        Message, i, j, ExpectedValue, actual, Accuracy, Math.Abs(ExpectedValue - actual), Math.Abs(ExpectedValue - actual) / ExpectedValue);
+                        "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; err:{6}(rel:{7})",
+                        Message, i, j, ExpectedValue, actual, Accuracy,
+                        Math.Abs(ExpectedValue - actual).ToString("e3", CultureInfo.InvariantCulture),
+                        (Math.Abs(ExpectedValue - actual) / ExpectedValue).ToString(CultureInfo.InvariantCulture));
                 }
         }
 
