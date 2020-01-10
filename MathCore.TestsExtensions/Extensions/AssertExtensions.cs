@@ -1,6 +1,6 @@
 ﻿using System;
 using MathCore.Tests.Annotations;
-
+// ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting

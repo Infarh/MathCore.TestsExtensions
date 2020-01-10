@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+
 // ReSharper disable UnusedMethodReturnValue.Global
 // ReSharper disable UnusedMember.Global
 
@@ -35,9 +37,23 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             _IsChecked = true;
             if (_Not)
-                Assert.AreNotEqual(_ExpectedValue, _ActualValue, Accuracy, "{0}error:{1:e2}", Message.AddSeparator(), Math.Abs(_ExpectedValue - _ActualValue));
+                Assert.AreNotEqual(
+                    _ExpectedValue, 
+                    _ActualValue, 
+                    Accuracy, 
+                    "{0}err:{1}(rel:{2})", 
+                    Message.AddSeparator(),
+                    Math.Abs(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture),
+                    (Math.Abs(_ExpectedValue - _ActualValue) / _ExpectedValue).ToString("e2", CultureInfo.InvariantCulture));
             else
-                Assert.AreEqual(_ExpectedValue, _ActualValue, Accuracy, "{0}error:{1:e2}", Message.AddSeparator(), Math.Abs(_ExpectedValue - _ActualValue));
+                Assert.AreEqual(
+                    _ExpectedValue, 
+                    _ActualValue, 
+                    Accuracy, 
+                    "{0}err:{1}(rel:{2})",
+                    Message.AddSeparator(), 
+                    Math.Abs(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture),
+                    (Math.Abs(_ExpectedValue - _ActualValue) / _ExpectedValue).ToString("e2", CultureInfo.InvariantCulture));
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]

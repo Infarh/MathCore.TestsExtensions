@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 // ReSharper disable UnusedType.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {

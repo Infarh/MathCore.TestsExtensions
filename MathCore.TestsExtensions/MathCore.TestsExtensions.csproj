@@ -12,8 +12,8 @@
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest, MSTest</PackageTags>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
-    <Version>0.1.19</Version>
-    <PackageReleaseNotes>Добавлен атрибут модульного теста на основе данных с поддержкой итерационного запуска</PackageReleaseNotes>
+    <Version>0.1.20</Version>
+    <PackageReleaseNotes>Изменена культура форматирования вещественных значений в выводимых комментариях к ошибкам, добавлены относительные значения ошибки</PackageReleaseNotes>
     <Copyright>shmachilin@yandex.ru</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

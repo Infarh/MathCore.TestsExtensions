@@ -1,4 +1,6 @@
 ﻿using System;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {

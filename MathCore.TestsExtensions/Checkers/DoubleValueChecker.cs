@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMethodReturnValue.Global
 // ReSharper disable UnusedMember.Global
@@ -21,8 +22,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.AreEqual(
                 ExpectedValue, ActualValue,
-                "{0}error:{1:e2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - ActualValue));
+                "{0}error:{1}",
+                Message.AddSeparator(), 
+                Math.Abs(ExpectedValue - ActualValue).ToString("e2", CultureInfo.InvariantCulture));
             return this;
         }
 
@@ -35,8 +37,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.AreNotEqual(
                 ExpectedValue, ActualValue,
-                "{0}error:{1:e2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - ActualValue));
+                "{0}error:{1}",
+                Message.AddSeparator(), 
+                Math.Abs(ExpectedValue - ActualValue).ToString("e2", CultureInfo.InvariantCulture));
             return this;
         }
     }

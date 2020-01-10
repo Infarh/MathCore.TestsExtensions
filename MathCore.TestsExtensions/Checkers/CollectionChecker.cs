@@ -30,7 +30,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.That
                .Value(ActualValue.Count)
-               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {ActualValue.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {ActualValue.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}");
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
@@ -69,7 +69,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.That
                .Value(ActualValue.Count)
-               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {ActualValue.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}"); ;
+               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {ActualValue.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}");
 
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;

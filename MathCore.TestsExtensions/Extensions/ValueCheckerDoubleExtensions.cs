@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
+// ReSharper disable ArgumentsStyleLiteral
+// ReSharper disable RedundantArgumentDefaultValue
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -36,8 +39,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.AreEqual(
                 ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}error:{1:e2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - Checker.ActualValue));
+                "{0}err:{1}(rel:{2}) eps:{3}",
+                Message.AddSeparator(),
+                Math.Abs(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture),
+                ((ExpectedValue - Checker.ActualValue) / Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
+                Accuracy);
             return Checker;
         }
 
@@ -52,8 +58,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             Assert.AreNotEqual(
                 ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}error:{1:e2}",
-                Message.AddSeparator(), Math.Abs(ExpectedValue - Checker.ActualValue));
+                "{0}err:{1}(rel:{2}) eps:{3}",
+                Message.AddSeparator(), 
+                Math.Abs(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture),
+                ((ExpectedValue - Checker.ActualValue) / Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
+                Accuracy);
             return Checker;
         }
 
@@ -65,7 +74,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public static ValueChecker<double> GreaterThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, string Message = null)
         {
             if (!(Checker.ActualValue > ExpectedValue))
-                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть больше {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue:e2}");
+                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть больше {ExpectedValue}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 
@@ -78,7 +87,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             if (!(Checker.ActualValue >= ExpectedValue))
                 throw new AssertFailedException(
-                    $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}). delta:{ExpectedValue - Checker.ActualValue:e2}");
+                    $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}). delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 
@@ -91,7 +100,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public static ValueChecker<double> GreaterOrEqualsThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, double Accuracy, string Message = null)
         {
             if (!(Checker.ActualValue - ExpectedValue <= Accuracy))
-                throw new AssertFailedException($"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy:e2}. delta:{ExpectedValue - Checker.ActualValue:e2}");
+                throw new AssertFailedException($"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy:e2}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 
@@ -103,7 +112,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public static ValueChecker<double> LessThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, string Message = null)
         {
             if (!(Checker.ActualValue < ExpectedValue))
-                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue:e2}");
+                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше {ExpectedValue}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 
@@ -115,7 +124,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public static ValueChecker<double> LessOrEqualsThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, string Message = null)
         {
             if (!(Checker.ActualValue <= ExpectedValue))
-                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше, либо равно {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue:e2}");
+                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше, либо равно {ExpectedValue}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 
@@ -129,7 +138,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             if (!(ExpectedValue - Checker.ActualValue <= Accuracy))
                 throw new AssertFailedException(
-                    $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy:e2}. delta:{ExpectedValue - Checker.ActualValue:e2}");
+                    $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy:e2}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 
