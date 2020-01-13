@@ -200,6 +200,26 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
         public void NotContains(Func<T, bool> Predicate, string Message = null) => Assert.IsFalse(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
 
+        /// <summary>Выполнение проверки для всех элементов коллекции</summary>
+        /// <param name="Check">Метод проверки значения</param>
+        /// <returns>Исходный объект проверки коллекции</returns>
+        public CollectionChecker<T> All(Action<ValueChecker<T>> Check)
+        {
+            foreach (var item in ActualValue)
+                Check(new ValueChecker<T>(item));
+            return this;
+        }
+
+        /// <summary>Выполнение проверки для всех элементов коллекции</summary>
+        /// <param name="Check">Позиционный метод проверки значения</param>
+        /// <returns>Исходный объект проверки коллекции</returns>
+        public CollectionChecker<T> All(Action<ValueChecker<T>, int> Check)
+        {
+            var index = 0;
+            foreach (var item in ActualValue)
+                Check(new ValueChecker<T>(item), index++);
+            return this;
+        }
     }
 
     /// <summary>Объект проверки коллекции</summary>
