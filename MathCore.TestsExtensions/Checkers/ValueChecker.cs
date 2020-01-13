@@ -221,23 +221,18 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         }
 
         /// <summary>Проверка вложенного значения</summary>
-        /// <typeparam name="TValue">Тип вложенного значения</typeparam>
         /// <typeparam name="TItem">Тип элементов коллекции</typeparam>
         /// <param name="Selector">Метод определения вложенного значения</param>
         /// <returns>Объект проверки вложенного значения</returns>
         [NotNull]
-        public NestedCollectionValueChecker<TItem, T> WhereItems<TValue, TItem>([NotNull] Func<T, TValue> Selector)
-            where TValue : ICollection<TItem>
-            => new NestedCollectionValueChecker<TItem, T>(Selector(ActualValue), this);
+        public NestedCollectionValueChecker<TItem, T> WhereItems<TItem>([NotNull] Func<T, ICollection<TItem>> Selector) => new NestedCollectionValueChecker<TItem, T>(Selector(ActualValue), this);
 
         /// <summary>Проверка вложенной коллекции элементов</summary>
         /// <param name="Selector">Метод выбора вложенных элементов</param>
         /// <param name="Checker">Метод проверки</param>
-        /// <typeparam name="TValue">Тип проверяемого значения коллекции</typeparam>
         /// <typeparam name="TItem">Тип элементов коллекции</typeparam>
         /// <returns>Исходный объект проверки</returns>
-        public ValueChecker<T> WhereItems<TValue, TItem>([NotNull] Func<T, TValue> Selector, [NotNull] Action<CollectionChecker<TItem>> Checker)
-            where TValue : ICollection<TItem>
+        public ValueChecker<T> WhereItems<TItem>([NotNull] Func<T, ICollection<TItem>> Selector, [NotNull] Action<CollectionChecker<TItem>> Checker)
         {
             var value = Selector(ActualValue);
             var checker = new CollectionChecker<TItem>(value);
