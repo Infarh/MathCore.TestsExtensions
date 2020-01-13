@@ -4,7 +4,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
     /// <summary>Объект проверки дочернего значения</summary>
     /// <typeparam name="TValue">Тип дочернего значения</typeparam>
-    /// <typeparam name="TBaseValue">Тип  базового значения</typeparam>
+    /// <typeparam name="TBaseValue">Тип базового значения</typeparam>
     public sealed class NestedValueChecker<TValue, TBaseValue> : ValueChecker<TValue>
     {
         /// <summary>Базовый объект проверки значения</summary>
