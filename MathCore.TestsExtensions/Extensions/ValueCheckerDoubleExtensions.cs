@@ -59,7 +59,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             var err_delta_str = error_delta.ToString("e2", invariant_culture);
 
             var error_delta_rel = error_delta / Accuracy;
-            var expected_accuracy = error_delta_rel < 0.1 ? $" expected-eps:{(Accuracy + error_delta).ToString("e2", invariant_culture)}" : null;
+            var expected_accuracy = error_delta_rel < 0.1 ? $" expected-eps:{(Accuracy + error_delta + Accuracy * 0.01).ToString("e2", invariant_culture)}" : null;
 
             throw new AssertFailedException(
                 $"{msg}err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy}(eps-delta:{err_delta_str}){expected_accuracy}");
