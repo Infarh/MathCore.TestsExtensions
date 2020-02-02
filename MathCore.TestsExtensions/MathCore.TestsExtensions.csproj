@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeSymbols>false</IncludeSymbols>
-    <Version>0.1.23.3</Version>
-    <PackageReleaseNotes>Коррекция предлагаемой точности для метода IsEqual</PackageReleaseNotes>
+    <Version>0.1.23.4</Version>
+    <PackageReleaseNotes>Коррекция строки выводимой ошибки метода IsEqual</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>
