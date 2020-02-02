@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeSymbols>false</IncludeSymbols>
+    <Version>0.1.23</Version>
+    <PackageReleaseNotes>Отображение величины превышения ошибки для метода IsEqual с ограниченной точностью</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>
@@ -12,8 +14,6 @@
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
     <PackageTags>UnitTest, MSTest</PackageTags>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
-    <Version>0.1.22</Version>
-    <PackageReleaseNotes>Добавлен метод проверки всех элементов коллекции</PackageReleaseNotes>
     <Copyright>shmachilin@yandex.ru</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

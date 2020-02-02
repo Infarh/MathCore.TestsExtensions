@@ -35,16 +35,27 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         /// <returns>Объект проверки вещественного значения</returns>
         [NotNull]
-        public static ValueChecker<double> IsEqual([NotNull] this ValueChecker<double> Checker, double ExpectedValue, double Accuracy, string Message = null)
+        public static ValueChecker<double> IsEqual(
+            [NotNull] this ValueChecker<double> Checker, 
+            double ExpectedValue, 
+            double Accuracy, 
+            string Message = null)
         {
-            Assert.AreEqual(
-                ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}err:{1}(rel:{2}) eps:{3}",
-                Message.AddSeparator(),
-                Math.Abs(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture),
-                ((ExpectedValue - Checker.ActualValue) / Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
-                Accuracy);
-            return Checker;
+            if(double.IsNaN(ExpectedValue)) throw new ArgumentException("ExpectedValue is NaN", nameof(ExpectedValue));
+            var actual_value = Checker.ActualValue;
+            if(double.IsNaN(actual_value)) throw new ArgumentException("Checker.ActualValue is NaN", nameof(Checker.ActualValue));
+            if(double.IsNaN(Accuracy)) throw new ArgumentException("Accuracy is NaN", nameof(actual_value));
+
+            var value_delta = ExpectedValue - actual_value;
+            if (Math.Abs(value_delta) <= Accuracy)
+                return Checker;
+
+            var msg = Message.AddSeparator();
+            var delta_str = Math.Abs(value_delta).ToString("e2", CultureInfo.InvariantCulture);
+            var rel_delta_str = (value_delta / actual_value).ToString(CultureInfo.InvariantCulture);
+            var err_delta_str = (Math.Abs(value_delta) - Accuracy).ToString("e2", CultureInfo.InvariantCulture);
+            throw new AssertFailedException(
+                $"{msg}err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy}(eps-delta:{err_delta_str})");
         }
 
         /// <summary>Проверка на неравенство</summary>
@@ -54,7 +65,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         /// <returns>Объект проверки вещественного значения</returns>
         [NotNull]
-        public static ValueChecker<double> IsNotEqual([NotNull] this ValueChecker<double> Checker, double ExpectedValue, double Accuracy, string Message = null)
+        public static ValueChecker<double> IsNotEqual(
+            [NotNull] this ValueChecker<double> Checker, 
+            double ExpectedValue, 
+            double Accuracy,
+            string Message = null)
         {
             Assert.AreNotEqual(
                 ExpectedValue, Checker.ActualValue, Accuracy,
