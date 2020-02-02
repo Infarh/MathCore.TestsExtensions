@@ -51,7 +51,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             if (value_delta_abs <= Accuracy)
                 return Checker;
 
-            var msg = Message.AddSeparator();
+            var msg = Message.AddSeparator(Environment.NewLine);
             var invariant_culture = CultureInfo.InvariantCulture;
             var delta_str = value_delta_abs.ToString("e2", invariant_culture);
             var rel_delta_str = (value_delta / actual_value).ToString(invariant_culture);
@@ -59,11 +59,13 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             var err_delta_str = error_delta.ToString("e2", invariant_culture);
 
             var new_accuracy = value_delta_abs;
-            var expected_accuracy = $" expected-eps:{(new_accuracy + Math.Pow(10, (int)Math.Log10(new_accuracy) - 3)).ToString("e2", invariant_culture)}";
+            var expected_accuracy = (new_accuracy + Math.Pow(10, (int)Math.Log10(new_accuracy) - 3))
+               .ToString("e2", invariant_culture);
 
             throw new AssertFailedException(
-                $"Ожидаемое значение {ExpectedValue.ToString(invariant_culture)} не равно реальному {actual_value.ToString(invariant_culture)}." + Environment.NewLine
-                + $"{msg}err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy.ToString(invariant_culture)}(eps-delta:{err_delta_str}){expected_accuracy}");
+                $"{msg}Ожидаемое значение {ExpectedValue.ToString(invariant_culture)} не равно реальному {actual_value.ToString(invariant_culture)}." + Environment.NewLine
+                + $"err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy.ToString(invariant_culture)}(eps-delta:{err_delta_str})" + Environment.NewLine
+                + $"Требуется точность :{expected_accuracy}");
         }
 
         /// <summary>Проверка на неравенство</summary>
