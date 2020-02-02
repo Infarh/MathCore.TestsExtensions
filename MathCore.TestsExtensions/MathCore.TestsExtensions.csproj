@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeSymbols>false</IncludeSymbols>
-    <Version>0.1.23</Version>
-    <PackageReleaseNotes>Отображение величины превышения ошибки для метода IsEqual с ограниченной точностью</PackageReleaseNotes>
+    <Version>0.1.23.1</Version>
+    <PackageReleaseNotes>Добавление предпочитаемой ошибки для IsEqual в методе сравнения вещественных значений</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>

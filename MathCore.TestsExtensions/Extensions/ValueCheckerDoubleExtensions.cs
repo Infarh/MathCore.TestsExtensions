@@ -47,15 +47,22 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             if(double.IsNaN(Accuracy)) throw new ArgumentException("Accuracy is NaN", nameof(actual_value));
 
             var value_delta = ExpectedValue - actual_value;
-            if (Math.Abs(value_delta) <= Accuracy)
+            var value_delta_abs = Math.Abs(value_delta);
+            if (value_delta_abs <= Accuracy)
                 return Checker;
 
             var msg = Message.AddSeparator();
-            var delta_str = Math.Abs(value_delta).ToString("e2", CultureInfo.InvariantCulture);
-            var rel_delta_str = (value_delta / actual_value).ToString(CultureInfo.InvariantCulture);
-            var err_delta_str = (Math.Abs(value_delta) - Accuracy).ToString("e2", CultureInfo.InvariantCulture);
+            var invariant_culture = CultureInfo.InvariantCulture;
+            var delta_str = value_delta_abs.ToString("e2", invariant_culture);
+            var rel_delta_str = (value_delta / actual_value).ToString(invariant_culture);
+            var error_delta = value_delta_abs - Accuracy;
+            var err_delta_str = error_delta.ToString("e2", invariant_culture);
+
+            var error_delta_rel = error_delta / Accuracy;
+            var expected_accuracy = error_delta_rel < 0.1 ? $" expected-eps:{(Accuracy + error_delta).ToString("e2", invariant_culture)}" : null;
+
             throw new AssertFailedException(
-                $"{msg}err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy}(eps-delta:{err_delta_str})");
+                $"{msg}err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy}(eps-delta:{err_delta_str}){expected_accuracy}");
         }
 
         /// <summary>Проверка на неравенство</summary>
