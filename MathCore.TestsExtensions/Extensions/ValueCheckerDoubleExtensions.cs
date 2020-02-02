@@ -58,12 +58,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             var error_delta = value_delta_abs - Accuracy;
             var err_delta_str = error_delta.ToString("e2", invariant_culture);
 
-            var error_delta_rel = error_delta / Accuracy;
-            var new_accuracy = Accuracy + error_delta;
-            var expected_accuracy = error_delta_rel < 0.1 ? $" expected-eps:{(new_accuracy + Math.Pow(10, (int)Math.Log10(new_accuracy) - 3)).ToString("e2", invariant_culture)}" : null;
+            var new_accuracy = value_delta_abs;
+            var expected_accuracy = $" expected-eps:{(new_accuracy + Math.Pow(10, (int)Math.Log10(new_accuracy) - 3)).ToString("e2", invariant_culture)}";
 
             throw new AssertFailedException(
-                $"Ожидаемое значение {ExpectedValue.ToString(invariant_culture)} не равно реальному {actual_value.ToString(invariant_culture)}. "
+                $"Ожидаемое значение {ExpectedValue.ToString(invariant_culture)} не равно реальному {actual_value.ToString(invariant_culture)}." + Environment.NewLine
                 + $"{msg}err:{delta_str}(rel:{rel_delta_str}) eps:{Accuracy.ToString(invariant_culture)}(eps-delta:{err_delta_str}){expected_accuracy}");
         }
 
