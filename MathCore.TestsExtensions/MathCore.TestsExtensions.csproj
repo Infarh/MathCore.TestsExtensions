@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeSymbols>false</IncludeSymbols>
-    <Version>0.1.23.2</Version>
-    <PackageReleaseNotes>Увеличение рекомендуемой точности при вычислении ошибки в методе IsEqual на 1%</PackageReleaseNotes>
+    <Version>0.1.23.3</Version>
+    <PackageReleaseNotes>Коррекция предлагаемой точности для метода IsEqual</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>
