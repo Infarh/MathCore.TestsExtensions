@@ -284,6 +284,16 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             return this;
         }
 
+        /// <summary>Проверка действия над значением</summary>
+        /// <param name="action">Действие, выполняемое над значением</param>
+        /// <returns>Объект проверки действия</returns>
+        public ActionChecker<T> Method(Action<T> action) => new ActionChecker<T>(action, ActualValue);
+
+        /// <summary>Проверка функции над значением</summary>
+        /// <param name="function">Функция, выполняемая над значением</param>
+        /// <returns>Объект проверки функции</returns>
+        public FunctionChecker<T, TResult> Method<TResult>(Func<T, TResult> function) => new FunctionChecker<T, TResult>(function, ActualValue);
+
         /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
         /// <param name="Checker">Объект проверки</param>
         public static implicit operator T(ValueChecker<T> Checker) => Checker.ActualValue;
