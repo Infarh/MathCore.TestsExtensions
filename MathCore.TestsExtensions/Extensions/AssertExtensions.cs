@@ -33,11 +33,11 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка действия</summary>
         /// <typeparam name="TValue">Тип параметра действия</typeparam>
         /// <param name="that">Объект-помощник проверки</param>
-        /// <param name="action">Проверяемое действие</param>
         /// <param name="value">Параметр</param>
+        /// <param name="action">Проверяемое действие</param>
         /// <returns>Объект проверки исключения</returns>
         [NotNull]
-        public static ActionChecker<TValue> Method<TValue>([NotNull] this Assert that, Action<TValue> action, TValue value) => new ActionChecker<TValue>(action, value);
+        public static ActionChecker<TValue> Method<TValue>([NotNull] this Assert that, TValue value, Action<TValue> action) => new ActionChecker<TValue>(action, value);
 
         /// <summary>Проверка функции</summary>
         /// <typeparam name="TResult">Тип результата функции</typeparam>
@@ -51,10 +51,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <typeparam name="TResult">Тип результата функции</typeparam>
         /// <typeparam name="TValue">Тип параметра функции</typeparam>
         /// <param name="that">Объект-помощник проверки</param>
-        /// <param name="function">Проверяемая функция</param>
         /// <param name="value">Значение, передаваемое в функцию</param>
+        /// <param name="function">Проверяемая функция</param>
         /// <returns>Объект проверки исключения</returns>
         [NotNull]
-        public static FunctionChecker<TValue, TResult> Method<TValue, TResult>([NotNull] this Assert that, Func<TValue, TResult> function, TValue value) => new FunctionChecker<TValue, TResult>(function, value);
+        public static FunctionChecker<TValue, TResult> Method<TValue, TResult>([NotNull] this Assert that, TValue value, Func<TValue, TResult> function) => new FunctionChecker<TValue, TResult>(function, value);
     }
 }
