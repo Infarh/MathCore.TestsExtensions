@@ -102,5 +102,57 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 ExpectedRegEx);
             return Checker;
         }
+
+        /// <summary>Проверка, что ссылка на строку не пуста и строка не является пустой</summary>
+        /// <param name="Checker">Объект проверки строкового значения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+        /// <returns>Исходный объект проверки строки</returns>
+        [NotNull]
+        public static ValueChecker<string> IsNotNullOrEmpty(this ValueChecker<string> Checker, string Message = null)
+        {
+            var str = Checker.ActualValue;
+            if(string.IsNullOrEmpty(str))
+                throw new AssertFailedException($"{Message.AddSeparator()}Строка является пустой {(str is null ? "ссылкой" : "строкой")}");
+            return Checker;
+        }
+
+        /// <summary>Проверка, что ссылка на строку пуста, либо строка пуста</summary>
+        /// <param name="Checker">Объект проверки строкового значения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+        /// <returns>Исходный объект проверки строки</returns>
+        [NotNull]
+        public static ValueChecker<string> IsNullOrEmpty(this ValueChecker<string> Checker, string Message = null)
+        {
+            var str = Checker.ActualValue;
+            if (!string.IsNullOrEmpty(str))
+                throw new AssertFailedException($"{Message.AddSeparator()}Строка не пуста");
+            return Checker;
+        }
+
+        /// <summary>Проверка, что ссылка на строку не пуста и строка не является пустой, либо состоящей из пробелов</summary>
+        /// <param name="Checker">Объект проверки строкового значения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+        /// <returns>Исходный объект проверки строки</returns>
+        [NotNull]
+        public static ValueChecker<string> IsNotNullOrWhiteSpace(this ValueChecker<string> Checker, string Message = null)
+        {
+            var str = Checker.ActualValue;
+            if (string.IsNullOrWhiteSpace(str))
+                throw new AssertFailedException($"{Message.AddSeparator()}Строка является {(str is null ? "пустой ссылкой" : string.IsNullOrWhiteSpace(str) ? "строкой из пробелов" : "пустой строкой")}");
+            return Checker;
+        }
+
+        /// <summary>Проверка, что ссылка на строку пуста, либо строка пуста, либо строка состоит из пробелов</summary>
+        /// <param name="Checker">Объект проверки строкового значения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+        /// <returns>Исходный объект проверки строки</returns>
+        [NotNull]
+        public static ValueChecker<string> IsNullOrWhiteSpace(this ValueChecker<string> Checker, string Message = null)
+        {
+            var str = Checker.ActualValue;
+            if (!string.IsNullOrWhiteSpace(str))
+                throw new AssertFailedException($"{Message.AddSeparator()}Строка не пуста");
+            return Checker;
+        }
     }
 }
