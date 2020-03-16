@@ -241,6 +241,53 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Check(value, i++);
             return this;
         }
+
+        /// <summary>Объект проверки числа элементов</summary>
+        public ValueChecker<int> ItemsCount => new ValueChecker<int>(ActualValue.Count);
+
+        /// <summary>Проверка на соответствие размера коллекции ожидаемому значению</summary>
+        /// <param name="ExpectedCount">Ожидаемое значение размера коллекции</param>
+        /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+        /// <returns>Объект проверки коллекции</returns>
+        public CollectionChecker<T> IsItemsCount(int ExpectedCount, string Message = null)
+        {
+            var count = ActualValue.Count;
+            if(count != ExpectedCount)
+                throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {count} не совпадает с ожидаемым {ExpectedCount}");
+            return this;
+        }
+
+        /// <summary>Проверка - коллекция должна быть пуста</summary>
+        /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+        /// <returns>Объект проверки коллекции</returns>
+        public CollectionChecker<T> IsEmpty(string Message)
+        {
+            var count = ActualValue.Count;
+            if (count != 0)
+                throw new AssertFailedException($"{Message.AddSeparator()}Число элементов коллекции {count} не равно 0 - коллекция не пуста");
+            return this;
+        }
+
+        /// <summary>Проверка - коллекция должна быть не пуста</summary>
+        /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+        /// <returns>Объект проверки коллекции</returns>
+        public CollectionChecker<T> IsNotEmpty(string Message)
+        {
+            if (ActualValue.Count == 0)
+                throw new AssertFailedException($"{Message.AddSeparator()}Коллекция пуста");
+            return this;
+        }
+
+        /// <summary>Проверка - коллекция должна содержать один единственный элемент</summary>
+        /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+        /// <returns>Объект проверки коллекции</returns>
+        public CollectionChecker<T> IsSingleItem(string Message)
+        {
+            var count = ActualValue.Count;
+            if (count != 1)
+                throw new AssertFailedException($"{Message.AddSeparator()}Число элементов коллекции {count} не равно 1 - коллекция содержит не один единственный элемент");
+            return this;
+        }
     }
 
     /// <summary>Объект проверки коллекции</summary>

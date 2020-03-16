@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeSymbols>false</IncludeSymbols>
-    <Version>0.1.26</Version>
-    <PackageReleaseNotes>Обеспечение возможности проверки элементов коллекции</PackageReleaseNotes>
+    <Version>0.1.27</Version>
+    <PackageReleaseNotes>Расширение методов проверки коллекций на перечисления</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>
