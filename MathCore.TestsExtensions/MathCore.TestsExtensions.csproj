@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeSymbols>false</IncludeSymbols>
-    <Version>0.1.25</Version>
-    <PackageReleaseNotes>Проверка строк на пустоту</PackageReleaseNotes>
+    <Version>0.1.26</Version>
+    <PackageReleaseNotes>Обеспечение возможности проверки элементов коллекции</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
     <Authors>Shmachilin P.A.</Authors>
