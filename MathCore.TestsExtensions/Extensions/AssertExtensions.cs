@@ -81,6 +81,17 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         public static CollectionChecker<T> Collection<T>([NotNull] this Assert assert, ICollection<T> ActualCollection) => new CollectionChecker<T>(ActualCollection);
 
+        #endregion
+
+        #region Enumerable
+
+        /// <summary>Проверка коллекции</summary>
+        /// <typeparam name="T">Тип элементов коллекции</typeparam>
+        /// <param name="assert">Объект-помощник проверки</param>
+        /// <param name="ActualEnumerable">Проверяемая коллекция</param>
+        /// <returns>Объект проверки</returns>
+        [NotNull]
+        public static EnumerableChecker<T> Enumerable<T>([NotNull] this Assert assert, IEnumerable<T> ActualEnumerable) => new EnumerableChecker<T>(ActualEnumerable);
 
         #endregion
     }
