@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
@@ -56,5 +57,31 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <returns>Объект проверки исключения</returns>
         [NotNull]
         public static FunctionChecker<TValue, TResult> Method<TValue, TResult>([NotNull] this Assert that, TValue value, Func<TValue, TResult> function) => new FunctionChecker<TValue, TResult>(function, value);
+
+        #region Collection
+
+        /// <param name="assert">Объект-помощник проверки</param>
+        /// <param name="ActualCollection">Проверяемая коллекция</param>
+        /// <returns>Объект проверки</returns>
+        [NotNull]
+        public static DoubleCollectionChecker Collection([NotNull] this Assert assert, ICollection<double> ActualCollection) => new DoubleCollectionChecker(ActualCollection);
+
+        /// <summary>Проверка двумерного массива вещественных чисел</summary>
+        /// <param name="assert">Объект-помощник проверки</param>
+        /// <param name="ActualArray">Проверяемый двумерный массив</param>
+        /// <returns>Объект проверки</returns>
+        [NotNull]
+        public static DoubleDimensionArrayChecker Collection([NotNull] this Assert assert, double[,] ActualArray) => new DoubleDimensionArrayChecker(ActualArray);
+
+        /// <summary>Проверка коллекции</summary>
+        /// <typeparam name="T">Тип элементов коллекции</typeparam>
+        /// <param name="assert">Объект-помощник проверки</param>
+        /// <param name="ActualCollection">Проверяемая коллекция</param>
+        /// <returns>Объект проверки</returns>
+        [NotNull]
+        public static CollectionChecker<T> Collection<T>([NotNull] this Assert assert, ICollection<T> ActualCollection) => new CollectionChecker<T>(ActualCollection);
+
+
+        #endregion
     }
 }

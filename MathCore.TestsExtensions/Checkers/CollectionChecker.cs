@@ -220,6 +220,27 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 Check(new ValueChecker<T>(item), index++);
             return this;
         }
+
+        /// <summary>Выполнение проверки элементов коллекции</summary>
+        /// <param name="Check">Метод проверки элементов коллекции</param>
+        /// <returns>Исходный объект проверки коллекции</returns>
+        public CollectionChecker<T> Items(Action<ValueChecker<T>> Check)
+        {
+            foreach (var value in ActualValue.Select(value => new ValueChecker<T>(value)))
+                Check(value);
+            return this;
+        }
+
+        /// <summary>Выполнение проверки элементов коллекции</summary>
+        /// <param name="Check">Метод проверки элементов коллекции с учётом порядкового номера</param>
+        /// <returns>Исходный объект проверки коллекции</returns>
+        public CollectionChecker<T> Items(Action<ValueChecker<T>, int> Check)
+        {
+            var i = 0;
+            foreach (var value in ActualValue.Select(value => new ValueChecker<T>(value)))
+                Check(value, i++);
+            return this;
+        }
     }
 
     /// <summary>Объект проверки коллекции</summary>
