@@ -1,9 +1,1414 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <doc>
     <assembly>
         <name>MathCore.TestsExtensions</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DataTestMethodIterativeAttribute">
+            <summary>Итерационное выполнение теста на основе данных с заданием числа итераций для набора статистики</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DataTestMethodIterativeAttribute._IterationsCount">
+            <summary>Число итераций повторения теста</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DataTestMethodIterativeAttribute.StopAtFirstFail">
+            <summary>Остановить процесс выполнения теста при первом сбое</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DataTestMethodIterativeAttribute.#ctor(System.Int32)">
+            <summary>Инициализация итерационного теста на основе данных</summary>
+            <param name="IterationsCount">Число итераций</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DataTestMethodIterativeAttribute.Execute(Microsoft.VisualStudio.TestTools.UnitTesting.ITestMethod)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute">
+            <summary>Итерационный тестовый класс</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute._IterationsCount">
+            <summary>Число итераций</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.StopAtFirstFail">
+            <summary>Остановить процесс выполнения теста при первом сбое</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.#ctor(System.Int32)">
+            <summary>Инициализация итерационного теста</summary>
+            <param name="IterationsCount">Число итераций</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.GetTestMethodAttribute(Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute">
+            <summary>Итерационное выполнение теста с заданием числа итераций для набора статистики</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute._IterationsCount">
+            <summary>Число итераций повторения теста</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.StopAtFirstFail">
+            <summary>Остановить процесс выполнения теста при первом сбое</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.#ctor(System.Int32)">
+            <summary>Инициализация итерационного теста</summary>
+            <param name="IterationsCount">Число итераций</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.Execute(Microsoft.VisualStudio.TestTools.UnitTesting.ITestMethod)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker">
+            <summary>Объект проверки действия</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.Action">
+            <summary>Проверяемое действие</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.#ctor(System.Action)">
+            <summary>Инициализация нового объекта проверки действия</summary>
+            <param name="action">Проверяемое действие</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.Throw``1(System.String)">
+            <summary>Проверка, что метод вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1">
+            <summary>Объект проверки параметрического действия</summary>
+            <typeparam name="TValue">Тип параметра действия</typeparam>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Action">
+            <summary>Проверяемое действие</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Value">
+            <summary>Параметр действия</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.#ctor(System.Action{`0},`0)">
+            <summary>Инициализация нового объекта проверки действия</summary>
+            <param name="action">Проверяемое действие</param>
+            <param name="value">Параметр действия</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Throw``1(System.String)">
+            <summary>Проверка, что метод вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">Возникает в случае, если тестируемый метод не сгенерировал никакого исключения</exception>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1">
+            <summary>Объект проверки коллекции</summary>
+            <typeparam name="T">Тип элементов коллекции</typeparam>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.ActualValue">
+            <summary>Проверяемая коллекция</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.#ctor(System.Collections.Generic.ICollection{`0})">
+            <summary>Инициализация нового объекта проверки коллекции</summary>
+            <param name="ActualCollection">Проверяемая коллекция</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.EqualityComparer">
+            <summary>Метод сравнения значений элементов коллекции</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker{`0}.EqualityComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Comparer">Метод проверки элементов коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.EqualityPositionalComparer">
+            <summary>Метод сравнения значений элементов коллекции</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="Index">Индекс проверяемого элемента</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker{`0}.EqualityPositionalComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Comparer">Метод проверки элементов коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},System.Collections.Generic.IEqualityComparer{`0},System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Comparer">Объект проверки элементов коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Max(System.Func{`0,System.Double})">
+            <summary>Максимальное значение в коллекции</summary>
+            <param name="Selector">Метод оценки элемента коллекции</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Min(System.Func{`0,System.Double})">
+            <summary>Минимальное значение в коллекции</summary>
+            <param name="Selector">Метод оценки элемента коллекции</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Average(System.Func{`0,System.Double})">
+            <summary>Среднее значение в коллекции</summary>
+            <param name="Selector">Метод оценки элемента коллекции</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Contains(`0,System.String)">
+            <summary>Проверка, что коллекция содержит указанный элемент</summary>
+            <param name="item">Элемент, который должен быть найден в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Contains(System.Func{`0,System.Boolean},System.String)">
+            <summary>Проверка, что коллекция содержит элемент, удовлетворяющий указанному критерию</summary>
+            <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.NotContains(`0,System.String)">
+            <summary>Проверка, что указанного элемента нет в коллекции</summary>
+            <param name="item">Элемент, которого не должно быть в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.NotContains(System.Func{`0,System.Boolean},System.String)">
+            <summary>Проверка, что коллекция НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
+            <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.All(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
+            <summary>Выполнение проверки для всех элементов коллекции</summary>
+            <param name="Check">Метод проверки значения</param>
+            <returns>Исходный объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.All(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0},System.Int32})">
+            <summary>Выполнение проверки для всех элементов коллекции</summary>
+            <param name="Check">Позиционный метод проверки значения</param>
+            <returns>Исходный объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Items(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
+            <summary>Выполнение проверки элементов коллекции</summary>
+            <param name="Check">Метод проверки элементов коллекции</param>
+            <returns>Исходный объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Items(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0},System.Int32})">
+            <summary>Выполнение проверки элементов коллекции</summary>
+            <param name="Check">Метод проверки элементов коллекции с учётом порядкового номера</param>
+            <returns>Исходный объект проверки коллекции</returns>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.ItemsCount">
+            <summary>Объект проверки числа элементов</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsItemsCount(System.Int32,System.String)">
+            <summary>Проверка на соответствие размера коллекции ожидаемому значению</summary>
+            <param name="ExpectedCount">Ожидаемое значение размера коллекции</param>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEmpty(System.String)">
+            <summary>Проверка - коллекция должна быть пуста</summary>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsNotEmpty(System.String)">
+            <summary>Проверка - коллекция должна быть не пуста</summary>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsSingleItem(System.String)">
+            <summary>Проверка - коллекция должна содержать один единственный элемент</summary>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки коллекции</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker">
+            <summary>Объект проверки коллекции</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker._ActualCollection">
+            <summary>Проверяемая коллекция</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.#ctor(System.Collections.ICollection)">
+            <summary>Инициализация нового объекта проверки коллекции</summary>
+            <param name="ActualCollection">Проверяемая коллекция</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityComparer">
+            <summary>Метод сравнения значений элементов коллекции</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Comparer">Метод сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityPositionalComparer">
+            <summary>Метод сравнения значений элементов коллекции</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="Index">Индекс проверяемого элемента</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityPositionalComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Comparer">Метод сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,System.Collections.IEqualityComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Comparer">Объект сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.Max(System.Func{System.Object,System.Double})">
+            <summary>Минимальное значение в коллекции</summary>
+            <param name="Selector">Метод оценки элемента коллекции</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.Min(System.Func{System.Object,System.Double})">
+            <summary>Минимальное значение в коллекции</summary>
+            <param name="Selector">Метод оценки элемента коллекции</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.Average(System.Func{System.Object,System.Double})">
+            <summary>Среднее значение в коллекции</summary>
+            <param name="Selector">Метод оценки элемента коллекции</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker">
+            <summary>Объект проверки коллекций вещественных чисел</summary>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy">
+            <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy._ActualValues">
+            <summary>Проверяемая коллекция значение</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy._ExpectedValues">
+            <summary>Значения, с которыми требуется провести сравнение</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy._Not">
+            <summary>Проверка на неравенство</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy.#ctor(System.Collections.Generic.ICollection{System.Double},System.Double[],System.Boolean)">
+            <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
+            <param name="ActualValues">Проверяемая коллекция</param>
+            <param name="ExpectedValues">Требуемые значения</param>
+            <param name="Not">Проверять на неравенство</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy.WithAccuracy(System.Double,System.String)">
+            <summary>Проверка с задаваемой точностью</summary>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker._ActualCollection">
+            <summary>Проверяемая коллекция</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.#ctor(System.Collections.Generic.ICollection{System.Double})">
+            <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
+            <param name="ActualCollection"></param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreEqualTo(System.Double[])">
+            <summary>Проверка значений коллекции на равенство</summary>
+            <param name="ExpectedValues">Ожидаемые значения</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreNotEqualTo(System.Double[])">
+            <summary>Проверка значений коллекции на равенство</summary>
+            <param name="ExpectedValues">Ожидаемые значения</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreEqual(System.Double[])">
+            <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
+            <param name="ExpectedValues">Ожидаемые значения коллекции</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreEqual(System.String,System.Double[])">
+            <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+            <param name="ExpectedValues">Ожидаемые значения коллекции</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.IsEqualTo(System.Collections.Generic.ICollection{System.Double},System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.IsEqualTo(System.Collections.Generic.ICollection{System.Double},System.Double,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreEqualTo(System.Double,System.String)">
+            <summary>Все элементы коллекции равны заданному значению</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreEqualTo(System.Double,System.Double,System.String)">
+            <summary>Все элементы коллекции равны заданному значению</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Accuracy"></param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementChecker">
+            <summary>Критерий проверки элементов коллекции</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Истина, если элемент соответствует критерию проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementChecker,System.String)">
+            <summary>Все элементы коллекции удовлетворяют условию</summary>
+            <param name="Condition">Условие проверки всех элементов</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.PositionElementChecker">
+            <summary>Позиционный критерий проверки элементов коллекции</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="ItemIndex">Индекс проверяемого элемента в коллекции</param>
+            <returns>Истина, если элемент соответствует критерию проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.PositionElementChecker,System.String)">
+            <summary>Все элементы коллекции удовлетворяют условию</summary>
+            <param name="Condition">Условие проверки всех элементов</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.Max">
+            <summary>Максимальное значение в коллекции</summary>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.Min">
+            <summary>Минимальное значение в коллекции</summary>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.Average">
+            <summary>Среднее значение в коллекции</summary>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy">
+            <summary>Объект сравнения чисел с заданной точностью</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy._ActualValue">
+            <summary>Проверяемое значение</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy._ExpectedValue">
+            <summary>Ожидаемое значение</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy._IsEquals">
+            <summary>Проверка на равенство</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy._IsLessChecking">
+            <summary>Проверка - меньше</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy._IsChecked">
+            <summary>Проверка выполнена</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy.#ctor(System.Double,System.Double,System.Boolean,System.Boolean)">
+            <summary>Инициализация объекта сравнения</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="IsEquals">Проверять на равенство</param>
+            <param name="IsLessChecking">Проверка - на "меньше"</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCompareCheckerWithAccuracy.WithAccuracy(System.Double,System.String)">
+            <summary>Сравнение с задаваемой точностью</summary>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker">
+            <summary>Объект проверки двумерного массива вещественных чисел</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ActualValue">
+            <summary>Проверяемый массив</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.#ctor(System.Double[0:,0:])">
+            <summary>Инициализация нового объекта проверки</summary>
+            <param name="ActualArray">Проверяемый массив</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.IsEqualTo(System.Double[0:,0:],System.String)">
+            <summary>По размеру и поэлементно массив эквивалентен ожидаемому массиву</summary>
+            <param name="ExpectedArray">Ожидаемая коллекция значений</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.IsEqualTo(System.Double[0:,0:],System.Double,System.String)">
+            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+            <param name="ExpectedArray">Ожидаемая коллекция значений</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreEqualTo(System.Double,System.String)">
+            <summary>Все элементы массива равны ожидаемому значению</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreEqualTo(System.Double,System.Double,System.String)">
+            <summary>Все элементы массива равны ожидаемому значению</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementChecker">
+            <summary>Критерий проверки элементов коллекции</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Истина, если элемент соответствует критерию проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementChecker,System.String)">
+            <summary>Все элементы коллекции удовлетворяют условию</summary>
+            <param name="Condition">Условие проверки всех элементов</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.PositionElementChecker">
+            <summary>Позиционный критерий проверки элементов коллекции</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="i">Индекс строки</param>
+            <param name="j">Индекс столбца</param>
+            <returns>Истина, если элемент соответствует критерию проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.PositionElementChecker,System.String)">
+            <summary>Все элементы коллекции удовлетворяют условию</summary>
+            <param name="Condition">Условие проверки всех элементов</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy">
+            <summary>Объект проверки равенства чисел с заданной точностью</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy._ActualValue">
+            <summary>Проверяемое значение</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy._ExpectedValue">
+            <summary>Значение, с которым требуется провести сравнение</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy._Not">
+            <summary>Проверка на неравенство</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy._IsChecked">
+            <summary>Проверка выполнена</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy.#ctor(System.Double,System.Double,System.Boolean)">
+            <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="ExpectedValue">Требуемое значение</param>
+            <param name="Not">Проверять на неравенство</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleEqualityCheckerWithAccuracy.WithAccuracy(System.Double,System.String)">
+            <summary>Проверка с задаваемой точностью</summary>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker">
+            <summary>Объект проверки равенства/неравенства чисел с плавающей запятой двойной точности</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.#ctor(System.Double)">
+            <summary>Инициализация нового объекта сравнения чисел с плавающей запятой</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsEqual(System.Double,System.String)">
+            <summary>Сравнение с ожидаемым значением</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsNotEqual(System.Double,System.String)">
+            <summary>Проверка на неравенство</summary>
+            <param name="ExpectedValue">Не ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1">
+            <summary>Объект проверки перечисления</summary>
+            <typeparam name="T">Тип элементов перечисления</typeparam>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.ActualValue">
+            <summary>Проверяемое перечисление</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Инициализация нового объекта проверки перечисления</summary>
+            <param name="ActualEnumerable">Проверяемое перечисление</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsEqualTo(System.Collections.Generic.IEnumerable{`0},System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.EqualityComparer">
+            <summary>Метод сравнения значений элементов перечисления</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsEqualTo(System.Collections.Generic.IEnumerable{`0},Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker{`0}.EqualityComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Comparer">Метод проверки элементов перечисления</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.EqualityPositionalComparer">
+            <summary>Метод сравнения значений элементов перечисления</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="Index">Индекс проверяемого элемента</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsEqualTo(System.Collections.Generic.IEnumerable{`0},Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker{`0}.EqualityPositionalComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Comparer">Метод проверки элементов перечисления</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsEqualTo(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEqualityComparer{`0},System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Comparer">Объект проверки элементов перечисления</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Max(System.Func{`0,System.Double})">
+            <summary>Максимальное значение в перечислении</summary>
+            <param name="Selector">Метод оценки элемента перечисления</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Min(System.Func{`0,System.Double})">
+            <summary>Минимальное значение в перечислении</summary>
+            <param name="Selector">Метод оценки элемента перечисления</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Average(System.Func{`0,System.Double})">
+            <summary>Среднее значение в перечислении</summary>
+            <param name="Selector">Метод оценки элемента перечисления</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Contains(`0,System.String)">
+            <summary>Проверка, что перечисление содержит указанный элемент</summary>
+            <param name="item">Элемент, который должен быть найден в перечислении</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Contains(System.Func{`0,System.Boolean},System.String)">
+            <summary>Проверка, что перечисление содержит элемент, удовлетворяющий указанному критерию</summary>
+            <param name="Predicate">Критерий проверки наличия элемента в перечислении</param>
+            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.NotContains(`0,System.String)">
+            <summary>Проверка, что указанного элемента нет в перечислении</summary>
+            <param name="item">Элемент, которого не должно быть в перечислении</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.NotContains(System.Func{`0,System.Boolean},System.String)">
+            <summary>Проверка, что перечисление НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
+            <param name="Predicate">Критерий проверки наличия элемента в перечислении</param>
+            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.All(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
+            <summary>Выполнение проверки для всех элементов перечисления</summary>
+            <param name="Check">Метод проверки значения</param>
+            <returns>Исходный объект проверки перечисления</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.All(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0},System.Int32})">
+            <summary>Выполнение проверки для всех элементов перечисления</summary>
+            <param name="Check">Позиционный метод проверки значения</param>
+            <returns>Исходный объект проверки перечисления</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Items(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
+            <summary>Выполнение проверки элементов перечисления</summary>
+            <param name="Check">Метод проверки элементов перечисления</param>
+            <returns>Исходный объект проверки перечисления</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.Items(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0},System.Int32})">
+            <summary>Выполнение проверки элементов перечисления</summary>
+            <param name="Check">Метод проверки элементов перечисления с учётом порядкового номера</param>
+            <returns>Исходный объект проверки перечисления</returns>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.ItemsCount">
+            <summary>Объект проверки числа элементов</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsItemsCount(System.Int32,System.String)">
+            <summary>Проверка на соответствие размера перечисления ожидаемому значению</summary>
+            <param name="ExpectedCount">Ожидаемое значение размера перечисления</param>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки перечисления</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsEmpty(System.String)">
+            <summary>Проверка - перечисление должна быть пуста</summary>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки перечисления</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsNotEmpty(System.String)">
+            <summary>Проверка - перечисление должна быть не пуста</summary>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки перечисления</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker`1.IsSingleItem(System.String)">
+            <summary>Проверка - перечисление должна содержать один единственный элемент</summary>
+            <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
+            <returns>Объект проверки перечисления</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker">
+            <summary>Объект проверки перечисления</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker._ActualEnumerable">
+            <summary>Проверяемое перечисление</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.#ctor(System.Collections.IEnumerable)">
+            <summary>Инициализация нового объекта проверки перечисления</summary>
+            <param name="ActualEnumerable">Проверяемое перечисление</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.IsEqualTo(System.Collections.IEnumerable,System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.EqualityComparer">
+            <summary>Метод сравнения значений элементов перечисления</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.IsEqualTo(System.Collections.IEnumerable,Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.EqualityComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Comparer">Метод сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.EqualityPositionalComparer">
+            <summary>Метод сравнения значений элементов перечисления</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="Index">Индекс проверяемого элемента</param>
+            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.IsEqualTo(System.Collections.IEnumerable,Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.EqualityPositionalComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Comparer">Метод сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.IsEqualTo(System.Collections.IEnumerable,System.Collections.IEqualityComparer,System.String)">
+            <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+            <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+            <param name="Comparer">Объект сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.Max(System.Func{System.Object,System.Double})">
+            <summary>Минимальное значение в перечислении</summary>
+            <param name="Selector">Метод оценки элемента перечисления</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.Min(System.Func{System.Object,System.Double})">
+            <summary>Минимальное значение в перечислении</summary>
+            <param name="Selector">Метод оценки элемента перечисления</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.EnumerableChecker.Average(System.Func{System.Object,System.Double})">
+            <summary>Среднее значение в перечислении</summary>
+            <param name="Selector">Метод оценки элемента перечисления</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1">
+            <summary>Объект проверки функции</summary>
+            <typeparam name="TResult">Тип значения функции</typeparam>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.Function">
+            <summary>Проверяемая функция</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.#ctor(System.Func{`0})">
+            <summary>Инициализация нового объекта проверки функции</summary>
+            <param name="function">Проверяемое действие</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.Throw``1(System.String)">
+            <summary>Проверка, что функция вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2">
+            <summary>Объект проверки параметрической функции</summary>
+            <typeparam name="TValue">Тип параметра функции</typeparam>
+            <typeparam name="TResult">Тип значения функции</typeparam>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Function">
+            <summary>Проверяемая функция</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Value">
+            <summary>Параметр функции</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.#ctor(System.Func{`0,`1},`0)">
+            <summary>Инициализация нового объекта проверки функции</summary>
+            <param name="function">Проверяемая функция</param>
+            <param name="value">Параметр функции</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Throw``1(System.String)">
+            <summary>Проверка, что функция вызывает исключение указанного типа</summary>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <typeparam name="TException">Тип генерируемого исключения</typeparam>
+            <returns>Объект проверки исключения</returns>
+            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">Возникает в случае, если тестируемая функция не сгенерировала исключения</exception>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.NestedCollectionValueChecker`2">
+            <summary>Объект проверки дочернего значения коллекции</summary>
+            <typeparam name="TValue">Тип элементов дочерней коллекции</typeparam>
+            <typeparam name="TBaseValue">Тип базового значения</typeparam>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.NestedCollectionValueChecker`2._BaseChecker">
+            <summary>Базовый объект проверки значения</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedCollectionValueChecker`2.#ctor(System.Collections.Generic.ICollection{`0},Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`1})">
+            <summary>Инициализация нового объекта проверки дочернего значения коллекции</summary>
+            <param name="ActualCollection">Проверяемое значение коллекции</param>
+            <param name="BaseChecker">Базовый объект проверки значения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedCollectionValueChecker`2.Check(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker{`0}})">
+            <summary>Проверка дочернего значения коллекции</summary>
+            <param name="Checker">Метод проверки дочернего значения коллекции</param>
+            <returns>Объект проверки базового значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2">
+            <summary>Объект проверки дочернего значения</summary>
+            <typeparam name="TValue">Тип дочернего значения</typeparam>
+            <typeparam name="TBaseValue">Тип базового значения</typeparam>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2._BaseChecker">
+            <summary>Базовый объект проверки значения</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`1})">
+            <summary>Инициализация нового объекта проверки вложенного значения</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="BaseChecker">Базовый объект проверки значения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2.Check(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
+            <summary>Проверка дочернего значения</summary>
+            <param name="Checker">Метод проверки дочернего значения</param>
+            <returns>Объект проверки базового значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1">
+            <summary>Объект проверки значения</summary>
+            <typeparam name="T">Тип проверяемого значения</typeparam>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.ActualValue">
+            <summary>Проверяемое значение</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.And">
+            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.#ctor(`0)">
+            <summary>Инициализация нового объекта проверки значения</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsEqual(`0,System.String)">
+            <summary>Проверка значения на эквивалентность ожидаемому</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsEqual(`0,System.Collections.Generic.IEqualityComparer{`0},System.String)">
+            <summary>Проверка значение на эквивалентность ожидаемому</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Comparer">Объект сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.EqualityComparer">
+            <summary>Метод сравнения значений</summary>
+            <param name="ActualValue">Проверяемое значение</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Истина, если проверяемое и ожидаемое значения равны</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsEqual(`0,Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}.EqualityComparer,System.String)">
+            <summary>Проверка значение на эквивалентность ожидаемому</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Comparer">Метод сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsReferenceEquals(`0,System.String)">
+            <summary>Проверка значения на идентичность ожидаемому (при сравнении ссылок)</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNotEqual(`0,System.String)">
+            <summary>Проверка значения на не эквивалентность ожидаемому</summary>
+            <param name="ExpectedValue">Не ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNotReferenceEquals(`0,System.String)">
+            <summary>Проверка значения на не идентичность ожидаемому (при сравнении ссылок)</summary>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNull(System.String)">
+            <summary>Ссылка на значение должна быть пустой</summary>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNotNull(System.String)">
+            <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+            <returns>Значение, гарантированно не являющееся пустой ссылкой</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.AsNotNull(System.String)">
+            <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+            <returns>Исходный объект проверки значений</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Is(System.Type,System.String)">
+            <summary>Значение является значением указанного типа</summary>
+            <param name="ExpectedType">Ожидаемый тип значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <returns>Текущий объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Is``1(System.String)">
+            <summary>Значение является значением указанного типа</summary>
+            <typeparam name="TExpectedType">Ожидаемый тип значения</typeparam>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <returns>Текущий объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.As``1(System.String)">
+            <summary>Объект является объектом более специфичного типа</summary>
+            <typeparam name="TExpectedType">Тип наследника</typeparam>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <returns>Объект проверки типа наследника</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.As``2(System.Func{``0,``1},System.String)">
+            <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
+            <typeparam name="TExpectedType">Тип наследника</typeparam>
+            <typeparam name="TValue">Тип значения</typeparam>
+            <param name="Selector">Метод определения значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <returns>Объект проверки производного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Where``1(System.Func{`0,``0})">
+            <summary>Проверка вложенного значения</summary>
+            <typeparam name="TValue">Тип вложенного значения</typeparam>
+            <param name="Selector">Метод определения вложенного значения</param>
+            <returns>Объект проверки вложенного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Where``1(System.Func{`0,``0},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0}})">
+            <summary>Проверка вложенного значения</summary>
+            <typeparam name="TValue">Тип вложенного значения</typeparam>
+            <param name="Selector">Метод определения вложенного значения</param>
+            <param name="Checker">Метод проверки вложенного значения</param>
+            <returns>Объект проверки текущего значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.WhereItems``1(System.Func{`0,System.Collections.Generic.ICollection{``0}})">
+            <summary>Проверка вложенного значения</summary>
+            <typeparam name="TItem">Тип элементов коллекции</typeparam>
+            <param name="Selector">Метод определения вложенного значения</param>
+            <returns>Объект проверки вложенного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.WhereItems``1(System.Func{`0,System.Collections.Generic.ICollection{``0}},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker{``0}})">
+            <summary>Проверка вложенной коллекции элементов</summary>
+            <param name="Selector">Метод выбора вложенных элементов</param>
+            <param name="Checker">Метод проверки</param>
+            <typeparam name="TItem">Тип элементов коллекции</typeparam>
+            <returns>Исходный объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.AssertThat(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
+            <summary>Набор проверок</summary>
+            <param name="Checker">Метод проведения проверок</param>
+            <returns>Исходный объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.WhereAll``1(System.Func{`0,System.Collections.Generic.IEnumerable{``0}},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0}})">
+            <summary>Проверка вложенной коллекции</summary>
+            <param name="Selector">Метод определения вложенной коллекции</param>
+            <param name="Checker">Метод проверки вложенной коллекции</param>
+            <typeparam name="TItem">Тип элементов вложенной коллекции</typeparam>
+            <returns>Исходный объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.WhereAll``1(System.Func{`0,System.Collections.Generic.IEnumerable{``0}},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0},System.Int32})">
+            <summary>Проверка вложенной коллекции</summary>
+            <param name="Selector">Позиционный метод определения вложенной коллекции</param>
+            <param name="Checker">Метод проверки вложенной коллекции</param>
+            <typeparam name="TItem">Тип элементов вложенной коллекции</typeparam>
+            <returns>Исходный объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Method(System.Action{`0})">
+            <summary>Проверка действия над значением</summary>
+            <param name="action">Действие, выполняемое над значением</param>
+            <returns>Объект проверки действия</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Method``1(System.Func{`0,``0})">
+            <summary>Проверка функции над значением</summary>
+            <param name="function">Функция, выполняемая над значением</param>
+            <returns>Объект проверки функции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.op_Implicit(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0})~`0">
+            <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
+            <param name="Checker">Объект проверки</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions">
+            <summary>Класс методов-расширений для объекта-помощника проверки <see cref="P:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.That"/></summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,``0)">
+            <summary>Проверка значения</summary>
+            <typeparam name="T">ТИп проверяемого значения</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Double)">
+            <summary>Проверка вещественного значения</summary>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="ActualValue">Проверяемое значение</param>
+            <returns>Объект проверки вещественных значений</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Action)">
+            <summary>Проверка действия</summary>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="action">Проверяемое действие</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,``0,System.Action{``0})">
+            <summary>Проверка действия</summary>
+            <typeparam name="TValue">Тип параметра действия</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="value">Параметр</param>
+            <param name="action">Проверяемое действие</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Func{``0})">
+            <summary>Проверка функции</summary>
+            <typeparam name="TResult">Тип результата функции</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="function">Проверяемая функция</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``2(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,``0,System.Func{``0,``1})">
+            <summary>Проверка функции</summary>
+            <typeparam name="TResult">Тип результата функции</typeparam>
+            <typeparam name="TValue">Тип параметра функции</typeparam>
+            <param name="that">Объект-помощник проверки</param>
+            <param name="value">Значение, передаваемое в функцию</param>
+            <param name="function">Проверяемая функция</param>
+            <returns>Объект проверки исключения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Collection(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Collections.Generic.ICollection{System.Double})">
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualCollection">Проверяемая коллекция</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Collection(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Double[0:,0:])">
+            <summary>Проверка двумерного массива вещественных чисел</summary>
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualArray">Проверяемый двумерный массив</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Collection``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Collections.Generic.ICollection{``0})">
+            <summary>Проверка коллекции</summary>
+            <typeparam name="T">Тип элементов коллекции</typeparam>
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualCollection">Проверяемая коллекция</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Enumerable``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Collections.Generic.IEnumerable{``0})">
+            <summary>Проверка коллекции</summary>
+            <typeparam name="T">Тип элементов коллекции</typeparam>
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualEnumerable">Проверяемая коллекция</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions">
+            <summary>Методы-расширения для объекта-помощника проверки <see cref="P:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.That"/></summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions.Collection(Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert,System.Collections.Generic.ICollection{System.Double})">
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualCollection">Проверяемая коллекция</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions.Collection(Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert,System.Double[0:,0:])">
+            <summary>Проверка двумерного массива вещественных чисел</summary>
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualArray">Проверяемый двумерный массив</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions.Collection``1(Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert,System.Collections.Generic.ICollection{``0})">
+            <summary>Проверка коллекции</summary>
+            <typeparam name="T">Тип элементов коллекции</typeparam>
+            <param name="assert">Объект-помощник проверки</param>
+            <param name="ActualCollection">Проверяемая коллекция</param>
+            <returns>Объект проверки</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssertExtensions">
+            <summary>Методы-расширения для объекта проверки строк</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert,System.String)">
+            <summary>Проверка строки</summary>
+            <param name="that">Объект проверки</param>
+            <param name="ActualValue">Проверяемая строка</param>
+            <returns>Объект проверки строк</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerBoolExtensions">
+            <summary>Методы-расширения для объекта проверки логических значений</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerBoolExtensions.IsTrue(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.String)">
+            <summary>Проверка значения на истинность</summary>
+            <param name="Checker">Объект проверки логического значения</param>
+            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
+            <returns>Исходный объект проверки логического значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerBoolExtensions.IsFalse(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.String)">
+            <summary>Проверка значения на ложно</summary>
+            <param name="Checker">Объект проверки логического значения</param>
+            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
+            <returns>Исходный объект проверки логического значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerBoolExtensions.Is(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.Boolean,System.String)">
+            <summary>Проверка значения на ложно</summary>
+            <param name="Checker">Объект проверки логического значения</param>
+            <param name="Value">Значение для проверки</param>
+            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
+            <returns>Исходный объект проверки логического значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions">
+            <summary>Методы-расширения для объекта проверки вещественных значений</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.IsEqualTo(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double)">
+            <summary>Проверка значения на равенство</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.IsNotEqualTo(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double)">
+            <summary>Проверка значения на неравенство</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.IsEqual(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.Double,System.String)">
+            <summary>Сравнение с ожидаемым значением с задаваемой точностью</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Accuracy">Точность</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.IsNotEqual(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.Double,System.String)">
+            <summary>Проверка на неравенство</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Не ожидаемое значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки вещественного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.GreaterThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.String)">
+            <summary>Проверка, что значение больше заданного</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.GreaterOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.String)">
+            <summary>Проверка, что значение больше, либо равно заданному</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.GreaterOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.Double,System.String)">
+            <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.LessThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.String)">
+            <summary>Проверка, что значение меньше заданного</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.LessOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.String)">
+            <summary>Проверка, что значение меньше, либо равно заданному</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.LessOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double,System.Double,System.String)">
+            <summary>Проверка, что значение меньше, либо равно заданному</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.Greater(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double)">
+            <summary>Значение больше (строго), чем указанное с задаваемой точностью</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.GreaterOrEqual(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double)">
+            <summary>Значение больше, чем указанное с задаваемой точностью</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.Less(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double)">
+            <summary>Значение меньше (строго), чем указанное с задаваемой точностью</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.LessOrEqual(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.Double)">
+            <summary>Значение меньше, чем указанное с задаваемой точностью</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <returns>Объект сравнения с задаваемой точностью</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.IsNotNaN(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.String)">
+            <summary>Проверить, что значение не является не-числом</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerDoubleExtensions.IsNaN(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Double},System.String)">
+            <summary>Проверить, что значение является не-числом</summary>
+            <param name="Checker">Объект проверки вещественного значения</param>
+            <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions">
+            <summary>Методы-расширения для объекта проверки значения</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Are``2(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0})">
+            <summary>Проверка значения как коллекции элементов</summary>
+            <param name="Checker">Объект проверки одиночного значения</param>
+            <typeparam name="T">Тип проверяемого значения, которое является коллекцией объектов типа <typeparamref name="TItem"/></typeparam>
+            <typeparam name="TItem">Тип элементов проверяемой коллекции</typeparam>
+            <returns>Объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Items``2(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``1},System.Int32})">
+            <summary>Выполнение проверки элементов коллекции</summary>
+            <param name="Checker">Объект проверки одиночного значения</param>
+            <param name="Check">Метод проверки элементов коллекции с учётом порядкового номера</param>
+            <returns>Исходный объект проверки коллекции</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Items``2(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``1}})">
+            <summary>Выполнение проверки элементов коллекции</summary>
+            <param name="Checker">Объект проверки одиночного значения</param>
+            <param name="Check">Метод проверки элементов коллекции</param>
+            <returns>Исходный объект проверки коллекции</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions">
+            <summary>Методы-расширения для объекта проверки целочисленных значений</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.IsEqual(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.Int32,System.String)">
+            <summary>Проверка, что проверяемое значение равно ожидаемому с заданной точностью</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.IsNotEqual(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.Int32,System.String)">
+            <summary>Проверка, что проверяемое значение не равно ожидаемому с заданной точностью</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Ожидаемое значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае неудачи</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.GreaterThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.String)">
+            <summary>Проверка, что значение больше заданного</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.GreaterOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.String)">
+            <summary>Проверка, что значение больше, либо равно заданному</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.GreaterOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.Int32,System.String)">
+            <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.LessThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.String)">
+            <summary>Проверка, что значение меньше заданного</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.LessOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.String)">
+            <summary>Проверка, что значение меньше, либо равно заданному</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.LessOrEqualsThan(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.Int32,System.Int32,System.String)">
+            <summary>Проверка, что значение меньше, либо равно заданному</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="ExpectedValue">Опорное значение</param>
+            <param name="Accuracy">Точность сравнения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.IsEven(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.String)">
+            <summary>Проверка - является ли число чётным?</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerIntExtensions.IsOdd(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Int32},System.String)">
+            <summary>Проверка - является ли число нечётным?</summary>
+            <param name="Checker">Объект проверки целочисленного значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки</param>
+            <returns>Объект проверки целочисленного значения</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions">
+            <summary>Методы-расширения для объекта проверки строковых значений</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.StartWith(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка начинается с указанного префикса</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedPrefix">Ожидаемый префикс</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.EndWith(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка заканчивается указанной подстрокой</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedSuffix">Ожидаемое окончание</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.Contains(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка содержит ожидаемую подстроку</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedSubstring">Ожидаемая подстрока</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.Matches(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Ожидаемое регулярное выражение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.Matches(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.Text.RegularExpressions.Regex,System.String)">
+            <summary>Проверка, что строка соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Ожидаемое регулярное выражение</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.DoesNotMatch(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
+            <summary>Проверка, что строка НЕ соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Регулярное выражение, которому не должна соответствовать строка</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.DoesNotMatch(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.Text.RegularExpressions.Regex,System.String)">
+            <summary>Проверка, что строка НЕ соответствует указанному регулярному выражению</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="ExpectedRegEx">Регулярное выражение, которому не должна соответствовать строка</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.IsNotNullOrEmpty(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String)">
+            <summary>Проверка, что ссылка на строку не пуста и строка не является пустой</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.IsNullOrEmpty(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String)">
+            <summary>Проверка, что ссылка на строку пуста, либо строка пуста</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.IsNotNullOrWhiteSpace(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String)">
+            <summary>Проверка, что ссылка на строку не пуста и строка не является пустой, либо состоящей из пробелов</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerStringExtensions.IsNullOrWhiteSpace(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String)">
+            <summary>Проверка, что ссылка на строку пуста, либо строка пуста, либо строка состоит из пробелов</summary>
+            <param name="Checker">Объект проверки строкового значения</param>
+            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
+            <returns>Исходный объект проверки строки</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.Service">
+            <summary>Сервисные методы</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.Service.AddSeparator(System.String,System.String)">
+            <summary>Добавить разделитель к сообщению в конце в случае наличия сообщения</summary>
+            <param name="Str">Строка сообщения</param>
+            <param name="Separator">Разделитель</param>
+            <returns>Доработанная строка сообщения</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.Service.CheckSeparator(System.String@,System.String)">
+            <summary>Проверить строку сообщения на предмет наличия в ней разделителя в конце и добавить разделитель в случае его отсутствия</summary>
+            <param name="Str">Проверяемая строка сообщения</param>
+            <param name="Separator">Разделитель сообщения</param>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest">
+            <summary>Базовый класс модульного теста</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest._RndGenerator">
+            <summary>Генератор случайных чисел</summary>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDInt(System.Int32,System.Int32)">
+            <summary>Целое случайное число из указанного диапазона с равномерным распределением</summary>
+            <param name="Min">Минимальная граница диапазона (входит)</param>
+            <param name="Max">Максимальная граница диапазона (не входит)</param>
+            <returns>Случайное целое число</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDDouble(System.Double,System.Double)">
+            <summary>Случайное вещественное число с равномерным распределением в указанном диапазоне</summary>
+            <param name="Min">Нижняя граница диапазона</param>
+            <param name="Max">Верхняя граница диапазона</param>
+            <returns>Случайное число с равномерным распределением в указанном диапазоне</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDDoubleArray(System.Int32,System.Double,System.Double)">
+            <summary>Получить массив случайных чисел с равномерным распределением</summary>
+            <param name="Count">Размер массива</param>
+            <param name="Min">Нижняя граница интервала</param>
+            <param name="Max">Верхняя граница интервала</param>
+            <returns>Массив случайных чисел в заданном интервале</returns>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDIntArray(System.Int32,System.Int32,System.Int32)">
+            <summary>Получить массив случайных чисел с равномерным распределением</summary>
+            <param name="Count">Размер массива</param>
+            <param name="Min">Нижняя граница интервала (входит)</param>
+            <param name="Max">Верхняя граница интервала (не входи)</param>
+            <returns>Массив целых случайных чисел</returns>
+        </member>
+        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer">
+            <summary>Объект сравнения вещественных чисел с указанной точностью</summary>
+        </member>
+        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer._Tolerance">
+            <summary>Точность сравнения</summary>
+        </member>
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer.Tolerance">
+            <summary>Точность сравнения</summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">Если значение точности меньше нуля</exception>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer.#ctor(System.Double)">
+            <summary>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</summary>
+            <param name="Tolerance">Точность сравнения</param>
+        </member>
+        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetComparer(System.Double)">
+            <summary>Получить объект для сравнения вещественных чисел с заданной точностью</summary>
+            <param name="Tolerance">Точность сравнения чисел</param>
+            <returns>Объект сравнения чисел с заданной точностью</returns>
+        </member>
         <member name="T:MathCore.Tests.Annotations.CanBeNullAttribute">
             <summary>
             Indicates that the value of the marked element could be <c>null</c> sometimes,
@@ -284,1017 +1689,6 @@
         </member>
         <member name="T:MathCore.Tests.Annotations.RegexPatternAttribute">
             <summary>Является регулярным выражением</summary>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute">
-            <summary>Итерационный тестовый класс</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute._IterationsCount">
-            <summary>Число итераций</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.StopAtFirstFail">
-            <summary>Остановить процесс выполнения теста при первом сбое</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.#ctor(System.Int32)">
-            <summary>Инициализация итерационного теста</summary>
-            <param name="IterationsCount">Число итераций</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestClassIterativeAttribute.GetTestMethodAttribute(Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute)">
-            <inheritdoc />
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute">
-            <summary>Итерационное выполнение теста с заданием числа итераций для набора статистики</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute._IterationsCount">
-            <summary>Число итераций повторения теста</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.StopAtFirstFail">
-            <summary>Остановить процесс выполнения теста при первом сбое</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.#ctor(System.Int32)">
-            <summary>Инициализация итерационного теста</summary>
-            <param name="IterationsCount">Число итераций</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodIterativeAttribute.Execute(Microsoft.VisualStudio.TestTools.UnitTesting.ITestMethod)">
-            <inheritdoc />
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker">
-            <summary>Объект проверки действия</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.Action">
-            <summary>Проверяемое действие</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.#ctor(System.Action)">
-            <summary>Инициализация нового объекта проверки действия</summary>
-            <param name="action">Проверяемое действие</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker.Throw``1(System.String)">
-            <summary>Проверка, что метод вызывает исключение указанного типа</summary>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <typeparam name="TException">Тип генерируемого исключения</typeparam>
-            <returns>Объект проверки исключения</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1">
-            <summary>Объект проверки параметрического действия</summary>
-            <typeparam name="TValue">Тип параметра действия</typeparam>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Action">
-            <summary>Проверяемое действие</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Value">
-            <summary>Параметр действия</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.#ctor(System.Action{`0},`0)">
-            <summary>Инициализация нового объекта проверки действия</summary>
-            <param name="action">Проверяемое действие</param>
-            <param name="value">Параметр действия</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ActionChecker`1.Throw``1(System.String)">
-            <summary>Проверка, что метод вызывает исключение указанного типа</summary>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <typeparam name="TException">Тип генерируемого исключения</typeparam>
-            <returns>Объект проверки исключения</returns>
-            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">Возникает в случае, если тестируемый метод не сгенерировал никакого исключения</exception>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1">
-            <summary>Объект проверки коллекции</summary>
-            <typeparam name="T">Тип элементов коллекции</typeparam>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.ActualValue">
-            <summary>Проверяемая коллекция</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.#ctor(System.Collections.Generic.ICollection{`0})">
-            <summary>Инициализация нового объекта проверки коллекции</summary>
-            <param name="ActualCollection">Проверяемая коллекция</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.EqualityComparer">
-            <summary>Метод сравнения значений элементов коллекции</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker{`0}.EqualityComparer,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Comparer">Метод проверки элементов коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.EqualityPositionalComparer">
-            <summary>Метод сравнения значений элементов коллекции</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="Index">Индекс проверяемого элемента</param>
-            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker{`0}.EqualityPositionalComparer,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Comparer">Метод проверки элементов коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.IsEqualTo(System.Collections.Generic.ICollection{`0},System.Collections.Generic.IEqualityComparer{`0},System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Comparer">Объект проверки элементов коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Max(System.Func{`0,System.Double})">
-            <summary>Максимальное значение в коллекции</summary>
-            <param name="Selector">Метод оценки элемента коллекции</param>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Min(System.Func{`0,System.Double})">
-            <summary>Минимальное значение в коллекции</summary>
-            <param name="Selector">Метод оценки элемента коллекции</param>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Average(System.Func{`0,System.Double})">
-            <summary>Среднее значение в коллекции</summary>
-            <param name="Selector">Метод оценки элемента коллекции</param>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Contains(`0,System.String)">
-            <summary>Проверка, что коллекция содержит указанный элемент</summary>
-            <param name="item">Элемент, который должен быть найден в коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.Contains(System.Func{`0,System.Boolean},System.String)">
-            <summary>Проверка, что коллекция содержит элемент, удовлетворяющий указанному критерию</summary>
-            <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.NotContains(`0,System.String)">
-            <summary>Проверка, что указанного элемента нет в коллекции</summary>
-            <param name="item">Элемент, которого не должно быть в коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker`1.NotContains(System.Func{`0,System.Boolean},System.String)">
-            <summary>Проверка, что коллекция НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
-            <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
-            <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker">
-            <summary>Объект проверки коллекции</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker._ActualCollection">
-            <summary>Проверяемая коллекция</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.#ctor(System.Collections.ICollection)">
-            <summary>Инициализация нового объекта проверки коллекции</summary>
-            <param name="ActualCollection">Проверяемая коллекция</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityComparer">
-            <summary>Метод сравнения значений элементов коллекции</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityComparer,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Comparer">Метод сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityPositionalComparer">
-            <summary>Метод сравнения значений элементов коллекции</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="Index">Индекс проверяемого элемента</param>
-            <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.EqualityPositionalComparer,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Comparer">Метод сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.IsEqualTo(System.Collections.ICollection,System.Collections.IEqualityComparer,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Comparer">Объект сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.Max(System.Func{System.Object,System.Double})">
-            <summary>Минимальное значение в коллекции</summary>
-            <param name="Selector">Метод оценки элемента коллекции</param>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.Min(System.Func{System.Object,System.Double})">
-            <summary>Минимальное значение в коллекции</summary>
-            <param name="Selector">Метод оценки элемента коллекции</param>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionChecker.Average(System.Func{System.Object,System.Double})">
-            <summary>Среднее значение в коллекции</summary>
-            <param name="Selector">Метод оценки элемента коллекции</param>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker">
-            <summary>Объект проверки коллекций вещественных чисел</summary>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy">
-            <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy._ActualValues">
-            <summary>Проверяемая коллекция значение</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy._ExpectedValues">
-            <summary>Значения, с которыми требуется провести сравнение</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy._Not">
-            <summary>Проверка на неравенство</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy.#ctor(System.Collections.Generic.ICollection{System.Double},System.Double[],System.Boolean)">
-            <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
-            <param name="ActualValues">Проверяемая коллекция</param>
-            <param name="ExpectedValues">Требуемые значения</param>
-            <param name="Not">Проверять на неравенство</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.EqualityCheckerWithAccuracy.WithAccuracy(System.Double,System.String)">
-            <summary>Проверка с задаваемой точностью</summary>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker._ActualCollection">
-            <summary>Проверяемая коллекция</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.#ctor(System.Collections.Generic.ICollection{System.Double})">
-            <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
-            <param name="ActualCollection"></param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreEqualTo(System.Double[])">
-            <summary>Проверка значений коллекции на равенство</summary>
-            <param name="ExpectedValues">Ожидаемые значения</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreNotEqualTo(System.Double[])">
-            <summary>Проверка значений коллекции на равенство</summary>
-            <param name="ExpectedValues">Ожидаемые значения</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreEqual(System.Double[])">
-            <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
-            <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ValuesAreEqual(System.String,System.Double[])">
-            <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-            <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.IsEqualTo(System.Collections.Generic.ICollection{System.Double},System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.IsEqualTo(System.Collections.Generic.ICollection{System.Double},System.Double,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreEqualTo(System.Double,System.String)">
-            <summary>Все элементы коллекции равны заданному значению</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreEqualTo(System.Double,System.Double,System.String)">
-            <summary>Все элементы коллекции равны заданному значению</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Accuracy"></param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementChecker">
-            <summary>Критерий проверки элементов коллекции</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Истина, если элемент соответствует критерию проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementChecker,System.String)">
-            <summary>Все элементы коллекции удовлетворяют условию</summary>
-            <param name="Condition">Условие проверки всех элементов</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.PositionElementChecker">
-            <summary>Позиционный критерий проверки элементов коллекции</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="ItemIndex">Индекс проверяемого элемента в коллекции</param>
-            <returns>Истина, если элемент соответствует критерию проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.PositionElementChecker,System.String)">
-            <summary>Все элементы коллекции удовлетворяют условию</summary>
-            <param name="Condition">Условие проверки всех элементов</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.Max">
-            <summary>Максимальное значение в коллекции</summary>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.Min">
-            <summary>Минимальное значение в коллекции</summary>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleCollectionChecker.Average">
-            <summary>Среднее значение в коллекции</summary>
-            <returns>Объект проверки вещественного значения</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker">
-            <summary>Объект проверки двумерного массива вещественных чисел</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ActualValue">
-            <summary>Проверяемый массив</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.#ctor(System.Double[0:,0:])">
-            <summary>Инициализация нового объекта проверки</summary>
-            <param name="ActualArray">Проверяемый массив</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.IsEqualTo(System.Double[0:,0:],System.String)">
-            <summary>По размеру и поэлементно массив эквивалентен ожидаемому массиву</summary>
-            <param name="ExpectedArray">Ожидаемая коллекция значений</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.IsEqualTo(System.Double[0:,0:],System.Double,System.String)">
-            <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-            <param name="ExpectedArray">Ожидаемая коллекция значений</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreEqualTo(System.Double,System.String)">
-            <summary>Все элементы массива равны ожидаемому значению</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreEqualTo(System.Double,System.Double,System.String)">
-            <summary>Все элементы массива равны ожидаемому значению</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementChecker">
-            <summary>Критерий проверки элементов коллекции</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Истина, если элемент соответствует критерию проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementChecker,System.String)">
-            <summary>Все элементы коллекции удовлетворяют условию</summary>
-            <param name="Condition">Условие проверки всех элементов</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.PositionElementChecker">
-            <summary>Позиционный критерий проверки элементов коллекции</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="i">Индекс строки</param>
-            <param name="j">Индекс столбца</param>
-            <returns>Истина, если элемент соответствует критерию проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.ElementsAreSatisfyCondition(Microsoft.VisualStudio.TestTools.UnitTesting.DoubleDimensionArrayChecker.PositionElementChecker,System.String)">
-            <summary>Все элементы коллекции удовлетворяют условию</summary>
-            <param name="Condition">Условие проверки всех элементов</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker">
-            <summary>Объект проверки равенства/неравенства чисел с плавающей запятой двойной точности</summary>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.EqualityCheckerWithAccuracy">
-            <summary>Объект проверки равенства чисел с заданной точностью</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.EqualityCheckerWithAccuracy._ActualValue">
-            <summary>Проверяемое значение</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.EqualityCheckerWithAccuracy._ExpectedValue">
-            <summary>Значение, с которым требуется провести сравнение</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.EqualityCheckerWithAccuracy._Not">
-            <summary>Проверка на неравенство</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.EqualityCheckerWithAccuracy.#ctor(System.Double,System.Double,System.Boolean)">
-            <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="ExpectedValue">Требуемое значение</param>
-            <param name="Not">Проверять на неравенство</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.EqualityCheckerWithAccuracy.WithAccuracy(System.Double,System.String)">
-            <summary>Проверка с задаваемой точностью</summary>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy">
-            <summary>Объект сравнения чисел с заданной точностью</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy._ActualValue">
-            <summary>Проверяемое значение</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy._ExpectedValue">
-            <summary>Ожидаемое значение</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy._IsEquals">
-            <summary>Проверка на равенство</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy._IsLessChecking">
-            <summary>Проверка - меньше</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy._IsChecked">
-            <summary>Проверка выполнена</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy.#ctor(System.Double,System.Double,System.Boolean,System.Boolean)">
-            <summary>Инициализация объекта сравнения</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="IsEquals">Проверять на равенство</param>
-            <param name="IsLessChecking">Проверка - на "меньше"</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.CompareCheckerWithAccuracy.WithAccuracy(System.Double,System.String)">
-            <summary>Сравнение с задаваемой точностью</summary>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.ActualValue">
-            <summary>Сравниваемое значение</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.#ctor(System.Double)">
-            <summary>Инициализация нового объекта сравнения чисел с плавающей запятой</summary>
-            <param name="ExpectedValue">Проверяемое значение</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsEqualTo(System.Double)">
-            <summary>Проверка значения на равенство</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsNotEqualTo(System.Double)">
-            <summary>Проверка значения на неравенство</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsEqual(System.Double,System.String)">
-            <summary>Сравнение с ожидаемым значением</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsEqual(System.Double,System.Double,System.String)">
-            <summary>Сравнение с ожидаемым значением с задаваемой точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Accuracy">Точность</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsNotEqual(System.Double,System.String)">
-            <summary>Проверка на неравенство</summary>
-            <param name="ExpectedValue">Не ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsNotEqual(System.Double,System.Double,System.String)">
-            <summary>Проверка на неравенство</summary>
-            <param name="ExpectedValue">Не ожидаемое значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.GreaterThan(System.Double,System.String)">
-            <summary>Проверка, что значение больше заданного</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.GreaterOrEqualsThan(System.Double,System.String)">
-            <summary>Проверка, что значение больше, либо равно заданному</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.GreaterOrEqualsThan(System.Double,System.Double,System.String)">
-            <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.LessThan(System.Double,System.String)">
-            <summary>Проверка, что значение меньше заданного</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.LessOrEqualsThan(System.Double,System.String)">
-            <summary>Проверка, что значение меньше, либо равно заданному</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.LessOrEqualsThan(System.Double,System.Double,System.String)">
-            <summary>Проверка, что значение меньше, либо равно заданному</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.Greater(System.Double)">
-            <summary>Значение больше (строго), чем указанное с задаваемой точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.GreaterOrEqual(System.Double)">
-            <summary>Значение больше, чем указанное с задаваемой точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.Less(System.Double)">
-            <summary>Значение меньше (строго), чем указанное с задаваемой точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.LessOrEqual(System.Double)">
-            <summary>Значение меньше, чем указанное с задаваемой точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Объект сравнения с задаваемой точностью</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsNotNaN(System.String)">
-            <summary>Проверить, что значение не является не-числом</summary>
-            <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.DoubleValueChecker.IsNaN(System.String)">
-            <summary>Проверить, что значение является не-числом</summary>
-            <param name="Message">Сообщение, выводимое в случае если проверка провалена</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1">
-            <summary>Объект проверки функции</summary>
-            <typeparam name="TResult">Тип значения функции</typeparam>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.Function">
-            <summary>Проверяемая функция</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.#ctor(System.Func{`0})">
-            <summary>Инициализация нового объекта проверки функции</summary>
-            <param name="function">Проверяемое действие</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`1.Throw``1(System.String)">
-            <summary>Проверка, что функция вызывает исключение указанного типа</summary>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <typeparam name="TException">Тип генерируемого исключения</typeparam>
-            <returns>Объект проверки исключения</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2">
-            <summary>Объект проверки параметрической функции</summary>
-            <typeparam name="TValue">Тип параметра функции</typeparam>
-            <typeparam name="TResult">Тип значения функции</typeparam>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Function">
-            <summary>Проверяемая функция</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Value">
-            <summary>Параметр функции</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.#ctor(System.Func{`0,`1},`0)">
-            <summary>Инициализация нового объекта проверки функции</summary>
-            <param name="function">Проверяемая функция</param>
-            <param name="value">Параметр функции</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.FunctionChecker`2.Throw``1(System.String)">
-            <summary>Проверка, что функция вызывает исключение указанного типа</summary>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <typeparam name="TException">Тип генерируемого исключения</typeparam>
-            <returns>Объект проверки исключения</returns>
-            <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">Возникает в случае, если тестируемая функция не сгенерировала исключения</exception>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker">
-            <summary>Объект проверки равенства/неравенства целых чисел</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.ActualValue">
-            <summary>Проверяемое значение</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.#ctor(System.Int32)">
-            <summary>Инициализация нового объекта проверки целого числа</summary>
-            <param name="ExpectedValue">Проверяемое целое число</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.IsEqual(System.Int32,System.String)">
-            <summary>Проверка, что проверяемое значение равно ожидаемому</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.IsEqual(System.Int32,System.Double,System.String)">
-            <summary>Проверка, что проверяемое значение равно ожидаемому с заданной точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.IsNotEqual(System.Int32,System.String)">
-            <summary>Проверка, что проверяемое значение не равно ожидаемому</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.IsNotEqual(System.Int32,System.Double,System.String)">
-            <summary>Проверка, что проверяемое значение не равно ожидаемому с заданной точностью</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.GreaterThan(System.Int32,System.String)">
-            <summary>Проверка, что значение больше заданного</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.GreaterOrEqualsThan(System.Int32,System.String)">
-            <summary>Проверка, что значение больше, либо равно заданному</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.GreaterOrEqualsThan(System.Int32,System.Int32,System.String)">
-            <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.LessThan(System.Int32,System.String)">
-            <summary>Проверка, что значение меньше заданного</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.LessOrEqualsThan(System.Int32,System.String)">
-            <summary>Проверка, что значение меньше, либо равно заданному</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.IntValueChecker.LessOrEqualsThan(System.Int32,System.Int32,System.String)">
-            <summary>Проверка, что значение меньше, либо равно заданному</summary>
-            <param name="ExpectedValue">Опорное значение</param>
-            <param name="Accuracy">Точность сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2">
-            <summary>Объект проверки дочернего значения</summary>
-            <typeparam name="TValue">Тип дочернего значения</typeparam>
-            <typeparam name="TBaseValue">Тип  базового значения</typeparam>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2._BaseChecker">
-            <summary>Базовый объект проверки значения</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2.#ctor(`0,Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`1})">
-            <summary>Инициализация нового объекта проверки вложенного значения</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="BaseChecker">Базовый объект проверки значения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.NestedValueChecker`2.Check(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
-            <summary>Проверка дочернего значения</summary>
-            <param name="Checker">Метод проверки дочернего значения</param>
-            <returns>Объект проверки базового значения</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1">
-            <summary>Объект проверки значения</summary>
-            <typeparam name="T">Тип проверяемого значения</typeparam>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.ActualValue">
-            <summary>Проверяемое значение</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.And">
-            <summary>Продолжение (перезапуск) цепочки тестирования</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.#ctor(`0)">
-            <summary>Инициализация нового объекта проверки значения</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsEqual(`0,System.String)">
-            <summary>Проверка значения на эквивалентность ожидаемому</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsEqual(`0,System.Collections.Generic.IEqualityComparer{`0},System.String)">
-            <summary>Проверка значение на эквивалентность ожидаемому</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Comparer">Объект сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.EqualityComparer">
-            <summary>Метод сравнения значений</summary>
-            <param name="ActualValue">Проверяемое значение</param>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <returns>Истина, если проверяемое и ожидаемое значения равны</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsEqual(`0,Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}.EqualityComparer,System.String)">
-            <summary>Проверка значение на эквивалентность ожидаемому</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Comparer">Метод сравнения</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsReferenceEquals(`0,System.String)">
-            <summary>Проверка значения на идентичность ожидаемому (при сравнении ссылок)</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNotEqual(`0,System.String)">
-            <summary>Проверка значения на не эквивалентность ожидаемому</summary>
-            <param name="ExpectedValue">Не ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNotReferenceEquals(`0,System.String)">
-            <summary>Проверка значения на не идентичность ожидаемому (при сравнении ссылок)</summary>
-            <param name="ExpectedValue">Ожидаемое значение</param>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNull(System.String)">
-            <summary>Ссылка на значение должна быть пустой</summary>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.IsNotNull(System.String)">
-            <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-            <returns>Значение, гарантированно не являющееся пустой ссылкой</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.AsNotNull(System.String)">
-            <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
-            <param name="Message">Сообщение, выводимое в случае неудачи</param>
-            <returns>Исходный объект проверки значений</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Is(System.Type,System.String)">
-            <summary>Значение является значением указанного типа</summary>
-            <param name="ExpectedType">Ожидаемый тип значения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <returns>Текущий объект проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Is``1(System.String)">
-            <summary>Значение является значением указанного типа</summary>
-            <typeparam name="TExpectedType">Ожидаемый тип значения</typeparam>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <returns>Текущий объект проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.As``1(System.String)">
-            <summary>Объект является объектом более специфичного типа</summary>
-            <typeparam name="TExpectedType">Тип наследника</typeparam>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <returns>Объект проверки типа наследника</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.As``2(System.Func{``0,``1},System.String)">
-            <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
-            <typeparam name="TExpectedType">Тип наследника</typeparam>
-            <typeparam name="TValue">Тип значения</typeparam>
-            <param name="Selector">Метод определения значения</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки</param>
-            <returns>Объект проверки производного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Where``1(System.Func{`0,``0})">
-            <summary>Проверка вложенного значения</summary>
-            <typeparam name="TValue">Тип вложенного значения</typeparam>
-            <param name="Selector">Метод определения вложенного значения</param>
-            <returns>Объект проверки вложенного значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.Where``1(System.Func{`0,``0},System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0}})">
-            <summary>Проверка вложенного значения</summary>
-            <typeparam name="TValue">Тип вложенного значения</typeparam>
-            <param name="Selector">Метод определения вложенного значения</param>
-            <param name="Checker">Метод проверки вложенного значения</param>
-            <returns>Объект проверки текущего значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.AssertThat(System.Action{Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0}})">
-            <summary>Набор проверок</summary>
-            <param name="Checker">Метод проведения проверок</param>
-            <returns>Исходный объект проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker`1.op_Implicit(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{`0})~`0">
-            <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
-            <param name="Checker">Объект проверки</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions">
-            <summary>Класс методов-расширений для объекта-помощника проверки <see cref="P:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.That"/></summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,``0)">
-            <summary>Проверка значения</summary>
-            <typeparam name="T">ТИп проверяемого значения</typeparam>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Объект проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Double)">
-            <summary>Проверка вещественного значения</summary>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Объект проверки вещественных значений</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Int32)">
-            <summary>Проверка целочисленного значения</summary>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="ActualValue">Проверяемое значение</param>
-            <returns>Объект проверки целочисленных значений</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Action)">
-            <summary>Проверка действия</summary>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="action">Проверяемое действие</param>
-            <returns>Объект проверки исключения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Action{``0},``0)">
-            <summary>Проверка действия</summary>
-            <typeparam name="TValue">Тип параметра действия</typeparam>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="action">Проверяемое действие</param>
-            <param name="value">Параметр</param>
-            <returns>Объект проверки исключения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``1(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Func{``0})">
-            <summary>Проверка функции</summary>
-            <typeparam name="TResult">Тип результата функции</typeparam>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="function">Проверяемая функция</param>
-            <returns>Объект проверки исключения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.AssertExtensions.Method``2(Microsoft.VisualStudio.TestTools.UnitTesting.Assert,System.Func{``0,``1},``0)">
-            <summary>Проверка функции</summary>
-            <typeparam name="TResult">Тип результата функции</typeparam>
-            <typeparam name="TValue">Тип параметра функции</typeparam>
-            <param name="that">Объект-помощник проверки</param>
-            <param name="function">Проверяемая функция</param>
-            <param name="value">Значение, передаваемое в функцию</param>
-            <returns>Объект проверки исключения</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions">
-            <summary>Методы-расширения для объекта-помощника проверки <see cref="P:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.That"/></summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions.Collection(Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert,System.Collections.Generic.ICollection{System.Double})">
-            <param name="assert">Объект-помощник проверки</param>
-            <param name="ActualCollection">Проверяемая коллекция</param>
-            <returns>Объект проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions.Collection(Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert,System.Double[0:,0:])">
-            <summary>Проверка двумерного массива вещественных чисел</summary>
-            <param name="assert">Объект-помощник проверки</param>
-            <param name="ActualArray">Проверяемый двумерный массив</param>
-            <returns>Объект проверки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssertExtensions.Collection``1(Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert,System.Collections.Generic.ICollection{``0})">
-            <summary>Проверка коллекции</summary>
-            <typeparam name="T">Тип элементов коллекции</typeparam>
-            <param name="assert">Объект-помощник проверки</param>
-            <param name="ActualCollection">Проверяемая коллекция</param>
-            <returns>Объект проверки</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssertExtensions">
-            <summary>Методы-расширения для объекта проверки строк</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssertExtensions.Value(Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert,System.String)">
-            <summary>Проверка строки</summary>
-            <param name="that">Объект проверки</param>
-            <param name="ActualValue">Проверяемая строка</param>
-            <returns>Объект проверки строк</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions">
-            <summary>Методы-расширения для объекта проверки значения</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.IsTrue(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.String)">
-            <summary>Проверка значения на истинность</summary>
-            <param name="Checker">Объект проверки логического значения</param>
-            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
-            <returns>Исходный объект проверки логического значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.IsFalse(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.String)">
-            <summary>Проверка значения на ложно</summary>
-            <param name="Checker">Объект проверки логического значения</param>
-            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
-            <returns>Исходный объект проверки логического значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Is(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.Boolean},System.Boolean,System.String)">
-            <summary>Проверка значения на ложно</summary>
-            <param name="Checker">Объект проверки логического значения</param>
-            <param name="Value">Значение для проверки</param>
-            <param name="Message">Сообщение, выводимое в случае нарушения проверки</param>
-            <returns>Исходный объект проверки логического значения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Are``2(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{``0})">
-            <summary>Проверка значения как коллекции элементов</summary>
-            <param name="Checker">Объект проверки одиночного значения</param>
-            <typeparam name="T">Тип проверяемого значения, которое является коллекцией объектов типа <typeparamref name="TItem"/></typeparam>
-            <typeparam name="TItem">Тип элементов проверяемой коллекции</typeparam>
-            <returns>Объект проверки коллекции</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.StartWith(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
-            <summary>Проверка, что строка начинается с указанного префикса</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedPrefix">Ожидаемый префикс</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.EndWith(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
-            <summary>Проверка, что строка заканчивается указанной подстрокой</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedSuffix">Ожидаемое окончание</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Contains(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
-            <summary>Проверка, что строка содержит ожидаемую подстроку</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedSubstring">Ожидаемая подстрока</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Matches(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
-            <summary>Проверка, что строка соответствует указанному регулярному выражению</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedRegEx">Ожидаемое регулярное выражение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.Matches(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.Text.RegularExpressions.Regex,System.String)">
-            <summary>Проверка, что строка соответствует указанному регулярному выражению</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedRegEx">Ожидаемое регулярное выражение</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.DoesNotMatch(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.String,System.String)">
-            <summary>Проверка, что строка НЕ соответствует указанному регулярному выражению</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedRegEx">Регулярное выражение, которому не должна соответствовать строка</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.ValueCheckerExtensions.DoesNotMatch(Microsoft.VisualStudio.TestTools.UnitTesting.ValueChecker{System.String},System.Text.RegularExpressions.Regex,System.String)">
-            <summary>Проверка, что строка НЕ соответствует указанному регулярному выражению</summary>
-            <param name="Checker">Объект проверки строкового значения</param>
-            <param name="ExpectedRegEx">Регулярное выражение, которому не должна соответствовать строка</param>
-            <param name="Message">Сообщение, выводимое в случае ошибки при проверке</param>
-            <returns>Исходный объект проверки строки</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.Service">
-            <summary>Сервисные методы</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.Service.AddSeparator(System.String,System.String)">
-            <summary>Добавить разделитель к сообщению в конце в случае наличия сообщения</summary>
-            <param name="Str">Строка сообщения</param>
-            <param name="Separator">Разделитель</param>
-            <returns>Доработанная строка сообщения</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.Service.CheckSeparator(System.String@,System.String)">
-            <summary>Проверить строку сообщения на предмет наличия в ней разделителя в конце и добавить разделитель в случае его отсутствия</summary>
-            <param name="Str">Проверяемая строка сообщения</param>
-            <param name="Separator">Разделитель сообщения</param>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest">
-            <summary>Базовый класс модульного теста</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest._RndGenerator">
-            <summary>Генератор случайных чисел</summary>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDInt(System.Int32,System.Int32)">
-            <summary>Целое случайное число из указанного диапазона с равномерным распределением</summary>
-            <param name="Min">Минимальная граница диапазона (входит)</param>
-            <param name="Max">Максимальная граница диапазона (не входит)</param>
-            <returns>Случайное целое число</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDDouble(System.Double,System.Double)">
-            <summary>Случайное вещественное число с равномерным распределением в указанном диапазоне</summary>
-            <param name="Min">Нижняя граница диапазона</param>
-            <param name="Max">Верхняя граница диапазона</param>
-            <returns>Случайное число с равномерным распределением в указанном диапазоне</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDDoubleArray(System.Int32,System.Double,System.Double)">
-            <summary>Получить массив случайных чисел с равномерным распределением</summary>
-            <param name="Count">Размер массива</param>
-            <param name="Min">Нижняя граница интервала</param>
-            <param name="Max">Верхняя граница интервала</param>
-            <returns>Массив случайных чисел в заданном интервале</returns>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetRNDIntArray(System.Int32,System.Int32,System.Int32)">
-            <summary>Получить массив случайных чисел с равномерным распределением</summary>
-            <param name="Count">Размер массива</param>
-            <param name="Min">Нижняя граница интервала (входит)</param>
-            <param name="Max">Верхняя граница интервала (не входи)</param>
-            <returns>Массив целых случайных чисел</returns>
-        </member>
-        <member name="T:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer">
-            <summary>Объект сравнения вещественных чисел с указанной точностью</summary>
-        </member>
-        <member name="F:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer._Tolerance">
-            <summary>Точность сравнения</summary>
-        </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer.Tolerance">
-            <summary>Точность сравнения</summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">Если значение точности меньше нуля</exception>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.ToleranceComparer.#ctor(System.Double)">
-            <summary>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</summary>
-            <param name="Tolerance">Точность сравнения</param>
-        </member>
-        <member name="M:Microsoft.VisualStudio.TestTools.UnitTesting.UnitTest.GetComparer(System.Double)">
-            <summary>Получить объект для сравнения вещественных чисел с заданной точностью</summary>
-            <param name="Tolerance">Точность сравнения чисел</param>
-            <returns>Объект сравнения чисел с заданной точностью</returns>
         </member>
     </members>
 </doc>

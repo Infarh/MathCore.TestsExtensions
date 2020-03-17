@@ -6,6 +6,7 @@ using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMethodReturnValue.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -200,31 +201,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
         public void NotContains(Func<T, bool> Predicate, string Message = null) => Assert.IsFalse(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
 
-        /// <summary>Выполнение проверки для всех элементов коллекции</summary>
-        /// <param name="Check">Метод проверки значения</param>
-        /// <returns>Исходный объект проверки коллекции</returns>
-        public CollectionChecker<T> All(Action<ValueChecker<T>> Check)
-        {
-            foreach (var item in ActualValue)
-                Check(new ValueChecker<T>(item));
-            return this;
-        }
-
-        /// <summary>Выполнение проверки для всех элементов коллекции</summary>
-        /// <param name="Check">Позиционный метод проверки значения</param>
-        /// <returns>Исходный объект проверки коллекции</returns>
-        public CollectionChecker<T> All(Action<ValueChecker<T>, int> Check)
-        {
-            var index = 0;
-            foreach (var item in ActualValue)
-                Check(new ValueChecker<T>(item), index++);
-            return this;
-        }
-
         /// <summary>Выполнение проверки элементов коллекции</summary>
         /// <param name="Check">Метод проверки элементов коллекции</param>
         /// <returns>Исходный объект проверки коллекции</returns>
-        public CollectionChecker<T> Items(Action<ValueChecker<T>> Check)
+        public CollectionChecker<T> AllItems(Action<ValueChecker<T>> Check)
         {
             foreach (var value in ActualValue.Select(value => new ValueChecker<T>(value)))
                 Check(value);
@@ -234,7 +214,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Выполнение проверки элементов коллекции</summary>
         /// <param name="Check">Метод проверки элементов коллекции с учётом порядкового номера</param>
         /// <returns>Исходный объект проверки коллекции</returns>
-        public CollectionChecker<T> Items(Action<ValueChecker<T>, int> Check)
+        public CollectionChecker<T> AllItems(Action<ValueChecker<T>, int> Check)
         {
             var i = 0;
             foreach (var value in ActualValue.Select(value => new ValueChecker<T>(value)))
@@ -260,7 +240,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка - коллекция должна быть пуста</summary>
         /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
         /// <returns>Объект проверки коллекции</returns>
-        public CollectionChecker<T> IsEmpty(string Message)
+        public CollectionChecker<T> IsEmpty(string Message = null)
         {
             var count = ActualValue.Count;
             if (count != 0)
@@ -271,7 +251,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка - коллекция должна быть не пуста</summary>
         /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
         /// <returns>Объект проверки коллекции</returns>
-        public CollectionChecker<T> IsNotEmpty(string Message)
+        public CollectionChecker<T> IsNotEmpty(string Message = null)
         {
             if (ActualValue.Count == 0)
                 throw new AssertFailedException($"{Message.AddSeparator()}Коллекция пуста");
@@ -281,7 +261,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка - коллекция должна содержать один единственный элемент</summary>
         /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
         /// <returns>Объект проверки коллекции</returns>
-        public CollectionChecker<T> IsSingleItem(string Message)
+        public CollectionChecker<T> IsSingleItem(string Message = null)
         {
             var count = ActualValue.Count;
             if (count != 1)
