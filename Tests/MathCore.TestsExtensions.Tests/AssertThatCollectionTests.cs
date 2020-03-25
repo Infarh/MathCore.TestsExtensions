@@ -172,5 +172,12 @@ namespace MathCore.TestsExtensions.Tests
 
             IsAssertFail(() => Assert.That.Collection(actual_collection).AllItems((v, i) => v.IsEqual(i)));
         }
+
+        public void IsEquals_ToParamsValues_Success()
+        {
+            int[] test_collection = { 1, 3, 5, 7 };
+
+            Assert.That.Collection(test_collection).IsEqualTo(1, 3, 5, 7);
+        }
     }
 }

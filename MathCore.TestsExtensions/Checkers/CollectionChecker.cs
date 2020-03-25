@@ -166,6 +166,47 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             }
         }
 
+        /// <summary>Проверка коллекции на совпадение с указанным набором значений</summary>
+        /// <param name="items">Значения, из которых составлена коллекция</param>
+        /// <returns>Исходный объект проверки значений</returns>
+        public CollectionChecker<T> IsEqualTo(params T[] items)
+        {
+            CountEquals(items.Length);
+
+            var index = 0;
+            foreach (var value in ActualValue)
+                Assert.That.Value(value).IsEqual(items[index], $"item[{index++}]");
+
+            return this;
+        }
+
+        /// <summary>Проверка коллекции на совпадение с указанным набором значений</summary>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        /// <param name="items">Значения, из которых составлена коллекция</param>
+        /// <returns>Исходный объект проверки значений</returns>
+        public CollectionChecker<T> IsEqualTo(string Message, params T[] items)
+        {
+            CountEquals(items.Length);
+
+            var index = 0;
+            foreach (var value in ActualValue)
+                Assert.That.Value(value).IsEqual(items[index], $"item[{index++}]{Message}");
+
+            return this;
+        }
+
+        /// <summary>Првоерка на соответствие размера коллекции ожидаемому значению</summary>
+        /// <param name="ExpectedCount">Ожидаемый размер коллекции</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        /// <returns>Исходный объект проверки значений</returns>
+        public CollectionChecker<T> CountEquals(int ExpectedCount, string Message = null)
+        {
+            var actual_count = ActualValue.Count;
+            if(actual_count != ExpectedCount)
+                throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} не соответствует ожидаемому {ExpectedCount}");
+            return this;
+        }
+
         /// <summary>Максимальное значение в коллекции</summary>
         /// <param name="Selector">Метод оценки элемента коллекции</param>
         /// <returns>Объект проверки вещественного значения</returns>
