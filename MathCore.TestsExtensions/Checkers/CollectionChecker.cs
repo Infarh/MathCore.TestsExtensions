@@ -27,7 +27,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, string Message = null)
+        /// <returns>Исходный объект проверки значений</returns>
+        public CollectionChecker<T> IsEqualTo([NotNull] ICollection<T> ExpectedCollection, string Message = null)
         {
             Assert.That
                .Value(ActualValue.Count)
@@ -54,6 +55,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Метод сравнения значений элементов коллекции</summary>
