@@ -198,6 +198,40 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             return this;
         }
 
+        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+        /// <param name="ExpectedItems">Ожидаемый набор элементов</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        /// <returns>Исходный объект проверки значений</returns>
+        public CollectionChecker<T> IsEqualTo(IEnumerable<T> ExpectedItems, string Message = null)
+        {
+            IEnumerator<T> expected_collection_enumerator = null;
+            IEnumerator<T> actual_collection_enumerator = null;
+            try
+            {
+                expected_collection_enumerator = ExpectedItems.GetEnumerator();
+                actual_collection_enumerator = ActualValue.GetEnumerator();
+
+                var index = 0;
+                Service.CheckSeparator(ref Message);
+                bool actual_move_next, expected_move_next = false;
+                while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+                {
+                    var expected = expected_collection_enumerator.Current;
+                    var actual = actual_collection_enumerator.Current;
+                    Assert.AreEqual(expected, actual, "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index++, expected, actual);
+                }
+                if (actual_move_next != expected_move_next)
+                    throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            }
+            finally
+            {
+                expected_collection_enumerator?.Dispose();
+                actual_collection_enumerator?.Dispose();
+            }
+
+            return this;
+        }
+
         /// <summary>Првоерка на соответствие размера коллекции ожидаемому значению</summary>
         /// <param name="ExpectedCount">Ожидаемый размер коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
@@ -312,137 +346,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 throw new AssertFailedException($"{Message.AddSeparator()}Число элементов коллекции {count} не равно 1 - коллекция содержит не один единственный элемент");
             return this;
         }
-    }
 
-    /// <summary>Объект проверки коллекции</summary>
-    public class CollectionChecker
-    {
-        /// <summary>Проверяемая коллекция</summary>
-        private readonly ICollection _ActualCollection;
 
-        /// <summary>Инициализация нового объекта проверки коллекции</summary>
-        /// <param name="ActualCollection">Проверяемая коллекция</param>
-        internal CollectionChecker(ICollection ActualCollection) => _ActualCollection = ActualCollection;
-
-        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection ExpectedCollection, string Message = null)
-        {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
-
-            var expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-            var actual_collection_enumerator = _ActualCollection.GetEnumerator();
-
-            var index = 0;
-            Service.CheckSeparator(ref Message);
-            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-            {
-                var expected = expected_collection_enumerator.Current;
-                var actual = actual_collection_enumerator.Current;
-                Assert.AreEqual(expected, actual, "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index++, expected, actual);
-            }
-
-        }
-
-        /// <summary>Метод сравнения значений элементов коллекции</summary>
-        /// <param name="ExpectedValue">Ожидаемое значение</param>
-        /// <param name="ActualValue">Проверяемое значение</param>
-        /// <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
-        public delegate bool EqualityComparer(object ExpectedValue, object ActualValue);
-
-        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-        /// <param name="Comparer">Метод сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection ExpectedCollection, EqualityComparer Comparer, string Message = null)
-        {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
-
-            var expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-            var actual_collection_enumerator = _ActualCollection.GetEnumerator();
-
-            var index = 0;
-            Service.CheckSeparator(ref Message);
-            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-            {
-                var expected = expected_collection_enumerator.Current;
-                var actual = actual_collection_enumerator.Current;
-                Assert.IsTrue(
-                    Comparer(expected, actual),
-                    "{0}error[{1}]: ожидалось({2}), получено({3})",
-                    Message, index++, expected, actual);
-            }
-
-        }
-
-        /// <summary>Метод сравнения значений элементов коллекции</summary>
-        /// <param name="ExpectedValue">Ожидаемое значение</param>
-        /// <param name="ActualValue">Проверяемое значение</param>
-        /// <param name="Index">Индекс проверяемого элемента</param>
-        /// <returns>Истина, если проверяемое значение соответствует ожидаемому</returns>
-        public delegate bool EqualityPositionalComparer(object ExpectedValue, object ActualValue, int Index);
-
-        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-        /// <param name="Comparer">Метод сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection ExpectedCollection, EqualityPositionalComparer Comparer, string Message = null)
-        {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
-
-            var expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-            var actual_collection_enumerator = _ActualCollection.GetEnumerator();
-
-            var index = 0;
-            Service.CheckSeparator(ref Message);
-            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-            {
-                var expected = expected_collection_enumerator.Current;
-                var actual = actual_collection_enumerator.Current;
-                Assert.IsTrue(Comparer(expected, actual, index), "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index++, expected, actual);
-            }
-
-        }
-
-        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-        /// <param name="Comparer">Объект сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection ExpectedCollection, IEqualityComparer Comparer, string Message = null)
-        {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count);
-
-            var expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-            var actual_collection_enumerator = _ActualCollection.GetEnumerator();
-
-            var index = 0;
-            Service.CheckSeparator(ref Message);
-            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-            {
-                var expected = expected_collection_enumerator.Current;
-                var actual = actual_collection_enumerator.Current;
-                Assert.IsTrue(
-                    Comparer.Equals(expected, actual),
-                    "{0}error[{1}]: ожидалось({2}), получено({3})",
-                    Message, index++, expected, actual);
-            }
-
-        }
-
-        /// <summary>Минимальное значение в коллекции</summary>
-        /// <param name="Selector">Метод оценки элемента коллекции</param>
-        /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Max(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Max(Selector));
-
-        /// <summary>Минимальное значение в коллекции</summary>
-        /// <param name="Selector">Метод оценки элемента коллекции</param>
-        /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Min(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Min(Selector));
-
-        /// <summary>Среднее значение в коллекции</summary>
-        /// <param name="Selector">Метод оценки элемента коллекции</param>
-        /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Average(Func<object, double> Selector) => Assert.That.Value(_ActualCollection.Cast<object>().Average(Selector));
     }
 }
