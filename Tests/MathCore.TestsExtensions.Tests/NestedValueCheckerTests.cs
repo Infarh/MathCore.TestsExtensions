@@ -14,7 +14,7 @@ namespace MathCore.TestsExtensions.Tests
             (double x, string msg) test_value = (3.14, "Hello World!");
 
             Assert.That.Value(test_value)
-               .Where(v => v.x).CheckEquals(3.14)
+               .Where(v => v.x).CheckEeual(3.14, 1e-15)
                .Where(v => v.msg).CheckEquals("Hello World!");
         }
     }
