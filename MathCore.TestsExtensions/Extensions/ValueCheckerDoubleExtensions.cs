@@ -228,14 +228,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Accuracy">Точность</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
         /// <returns>Объект проверки родительского объекта-значения</returns>
-        public static ValueChecker<TBaseValue> CheckEeual<TBaseValue>(
+        public static ValueChecker<TBaseValue> CheckEquals<TBaseValue>(
             this NestedValueChecker<double, TBaseValue> Checker,
             double ExpectedValue,
             double Accuracy, 
             string Message = null)
         {
             Assert.That.Value(Checker.ActualValue).IsEqual(ExpectedValue, Accuracy, Message);
-            return Checker.Base;
+            return Checker.BaseValue;
         }
     }
 }
