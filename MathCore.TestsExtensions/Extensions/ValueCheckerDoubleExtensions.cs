@@ -6,6 +6,7 @@ using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable RedundantArgumentDefaultValue
+// ReSharper disable UnusedMethodReturnValue.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -219,6 +220,22 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             if (!double.IsNaN(Checker.ActualValue))
                 throw new AssertFailedException($"{Message.AddSeparator()}Значение не не является числом");
             return Checker;
+        }
+
+        /// <summary>Сравнение с ожидаемым значением с задаваемой точностью</summary>
+        /// <param name="Checker">Объект проверки вещественного значения</param>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Accuracy">Точность</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        /// <returns>Объект проверки родительского объекта-значения</returns>
+        public static ValueChecker<TBaseValue> CheckEeual<TBaseValue>(
+            this NestedValueChecker<double, TBaseValue> Checker,
+            double ExpectedValue,
+            double Accuracy, 
+            string Message = null)
+        {
+            Assert.That.Value(Checker.ActualValue).IsEqual(ExpectedValue, Accuracy, Message);
+            return Checker.Base;
         }
     }
 }

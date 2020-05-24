@@ -11,6 +11,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Базовый объект проверки значения</summary>
         private readonly ValueChecker<TBaseValue> _BaseChecker;
 
+        /// <summary>Базовый объект проверки значения</summary>
+        internal ValueChecker<TBaseValue> Base => _BaseChecker;
+
         /// <summary>Инициализация нового объекта проверки вложенного значения</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
         /// <param name="BaseChecker">Базовый объект проверки значения</param>
