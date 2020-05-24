@@ -2,11 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <IncludeSymbols>false</IncludeSymbols>
-    <Version>0.1.28.1</Version>
-    <PackageReleaseNotes>Доработка FluentAPI проверки коллекций</PackageReleaseNotes>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <LangVersion>8</LangVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeSymbols>false</IncludeSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.1.29</Version>
+    <PackageReleaseNotes>
+      Упрощение тестирования вложенных значений:
+      Assert.That.Value(complex_obj)
+        .Where(obj => obj.Property1).CheckEquals(expected_value1)
+        .Where(obj => obj.Property2).CheckEquals(expected_value2);
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Authors>Shmachilin P.A.</Authors>
     <Company />
     <Description>Библиотека средств помощи в процессе тестирования</Description>
@@ -17,6 +28,10 @@
     <Copyright>shmachilin@yandex.ru</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>
@@ -29,10 +44,6 @@
   <ItemGroup>
     <None Remove="MathCore.TestsExtensions.csproj.DotSettings" />
     <None Remove="MathCore.TestsExtensions.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
 
 </Project>
