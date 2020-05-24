@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -21,6 +22,35 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public ValueChecker<TBaseValue> Check(Action<ValueChecker<TValue>> Checker)
         {
             Checker(this);
+            return _BaseChecker;
+        }
+
+        /// <summary>Проверка значения на эквивалентность ожидаемому</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public ValueChecker<TBaseValue> CheckEquals(TValue ExpectedValue, string Message = null)
+        {
+            IsEqual(ExpectedValue, Message);
+            return _BaseChecker;
+        }
+
+        /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Comparer">Объект сравнения</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public ValueChecker<TBaseValue> CheckEquals(TValue ExpectedValue, IEqualityComparer<TValue> Comparer, string Message = null)
+        {
+            IsEqual(ExpectedValue, Comparer, Message);
+            return _BaseChecker;
+        }
+
+        /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
+        /// <param name="ExpectedValue">Ожидаемое значение</param>
+        /// <param name="Comparer">Метод сравнения</param>
+        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+        public ValueChecker<TBaseValue> CheckEquals(TValue ExpectedValue, EqualityComparer Comparer, string Message = null)
+        {
+            IsEqual(ExpectedValue, Comparer, Message);
             return _BaseChecker;
         }
     }
