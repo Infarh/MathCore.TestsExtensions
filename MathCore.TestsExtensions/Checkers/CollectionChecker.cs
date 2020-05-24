@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global

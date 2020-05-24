@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.29.1</Version>
+    <Version>0.1.29.2</Version>
     <PackageReleaseNotes>
       Упрощение тестирования вложенных значений:
       Assert.That.Value(complex_obj)

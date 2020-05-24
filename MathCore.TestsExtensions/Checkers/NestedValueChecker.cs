@@ -9,15 +9,12 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     public sealed class NestedValueChecker<TValue, TBaseValue> : ValueChecker<TValue>
     {
         /// <summary>Базовый объект проверки значения</summary>
-        private readonly ValueChecker<TBaseValue> _BaseChecker;
-
-        /// <summary>Базовый объект проверки значения</summary>
-        internal ValueChecker<TBaseValue> Base => _BaseChecker;
+        public ValueChecker<TBaseValue> BaseValue { get; }
 
         /// <summary>Инициализация нового объекта проверки вложенного значения</summary>
         /// <param name="ActualValue">Проверяемое значение</param>
         /// <param name="BaseChecker">Базовый объект проверки значения</param>
-        internal NestedValueChecker(TValue ActualValue, ValueChecker<TBaseValue> BaseChecker) : base(ActualValue) => _BaseChecker = BaseChecker;
+        internal NestedValueChecker(TValue ActualValue, ValueChecker<TBaseValue> BaseChecker) : base(ActualValue) => BaseValue = BaseChecker;
 
         /// <summary>Проверка дочернего значения</summary>
         /// <param name="Checker">Метод проверки дочернего значения</param>
@@ -25,7 +22,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public ValueChecker<TBaseValue> Check(Action<ValueChecker<TValue>> Checker)
         {
             Checker(this);
-            return _BaseChecker;
+            return BaseValue;
         }
 
         /// <summary>Проверка значения на эквивалентность ожидаемому</summary>
@@ -34,7 +31,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public ValueChecker<TBaseValue> CheckEquals(TValue ExpectedValue, string Message = null)
         {
             IsEqual(ExpectedValue, Message);
-            return _BaseChecker;
+            return BaseValue;
         }
 
         /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
@@ -44,7 +41,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public ValueChecker<TBaseValue> CheckEquals(TValue ExpectedValue, IEqualityComparer<TValue> Comparer, string Message = null)
         {
             IsEqual(ExpectedValue, Comparer, Message);
-            return _BaseChecker;
+            return BaseValue;
         }
 
         /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
@@ -54,7 +51,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public ValueChecker<TBaseValue> CheckEquals(TValue ExpectedValue, EqualityComparer Comparer, string Message = null)
         {
             IsEqual(ExpectedValue, Comparer, Message);
-            return _BaseChecker;
+            return BaseValue;
         }
     }
 }
