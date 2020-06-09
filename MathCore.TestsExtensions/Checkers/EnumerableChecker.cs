@@ -26,7 +26,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, string Message = null)
+        public EnumerableChecker<T> IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, string Message = null)
         {
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
@@ -52,6 +52,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -64,7 +66,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Comparer">Метод проверки элементов перечисления</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, EqualityComparer Comparer, string Message = null)
+        public EnumerableChecker<T> IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, EqualityComparer Comparer, string Message = null)
         {
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
@@ -90,6 +92,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -103,7 +107,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Comparer">Метод проверки элементов перечисления</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, EqualityPositionalComparer Comparer, string Message = null)
+        public EnumerableChecker<T> IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, EqualityPositionalComparer Comparer, string Message = null)
         {
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
@@ -129,13 +133,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Comparer">Объект проверки элементов перечисления</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, IEqualityComparer<T> Comparer, string Message = null)
+        public EnumerableChecker<T> IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, IEqualityComparer<T> Comparer, string Message = null)
         {
             IEnumerator<T> expected_collection_enumerator = null;
             IEnumerator<T> actual_collection_enumerator = null;
@@ -163,6 +169,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Максимальное значение в перечислении</summary>
@@ -303,7 +311,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, string Message = null)
+        public EnumerableChecker IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, string Message = null)
         {
             IEnumerator expected_collection_enumerator = null;
             IEnumerator actual_collection_enumerator = null;
@@ -329,6 +337,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 (expected_collection_enumerator as IDisposable)?.Dispose();
                 (actual_collection_enumerator as IDisposable)?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -341,7 +351,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Comparer">Метод сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, EqualityComparer Comparer, string Message = null)
+        public EnumerableChecker IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, EqualityComparer Comparer, string Message = null)
         {
             IEnumerator expected_collection_enumerator = null;
             IEnumerator actual_collection_enumerator = null;
@@ -371,6 +381,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 (expected_collection_enumerator as IDisposable)?.Dispose();
                 (actual_collection_enumerator as IDisposable)?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -384,7 +396,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Comparer">Метод сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, EqualityPositionalComparer Comparer, string Message = null)
+        public EnumerableChecker IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, EqualityPositionalComparer Comparer, string Message = null)
         {
             IEnumerator expected_collection_enumerator = null;
             IEnumerator actual_collection_enumerator = null;
@@ -411,13 +423,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 (expected_collection_enumerator as IDisposable)?.Dispose();
                 (actual_collection_enumerator as IDisposable)?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
         /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
         /// <param name="Comparer">Объект сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, IEqualityComparer Comparer, string Message = null)
+        public EnumerableChecker IsEqualTo([NotNull] IEnumerable ExpectedEnumerable, IEqualityComparer Comparer, string Message = null)
         {
             IEnumerator expected_collection_enumerator = null;
             IEnumerator actual_collection_enumerator = null;
@@ -446,6 +460,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 (expected_collection_enumerator as IDisposable)?.Dispose();
                 (actual_collection_enumerator as IDisposable)?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Минимальное значение в перечислении</summary>

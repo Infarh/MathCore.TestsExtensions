@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable UnusedMethodReturnValue.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {

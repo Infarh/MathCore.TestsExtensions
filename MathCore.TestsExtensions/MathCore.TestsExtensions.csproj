@@ -8,14 +8,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.29.2</Version>
+    <Version>0.1.30</Version>
     <PackageReleaseNotes>
-      Упрощение тестирования вложенных значений:
-      Assert.That.Value(complex_obj)
-        .Where(obj => obj.Property1).CheckEquals(expected_value1)
-        .Where(obj => obj.Property2).CheckEquals(expected_value2);
-        
-        Добавлена возможность указания точности
+      Развитие Flow-подхода к написанию кода с помощью методов объектов проверки
     </PackageReleaseNotes>
   </PropertyGroup>
 

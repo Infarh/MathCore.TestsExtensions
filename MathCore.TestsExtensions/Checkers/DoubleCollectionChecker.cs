@@ -134,7 +134,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection<double> ExpectedCollection, string Message = null)
+        public DoubleCollectionChecker IsEqualTo([NotNull] ICollection<double> ExpectedCollection, string Message = null)
         {
             Assert.That
                .Value(_ActualCollection.Count)
@@ -167,13 +167,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection<double> ExpectedCollection, double Accuracy, string Message = null)
+        public DoubleCollectionChecker IsEqualTo([NotNull] ICollection<double> ExpectedCollection, double Accuracy, string Message = null)
         {
             Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совпадают");
 
@@ -205,24 +207,28 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+
+            return this;
         }
 
         /// <summary>Все элементы коллекции равны заданному значению</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreEqualTo(double ExpectedValue, string Message = null)
+        public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, string Message = null)
         {
             var index = 0;
             foreach (var actual_value in _ActualCollection)
                 Assert.AreEqual(ExpectedValue, actual_value,
                     "{0}error[{1}]:{2:e2}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value));
+
+            return this;
         }
 
         /// <summary>Все элементы коллекции равны заданному значению</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Accuracy"></param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
+        public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
         {
             var index = 0;
             foreach (var actual_value in _ActualCollection)
@@ -232,6 +238,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     Math.Abs(ExpectedValue - actual_value).ToString("e2", CultureInfo.InvariantCulture),
                     ((ExpectedValue - actual_value) / ExpectedValue).ToString("e3", CultureInfo.InvariantCulture),
                     Accuracy);
+
+            return this;
         }
 
         /// <summary>Критерий проверки элементов коллекции</summary>
@@ -242,12 +250,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Все элементы коллекции удовлетворяют условию</summary>
         /// <param name="Condition">Условие проверки всех элементов</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
+        public DoubleCollectionChecker ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
         {
             var index = 0;
             Service.CheckSeparator(ref Message);
             foreach (var actual_value in _ActualCollection)
                 Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
+
+            return this;
         }
 
         /// <summary>Позиционный критерий проверки элементов коллекции</summary>
@@ -259,12 +269,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Все элементы коллекции удовлетворяют условию</summary>
         /// <param name="Condition">Условие проверки всех элементов</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
+        public DoubleCollectionChecker ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
         {
             var index = 0;
             Service.CheckSeparator(ref Message);
             foreach (var actual_value in _ActualCollection)
                 Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
+
+            return this;
         }
 
         /// <summary>Максимальное значение в коллекции</summary>

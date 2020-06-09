@@ -173,11 +173,32 @@ namespace MathCore.TestsExtensions.Tests
             IsAssertFail(() => Assert.That.Collection(actual_collection).AllItems((v, i) => v.IsEqual(i)));
         }
 
+        [TestMethod]
         public void IsEquals_ToParamsValues_Success()
         {
             int[] test_collection = { 1, 3, 5, 7 };
 
             Assert.That.Collection(test_collection).IsEqualTo(1, 3, 5, 7);
+        }
+
+        [TestMethod]
+        public void IsEqualTo_DoubleDeclensionsArray_Success()
+        {
+            double[,] actual_x =
+            {
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 9 },
+            };
+
+            double[,] expected_x =
+            {
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 9 },
+            };
+
+            Assert.That.Collection(actual_x).IsEqualTo(expected_x);
         }
     }
 }
