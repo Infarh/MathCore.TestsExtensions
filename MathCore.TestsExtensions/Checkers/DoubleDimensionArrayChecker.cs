@@ -20,7 +20,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedArray">Ожидаемая коллекция значений</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
 
-        public void IsEqualTo(double[,] ExpectedArray, string Message = null)
+        public DoubleDimensionArrayChecker IsEqualTo(double[,] ExpectedArray, string Message = null)
         {
             Service.CheckSeparator(ref Message);
             Assert.AreEqual(ExpectedArray.GetLength(0), ActualValue.GetLength(0), "{0}{1}", Message, "Размеры массивов не совпадают");
@@ -37,13 +37,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                         Math.Abs(expected - actual).ToString("e3", CultureInfo.InvariantCulture),
                         (Math.Abs(expected - actual) / expected).ToString(CultureInfo.InvariantCulture));
                 }
+
+            return this;
         }
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedArray">Ожидаемая коллекция значений</param>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo(double[,] ExpectedArray, double Accuracy, string Message = null)
+        public DoubleDimensionArrayChecker IsEqualTo(double[,] ExpectedArray, double Accuracy, string Message = null)
         {
             Service.CheckSeparator(ref Message);
             Assert.AreEqual(ExpectedArray.GetLength(0), ActualValue.GetLength(0), "{0}{1}", Message, "Размеры массивов не совпадают");
@@ -60,12 +62,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                         Math.Abs(expected - actual).ToString("e3", CultureInfo.InvariantCulture),
                         (Math.Abs(expected - actual) / expected).ToString(CultureInfo.InvariantCulture));
                 }
+
+            return this;
         }
 
         /// <summary>Все элементы массива равны ожидаемому значению</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreEqualTo(double ExpectedValue, string Message = null)
+        public DoubleDimensionArrayChecker ElementsAreEqualTo(double ExpectedValue, string Message = null)
         {
             Service.CheckSeparator(ref Message);
             for (var i = 0; i < ActualValue.GetLength(0); i++)
@@ -78,13 +82,15 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                         Math.Abs(ExpectedValue - actual).ToString("e3", CultureInfo.InvariantCulture),
                         (Math.Abs(ExpectedValue - actual) / ExpectedValue).ToString(CultureInfo.InvariantCulture));
                 }
+
+            return this;
         }
 
         /// <summary>Все элементы массива равны ожидаемому значению</summary>
         /// <param name="ExpectedValue">Ожидаемое значение</param>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
+        public DoubleDimensionArrayChecker ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
         {
             Service.CheckSeparator(ref Message);
             for (var i = 0; i < ActualValue.GetLength(0); i++)
@@ -97,6 +103,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                         Math.Abs(ExpectedValue - actual).ToString("e3", CultureInfo.InvariantCulture),
                         (Math.Abs(ExpectedValue - actual) / ExpectedValue).ToString(CultureInfo.InvariantCulture));
                 }
+
+            return this;
         }
 
         /// <summary>Критерий проверки элементов коллекции</summary>
@@ -107,7 +115,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Все элементы коллекции удовлетворяют условию</summary>
         /// <param name="Condition">Условие проверки всех элементов</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
+        public DoubleDimensionArrayChecker ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
         {
             Service.CheckSeparator(ref Message);
             for (var i = 0; i < ActualValue.GetLength(0); i++)
@@ -116,6 +124,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     var actual = ActualValue[i, j];
                     Assert.IsTrue(Condition(actual), "{0}err[{1},{2}]:{3}", Message, i, j, actual);
                 }
+
+            return this;
         }
 
         /// <summary>Позиционный критерий проверки элементов коллекции</summary>
@@ -128,7 +138,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Все элементы коллекции удовлетворяют условию</summary>
         /// <param name="Condition">Условие проверки всех элементов</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
+        public DoubleDimensionArrayChecker ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
         {
             Service.CheckSeparator(ref Message);
             for (var i = 0; i < ActualValue.GetLength(0); i++)
@@ -137,6 +147,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     var actual = ActualValue[i, j];
                     Assert.IsTrue(Condition(actual, i, j), "{0}err[{1},{2}]:{3}", Message, i, j, actual);
                 }
+
+            return this;
         }
     }
 }
