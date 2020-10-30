@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathCore.TestsExtensions.Tests
@@ -199,6 +200,13 @@ namespace MathCore.TestsExtensions.Tests
             };
 
             Assert.That.Collection(actual_x).IsEqualTo(expected_x);
+        }
+
+        [TestMethod]
+        public void FluentLambdaCollectionContains_Success()
+        {
+            int[] items = { 1, 3, 5, 7 };
+            Assert.That.Collection(items).Contains(item => item == 5);
         }
     }
 }

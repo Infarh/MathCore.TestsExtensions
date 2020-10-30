@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+
 using MathCore.Tests.Annotations;
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable UnusedMember.Global
@@ -38,7 +39,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             /// <summary>Проверка с задаваемой точностью</summary>
             /// <param name="Accuracy">Точность сравнения</param>
             /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-            public void WithAccuracy(double Accuracy, string Message = null)
+            public EqualityCheckerWithAccuracy WithAccuracy(double Accuracy, string Message = null)
             {
                 _IsChecked = true;
 
@@ -81,6 +82,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     expected_collection_enumerator?.Dispose();
                     actual_collection_enumerator?.Dispose();
                 }
+                return this;
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
@@ -124,12 +126,20 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
         /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
         /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        public void ValuesAreEqual([NotNull] params double[] ExpectedValues) => IsEqualTo(ExpectedValues);
+        public DoubleCollectionChecker ValuesAreEqual([NotNull] params double[] ExpectedValues)
+        {
+            IsEqualTo(ExpectedValues);
+            return this;
+        }
 
         /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        public void ValuesAreEqual(string Message, [NotNull] params double[] ExpectedValues) => IsEqualTo(ExpectedValues, Message);
+        public DoubleCollectionChecker ValuesAreEqual(string Message, [NotNull] params double[] ExpectedValues)
+        {
+            IsEqualTo(ExpectedValues, Message);
+            return this;
+        }
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>

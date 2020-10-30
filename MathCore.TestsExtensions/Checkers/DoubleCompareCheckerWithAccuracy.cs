@@ -36,7 +36,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Сравнение с задаваемой точностью</summary>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void WithAccuracy(double Accuracy, string Message = null)
+        public DoubleCompareCheckerWithAccuracy WithAccuracy(double Accuracy, string Message = null)
         {
             _IsChecked = true;
             if (_IsLessChecking)
@@ -61,6 +61,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4}",
                     Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy,
                     (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
+            return this;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
