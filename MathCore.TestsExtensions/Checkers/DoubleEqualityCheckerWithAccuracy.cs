@@ -33,7 +33,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка с задаваемой точностью</summary>
         /// <param name="Accuracy">Точность сравнения</param>
         /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        public void WithAccuracy(double Accuracy, string Message = null)
+        public DoubleEqualityCheckerWithAccuracy WithAccuracy(double Accuracy, string Message = null)
         {
             _IsChecked = true;
             if (_Not)
@@ -54,6 +54,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                     Message.AddSeparator(), 
                     Math.Abs(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture),
                     (Math.Abs(_ExpectedValue - _ActualValue) / _ExpectedValue).ToString("e2", CultureInfo.InvariantCulture));
+            return this;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]

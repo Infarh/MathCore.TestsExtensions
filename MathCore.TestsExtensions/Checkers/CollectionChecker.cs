@@ -68,7 +68,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
         /// <param name="Comparer">Метод проверки элементов коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityComparer Comparer, string Message = null)
+        public CollectionChecker<T> IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityComparer Comparer, string Message = null)
         {
             Assert.That
                .Value(ActualValue.Count)
@@ -95,6 +95,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+            return this;
         }
 
         /// <summary>Метод сравнения значений элементов коллекции</summary>
@@ -108,7 +109,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
         /// <param name="Comparer">Метод проверки элементов коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityPositionalComparer Comparer, string Message = null)
+        public CollectionChecker<T> IsEqualTo([NotNull] ICollection<T> ExpectedCollection, EqualityPositionalComparer Comparer, string Message = null)
         {
             Assert.That.Value(ActualValue.Count).IsEqual(ExpectedCollection.Count);
 
@@ -133,6 +134,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
+            return this;
         }
 
         /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
@@ -261,22 +263,38 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка, что коллекция содержит указанный элемент</summary>
         /// <param name="item">Элемент, который должен быть найден в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void Contains(T item, string Message = null) => Assert.IsTrue(ActualValue.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
+        public CollectionChecker<T> Contains(T item, string Message = null)
+        {
+            Assert.IsTrue(ActualValue.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
+            return this;
+        }
 
         /// <summary>Проверка, что коллекция содержит элемент, удовлетворяющий указанному критерию</summary>
         /// <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
-        public void Contains(Func<T, bool> Predicate, string Message = null) => Assert.IsTrue(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+        public CollectionChecker<T> Contains(Func<T, bool> Predicate, string Message = null)
+        {
+            Assert.IsTrue(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+            return this;
+        }
 
         /// <summary>Проверка, что указанного элемента нет в коллекции</summary>
         /// <param name="item">Элемент, которого не должно быть в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void NotContains(T item, string Message = null) => Assert.IsTrue(!ActualValue.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
+        public CollectionChecker<T> NotContains(T item, string Message = null)
+        {
+            Assert.IsTrue(!ActualValue.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
+            return this;
+        }
 
         /// <summary>Проверка, что коллекция НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
         /// <param name="Predicate">Критерий проверки наличия элемента в коллекции</param>
         /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
-        public void NotContains(Func<T, bool> Predicate, string Message = null) => Assert.IsFalse(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+        public CollectionChecker<T> NotContains(Func<T, bool> Predicate, string Message = null)
+        {
+            Assert.IsFalse(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+            return this;
+        }
 
         /// <summary>Выполнение проверки элементов коллекции</summary>
         /// <param name="Check">Метод проверки элементов коллекции</param>
@@ -345,7 +363,5 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
                 throw new AssertFailedException($"{Message.AddSeparator()}Число элементов коллекции {count} не равно 1 - коллекция содержит не один единственный элемент");
             return this;
         }
-
-
     }
 }

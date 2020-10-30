@@ -191,22 +191,38 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <summary>Проверка, что перечисление содержит указанный элемент</summary>
         /// <param name="item">Элемент, который должен быть найден в перечислении</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void Contains(T item, string Message = null) => Assert.IsTrue(ActualValue.Contains(item), "{0}Перечисление не содержит элемент {1}", Message.AddSeparator(), item);
+        public EnumerableChecker<T> Contains(T item, string Message = null)
+        {
+            Assert.IsTrue(ActualValue.Contains(item), "{0}Перечисление не содержит элемент {1}", Message.AddSeparator(), item);
+            return this;
+        }
 
         /// <summary>Проверка, что перечисление содержит элемент, удовлетворяющий указанному критерию</summary>
         /// <param name="Predicate">Критерий проверки наличия элемента в перечислении</param>
         /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
-        public void Contains(Func<T, bool> Predicate, string Message = null) => Assert.IsTrue(ActualValue.Any(Predicate), "{0}Перечисление не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+        public EnumerableChecker<T> Contains(Func<T, bool> Predicate, string Message = null)
+        {
+            Assert.IsTrue(ActualValue.Any(Predicate), "{0}Перечисление не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+            return this;
+        }
 
         /// <summary>Проверка, что указанного элемента нет в перечислении</summary>
         /// <param name="item">Элемент, которого не должно быть в перечислении</param>
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public void NotContains(T item, string Message = null) => Assert.IsTrue(!ActualValue.Contains(item), "{0}Перечисление содержит элемент {1}", Message.AddSeparator(), item);
+        public EnumerableChecker<T> NotContains(T item, string Message = null)
+        {
+            Assert.IsTrue(!ActualValue.Contains(item), "{0}Перечисление содержит элемент {1}", Message.AddSeparator(), item);
+            return this;
+        }
 
         /// <summary>Проверка, что перечисление НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
         /// <param name="Predicate">Критерий проверки наличия элемента в перечислении</param>
         /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
-        public void NotContains(Func<T, bool> Predicate, string Message = null) => Assert.IsFalse(ActualValue.Any(Predicate), "{0}Перечисление не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+        public EnumerableChecker<T> NotContains(Func<T, bool> Predicate, string Message = null)
+        {
+            Assert.IsFalse(ActualValue.Any(Predicate), "{0}Перечисление не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+            return this;
+        }
 
         /// <summary>Выполнение проверки для всех элементов перечисления</summary>
         /// <param name="Check">Метод проверки значения</param>
