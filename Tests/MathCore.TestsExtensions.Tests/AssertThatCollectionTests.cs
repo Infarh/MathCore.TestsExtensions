@@ -6,12 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathCore.TestsExtensions.Tests
 {
-    [TestClass]
-    public class AssertThatCollectionTests
+    public abstract class AssertTests
     {
-        private static AssertFailedException IsAssertFail(Action AssertAction) => ExpectedException<AssertFailedException>(AssertAction);
+        protected static AssertFailedException IsAssertFail(Action AssertAction) => ExpectedException<AssertFailedException>(AssertAction);
 
-        private static TException ExpectedException<TException>(Action AssertAction) where TException : Exception
+        protected static TException ExpectedException<TException>(Action AssertAction) where TException : Exception
         {
             TException expected_exception = null;
             try
@@ -27,7 +26,11 @@ namespace MathCore.TestsExtensions.Tests
 
             return expected_exception;
         }
-
+    }
+    
+    [TestClass]
+    public class AssertThatCollectionTests : AssertTests
+    {
         [TestMethod]
         public void IsItemsCount_Success()
         {

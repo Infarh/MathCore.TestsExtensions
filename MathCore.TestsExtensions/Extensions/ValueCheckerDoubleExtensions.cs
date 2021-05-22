@@ -162,7 +162,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         [NotNull]
         public static ValueChecker<double> LessOrEqualsThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, double Accuracy, string Message = null)
         {
-            if (!(ExpectedValue - Checker.ActualValue <= Accuracy))
+            if (!(Checker.ActualValue <= ExpectedValue + Accuracy))
                 throw new AssertFailedException(
                     $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy:e2}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;

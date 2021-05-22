@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using MathCore.Tests.Annotations;
 // ReSharper disable UnusedMember.Global
 
@@ -28,30 +29,20 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
         public EnumerableChecker<T> IsEqualTo([NotNull] IEnumerable<T> ExpectedEnumerable, string Message = null)
         {
-            IEnumerator<T> expected_collection_enumerator = null;
-            IEnumerator<T> actual_collection_enumerator = null;
-            try
-            {
-                expected_collection_enumerator = ExpectedEnumerable.GetEnumerator();
-                actual_collection_enumerator = ActualValue.GetEnumerator();
+            using var expected_collection_enumerator = ExpectedEnumerable.GetEnumerator();
+            using var actual_collection_enumerator = ActualValue.GetEnumerator();
 
-                var index = 0;
-                Service.CheckSeparator(ref Message);
-                bool actual_move_next, expected_move_next = false;
-                while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
-                {
-                    var expected = expected_collection_enumerator.Current;
-                    var actual = actual_collection_enumerator.Current;
-                    Assert.AreEqual(expected, actual, "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index++, expected, actual);
-                }
-                if (actual_move_next != expected_move_next)
-                    throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
-            }
-            finally
+            var index = 0;
+            Service.CheckSeparator(ref Message);
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
-                expected_collection_enumerator?.Dispose();
-                actual_collection_enumerator?.Dispose();
+                var expected = expected_collection_enumerator.Current;
+                var actual = actual_collection_enumerator.Current;
+                Assert.AreEqual(expected, actual, "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index++, expected, actual);
             }
+            if (actual_move_next != expected_move_next)
+                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
 
             return this;
         }
