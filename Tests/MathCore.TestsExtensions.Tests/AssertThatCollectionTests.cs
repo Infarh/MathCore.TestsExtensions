@@ -60,6 +60,14 @@ namespace MathCore.TestsExtensions.Tests
         }
 
         [TestMethod]
+        public void IsEqualTo_Success2()
+        {
+            var actual = new[] { "file1.bin", "file2.bin" };
+
+            Assert.That.Collection(actual).IsEqualTo("Error message", "file1.bin", "file2.bin");
+        }
+
+        [TestMethod]
         public void IsEqualTo_Fail_WithDifferentCount()
         {
             const int count = 10;
