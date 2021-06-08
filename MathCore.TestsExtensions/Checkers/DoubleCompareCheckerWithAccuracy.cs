@@ -2,6 +2,7 @@
 using System.Globalization;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
+// ReSharper disable UnusedMethodReturnValue.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -40,27 +41,27 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             _IsChecked = true;
             if (_IsLessChecking)
+            {
                 if (_IsEquals)
-                    Assert.IsTrue(_ExpectedValue - _ActualValue <= Accuracy,
-                        "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4}",
-                        Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, 
-                        (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
-                else
-                    Assert.IsTrue(_ExpectedValue - _ActualValue < Accuracy,
-                        "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4}",
-                        Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, 
-                        (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
-
-            else if (_IsEquals)
-                Assert.IsTrue(_ActualValue - _ExpectedValue <= Accuracy,
-                    "{0}Нарушено условие ({1} >= {2}) при точности {3:e2} delta:{4}",
-                    Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy, 
-                    (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
+                    if (!(_ActualValue - Math.Abs(Accuracy) <= _ExpectedValue))
+                        throw new AssertFailedException(
+                            $"{Message.AddSeparator()}Значение {_ActualValue} должно быть меньше, либо равно {_ExpectedValue} при точности {Accuracy}. delta:{(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
+                    else
+                        if (!(_ActualValue - Math.Abs(Accuracy) < _ExpectedValue))
+                            throw new AssertFailedException(
+                                $"{Message.AddSeparator()}Значение {_ActualValue} должно быть меньше {_ExpectedValue} при точности {Accuracy}. delta:{(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
+            }
             else
-                Assert.IsTrue(_ActualValue - _ExpectedValue < Accuracy,
-                    "{0}Нарушено условие ({1} > {2}) при точности {3:e2} delta:{4}",
-                    Message.AddSeparator(), _ActualValue, _ExpectedValue, Accuracy,
-                    (_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture));
+            {
+                if (_IsEquals)
+                    if (!(_ActualValue + Math.Abs(Accuracy) >= _ExpectedValue))
+                        throw new AssertFailedException(
+                            $"{Message.AddSeparator()}Значение {_ActualValue} должно быть больше, либо равно {_ExpectedValue} при точности {Accuracy}. delta:{(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
+                    else 
+                    if (!(_ActualValue + Math.Abs(Accuracy) > _ExpectedValue))
+                        throw new AssertFailedException(
+                            $"{Message.AddSeparator()}Значение {_ActualValue} должно быть больше {_ExpectedValue} при точности {Accuracy}. delta:{(_ExpectedValue - _ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
+            }
             return this;
         }
 

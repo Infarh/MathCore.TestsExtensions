@@ -7,6 +7,7 @@ using MathCore.Tests.Annotations;
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable RedundantArgumentDefaultValue
 // ReSharper disable UnusedMethodReturnValue.Global
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
@@ -104,6 +105,19 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             return Checker;
         }
 
+        /// <summary>Проверка, что значение больше заданного</summary>
+        /// <param name="Checker">Объект проверки вещественного значения</param>
+        /// <param name="ExpectedValue">Опорное значение</param>
+        /// <param name="Accuracy">Точность</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        [NotNull]
+        public static ValueChecker<double> GreaterThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, double Accuracy, string Message = null)
+        {
+            if (!(Checker.ActualValue + Math.Abs(Accuracy) > ExpectedValue))
+                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть больше {ExpectedValue} при точности {Accuracy}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
+            return Checker;
+        }
+
         /// <summary>Проверка, что значение больше, либо равно заданному</summary>
         /// <param name="Checker">Объект проверки вещественного значения</param>
         /// <param name="ExpectedValue">Опорное значение</param>
@@ -139,6 +153,19 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         {
             if (!(Checker.ActualValue < ExpectedValue))
                 throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше {ExpectedValue}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
+            return Checker;
+        }
+
+        /// <summary>Проверка, что значение больше заданного</summary>
+        /// <param name="Checker">Объект проверки вещественного значения</param>
+        /// <param name="ExpectedValue">Опорное значение</param>
+        /// <param name="Accuracy">Точность</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        [NotNull]
+        public static ValueChecker<double> LessThan([NotNull] this ValueChecker<double> Checker, double ExpectedValue, double Accuracy, string Message = null)
+        {
+            if (!(Checker.ActualValue - Math.Abs(Accuracy) < ExpectedValue))
+                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше {ExpectedValue} при точности {Accuracy}. delta:{(ExpectedValue - Checker.ActualValue).ToString("e2", CultureInfo.InvariantCulture)}");
             return Checker;
         }
 

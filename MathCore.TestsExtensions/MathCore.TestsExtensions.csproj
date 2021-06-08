@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.30.2</Version>
+    <Version>0.1.30.4</Version>
     <PackageReleaseNotes>
-      Развитие Flow-подхода к написанию кода с помощью методов объектов проверки
+      Исправление логки сравнения вещественных чисел для методов GreaterThan, LessThen
     </PackageReleaseNotes>
   </PropertyGroup>
 

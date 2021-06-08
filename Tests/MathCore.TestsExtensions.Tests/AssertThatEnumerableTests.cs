@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MathCore.TestsExtensions.Tests
 {
     [TestClass]
-    public class AssertThatEnumerableTests
+    public class AssertThatEnumerableTests : AssertTests
     {
         [TestMethod]
         public void IsEqualTo_Success()

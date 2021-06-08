@@ -3,7 +3,7 @@
 namespace MathCore.TestsExtensions.Tests
 {
     [TestClass]
-    public class NestedValueCheckerTests
+    public class NestedValueCheckerTests : AssertTests
     {
         [TestMethod]
         public void CheckEquals_Test()
