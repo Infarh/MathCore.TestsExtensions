@@ -1,33 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace MathCore.TestsExtensions.Tests
 {
-    public abstract class AssertTests
-    {
-        protected static AssertFailedException IsAssertFail(Action AssertAction) => ExpectedException<AssertFailedException>(AssertAction);
-
-        protected static TException ExpectedException<TException>(Action AssertAction) where TException : Exception
-        {
-            TException expected_exception = null;
-            try
-            {
-                AssertAction();
-            }
-            catch (TException exception)
-            {
-                expected_exception = exception;
-            }
-            if (expected_exception is null)
-                throw new AssertFailedException($"Требуемое исключение типа {typeof(TException).Name} выброшено не было");
-
-            return expected_exception;
-        }
-    }
-    
     [TestClass]
     public class AssertThatCollectionTests : AssertTests
     {
@@ -218,6 +196,17 @@ namespace MathCore.TestsExtensions.Tests
         {
             int[] items = { 1, 3, 5, 7 };
             Assert.That.Collection(items).Contains(item => item == 5);
+        }
+
+        [TestMethod]
+        public void IsEqualToEnumerable()
+        {
+            var enumerable = Enumerable.Range(1, 10);
+
+            var collection = enumerable.ToArray();
+
+            Assert.That.Collection(collection)
+               .IsEqualTo(enumerable);
         }
     }
 }

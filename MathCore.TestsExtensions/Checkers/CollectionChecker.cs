@@ -214,8 +214,8 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 
                 var index = 0;
                 Service.CheckSeparator(ref Message);
-                bool actual_move_next, expected_move_next = false;
-                while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+                bool actual_move_next, expected_move_next;
+                while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
                 {
                     var expected = expected_collection_enumerator.Current;
                     var actual = actual_collection_enumerator.Current;
