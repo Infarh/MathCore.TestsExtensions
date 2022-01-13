@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.32</Version>
+    <Version>0.1.33</Version>
     <PackageReleaseNotes>
-      Исправление логки сравнения коллекции с перечислением
+      DataRowSourceAttribute - атрибут, позволяющий указать метод-источник данных для теста
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -27,6 +27,14 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MathCore.TestsExtensions.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System"/>
+    <Using Include="System.Linq"/>
+    <Using Include="System.Collections.Generic"/>
+    <Using Include="System.Threading.Tasks"/>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
