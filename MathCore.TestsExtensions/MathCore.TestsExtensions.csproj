@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.33</Version>
+    <Version>0.1.34</Version>
     <PackageReleaseNotes>
-      DataRowSourceAttribute - атрибут, позволяющий указать метод-источник данных для теста
+      UnitTest.ToleranceComparer - Исправление ошибки
     </PackageReleaseNotes>
   </PropertyGroup>
 

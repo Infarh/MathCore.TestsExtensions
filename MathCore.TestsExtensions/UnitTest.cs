@@ -86,7 +86,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             /// <param name="Tolerance">Точность сравнения</param>
             public ToleranceComparer(double Tolerance) => _Tolerance = Tolerance;
 
-            int IComparer<double>.Compare(double x, double y) => Math.Abs(x - x) < _Tolerance ? 0 : Math.Sign(x - x);
+            int IComparer<double>.Compare(double x, double y) => Math.Abs(x - y) < _Tolerance ? 0 : Math.Sign(x - y);
 
             int IComparer.Compare(object x, object y) => ((IComparer<double>)this).Compare(Convert.ToDouble(x), Convert.ToDouble(y));
         }
@@ -95,6 +95,6 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         /// <param name="Tolerance">Точность сравнения чисел</param>
         /// <returns>Объект сравнения чисел с заданной точностью</returns>
         [DST, NotNull]
-        public static ToleranceComparer GetComparer(double Tolerance = 1e-14) => new ToleranceComparer(Tolerance);
+        public static ToleranceComparer GetComparer(double Tolerance = 1e-14) => new(Tolerance);
     }
 }
