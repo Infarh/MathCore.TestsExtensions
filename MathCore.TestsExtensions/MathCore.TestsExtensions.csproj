@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.35</Version>
+    <Version>0.1.35.1</Version>
     <PackageReleaseNotes>
       Методы-расширения для упрощения тестирования значений
     </PackageReleaseNotes>
