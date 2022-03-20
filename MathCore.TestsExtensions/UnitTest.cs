@@ -64,23 +64,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         }
 
         /// <summary>Объект сравнения вещественных чисел с указанной точностью</summary>
-        public class ToleranceComparer : IComparer<double>, IComparer
+        public readonly struct ToleranceComparer : IComparer<double>, IComparer, IEqualityComparer<double>
         {
             /// <summary>Точность сравнения</summary>
-            private double _Tolerance;
+            private readonly double _Tolerance;
 
             /// <summary>Точность сравнения</summary>
             /// <exception cref="ArgumentOutOfRangeException">Если значение точности меньше нуля</exception>
-            public double Tolerance
-            {
-                get => _Tolerance;
-                set
-                {
-                    if(value < 0) 
-                        throw new ArgumentOutOfRangeException(nameof(value), "Значение точности должно быть больше, либо равно 0");
-                    _Tolerance = value;
-                }
-            }
+            public double Tolerance { get => _Tolerance; init => _Tolerance = value; }
 
             /// <summary>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</summary>
             /// <param name="Tolerance">Точность сравнения</param>
@@ -89,6 +80,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
             int IComparer<double>.Compare(double x, double y) => Math.Abs(x - y) < _Tolerance ? 0 : Math.Sign(x - y);
 
             int IComparer.Compare(object x, object y) => ((IComparer<double>)this).Compare(Convert.ToDouble(x), Convert.ToDouble(y));
+
+            public bool Equals(double x, double y) => Math.Abs(x - y) <= _Tolerance;
+            public int GetHashCode(double value) => (Math.Round(value / _Tolerance) * _Tolerance).GetHashCode();
         }
 
         /// <summary>Получить объект для сравнения вещественных чисел с заданной точностью</summary>

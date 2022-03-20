@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.35.1</Version>
+    <Version>0.1.35.2</Version>
     <PackageReleaseNotes>
-      Методы-расширения для упрощения тестирования значений
+      ToleranceComparer становится структурой и приобретает интерфейс IEqualityComparer
     </PackageReleaseNotes>
   </PropertyGroup>
 
