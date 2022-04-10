@@ -1,304 +1,384 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 
-using MathCore.Tests.Annotations;
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace Microsoft.VisualStudio.TestTools.UnitTesting
+namespace Microsoft.VisualStudio.TestTools.UnitTesting;
+
+/// <summary>Объект проверки коллекций вещественных чисел</summary>
+public class DoubleCollectionChecker
 {
-    /// <summary>Объект проверки коллекций вещественных чисел</summary>
-    public class DoubleCollectionChecker
+    /// <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
+    public sealed class EqualityCheckerWithAccuracy : IDisposable
     {
-        /// <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
-        public sealed class EqualityCheckerWithAccuracy : IDisposable
+        /// <summary>Проверяемая коллекция значение</summary>
+        private readonly ICollection<double> _ActualValues;
+        /// <summary>Значения, с которыми требуется провести сравнение</summary>
+        private readonly ICollection<double> _ExpectedValues;
+        /// <summary>Проверка на неравенство</summary>
+        private readonly bool _Not;
+
+        private bool _IsChecked;
+
+        /// <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
+        /// <param name="ActualValues">Проверяемая коллекция</param>
+        /// <param name="ExpectedValues">Требуемые значения</param>
+        /// <param name="Not">Проверять на неравенство</param>
+        internal EqualityCheckerWithAccuracy(ICollection<double> ActualValues, double[] ExpectedValues, bool Not = false)
         {
-            /// <summary>Проверяемая коллекция значение</summary>
-            private readonly ICollection<double> _ActualValues;
-            /// <summary>Значения, с которыми требуется провести сравнение</summary>
-            private readonly ICollection<double> _ExpectedValues;
-            /// <summary>Проверка на неравенство</summary>
-            private readonly bool _Not;
-
-            private bool _IsChecked;
-
-            /// <summary>Инициализация нового объекта сравнения чисел с заданной точностью</summary>
-            /// <param name="ActualValues">Проверяемая коллекция</param>
-            /// <param name="ExpectedValues">Требуемые значения</param>
-            /// <param name="Not">Проверять на неравенство</param>
-            internal EqualityCheckerWithAccuracy(ICollection<double> ActualValues, double[] ExpectedValues, bool Not = false)
-            {
-                _ActualValues = ActualValues;
-                _ExpectedValues = ExpectedValues;
-                _Not = Not;
-            }
-
-            /// <summary>Проверка с задаваемой точностью</summary>
-            /// <param name="Accuracy">Точность сравнения</param>
-            /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-            public EqualityCheckerWithAccuracy WithAccuracy(double Accuracy, string Message = null)
-            {
-                _IsChecked = true;
-
-                IEnumerator<double> expected_collection_enumerator = null;
-                IEnumerator<double> actual_collection_enumerator = null;
-
-                try
-                {
-                    expected_collection_enumerator = _ExpectedValues.GetEnumerator();
-                    actual_collection_enumerator = _ActualValues.GetEnumerator();
-
-                    var index = 0;
-                    Service.CheckSeparator(ref Message);
-
-                    if (_Not)
-                        while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-                        {
-                            var expected = expected_collection_enumerator.Current;
-                            var actual = actual_collection_enumerator.Current;
-                            var delta = Math.Abs(expected - actual);
-                            Assert.AreNotEqual(
-                                expected, actual, Accuracy,
-                                "{0}error[{1}]: ожидалось({2}), получено({3}), accuracy:{4}, err:{5:e3}; rel.err:{6}",
-                                Message, index++, expected, actual, Accuracy, delta, delta / expected);
-                        }
-                    else
-                        while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-                        {
-                            var expected = expected_collection_enumerator.Current;
-                            var actual = actual_collection_enumerator.Current;
-                            var delta = Math.Abs(expected - actual);
-                            Assert.AreEqual(
-                                expected, actual, Accuracy,
-                                "{0}error[{1}]: ожидалось({2}), получено({3}), accuracy:{4}, err:{5:e3}; rel.err:{6}",
-                                Message, index++, expected, actual, Accuracy, delta, delta / expected);
-                        }
-                }
-                finally
-                {
-                    expected_collection_enumerator?.Dispose();
-                    actual_collection_enumerator?.Dispose();
-                }
-                return this;
-            }
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
-            void IDisposable.Dispose()
-            {
-                if (_IsChecked) return;
-                Assert.Fail($"Проверка на {(_Not ? "не" : null)}равенство не выполнена");
-            }
+            _ActualValues = ActualValues;
+            _ExpectedValues = ExpectedValues;
+            _Not = Not;
         }
 
-        /// <summary>Проверяемая коллекция</summary>
-        [NotNull] private readonly ICollection<double> _ActualCollection;
-
-        /// <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
-        /// <param name="ActualCollection"></param>
-        internal DoubleCollectionChecker([NotNull] ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
-
-        /// <summary>Проверка значений коллекции на равенство</summary>
-        /// <param name="ExpectedValues">Ожидаемые значения</param>
-        /// <returns>Объект сравнения с задаваемой точностью</returns>
-        public EqualityCheckerWithAccuracy ValuesAreEqualTo([NotNull] params double[] ExpectedValues)
+        /// <summary>Проверка с задаваемой точностью</summary>
+        /// <param name="Accuracy">Точность сравнения</param>
+        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+        public EqualityCheckerWithAccuracy WithAccuracy(double Accuracy, string? Message = null)
         {
-            Assert.That
-               .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}");
+            if (double.IsNaN(Accuracy))
+                throw new ArgumentException("Точность не может быть в значении NaN", nameof(Accuracy));
 
-            return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues);
-        }
+            _IsChecked = true;
 
-        /// <summary>Проверка значений коллекции на равенство</summary>
-        /// <param name="ExpectedValues">Ожидаемые значения</param>
-        /// <returns>Объект сравнения с задаваемой точностью</returns>
-        public EqualityCheckerWithAccuracy ValuesAreNotEqualTo([NotNull] params double[] ExpectedValues)
-        {
-            Assert.That
-               .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}");
+            IEnumerator<double>? expected_collection_enumerator = null;
+            IEnumerator<double>? actual_collection_enumerator = null;
 
-            return new EqualityCheckerWithAccuracy(_ActualCollection, ExpectedValues, Not: true);
-        }
-
-        /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
-        /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        public DoubleCollectionChecker ValuesAreEqual([NotNull] params double[] ExpectedValues)
-        {
-            IsEqualTo(ExpectedValues);
-            return this;
-        }
-
-        /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
-        public DoubleCollectionChecker ValuesAreEqual(string Message, [NotNull] params double[] ExpectedValues)
-        {
-            IsEqualTo(ExpectedValues, Message);
-            return this;
-        }
-
-        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public DoubleCollectionChecker IsEqualTo([NotNull] ICollection<double> ExpectedCollection, string Message = null)
-        {
-            Assert.That
-               .Value(_ActualCollection.Count)
-               .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}");
-
-            IEnumerator<double> expected_collection_enumerator = null;
-            IEnumerator<double> actual_collection_enumerator = null;
             try
             {
-                expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-                actual_collection_enumerator = _ActualCollection.GetEnumerator();
+                expected_collection_enumerator = _ExpectedValues.GetEnumerator();
+                actual_collection_enumerator = _ActualValues.GetEnumerator();
 
                 var index = 0;
                 Service.CheckSeparator(ref Message);
-                while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-                {
-                    var expected = expected_collection_enumerator.Current;
-                    var actual = actual_collection_enumerator.Current;
-                    var delta = Math.Abs(expected - actual);
-                    Assert.AreEqual(
-                        expected, actual,
-                        "{0}error[{1}]: ожидалось({2}), получено({3}), err:{4}(rel:{5})",
-                        Message, index++, expected, actual,
-                        delta.ToString("e3", CultureInfo.InvariantCulture),
-                        (delta / expected).ToString(CultureInfo.InvariantCulture));
-                }
+
+                if (_Not)
+                    while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+                    {
+                        var expected = expected_collection_enumerator.Current;
+                        var actual = actual_collection_enumerator.Current;
+                        var delta = Math.Abs(expected - actual);
+
+                        if (double.IsNaN(actual))
+                            throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
+
+                        if (Math.Abs(expected - actual) < Accuracy)
+                        {
+                            FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    accuracy:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                        }
+
+                        //Assert.AreNotEqual(
+                        //    expected, actual, Accuracy,
+                        //    "{0}error[{1}]: ожидалось({2}), получено({3}), accuracy:{4}, err:{5:e3}; rel.err:{6}",
+                        //    Message, index, expected, actual, Accuracy, delta, delta / expected);
+
+                        index++;
+                    }
+                else
+                    while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+                    {
+                        var expected = expected_collection_enumerator.Current;
+                        var actual = actual_collection_enumerator.Current;
+                        var delta = Math.Abs(expected - actual);
+
+                        if (double.IsNaN(actual))
+                            throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
+
+                        if (Math.Abs(expected - actual) > Accuracy)
+                        {
+                            FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    accuracy:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                        }
+
+                        //Assert.AreEqual(
+                        //    expected, actual, Accuracy,
+                        //    "{0}error[{1}]: ожидалось({2}), получено({3}), accuracy:{4}, err:{5:e3}; rel.err:{6}",
+                        //    Message, index, expected, actual, Accuracy, delta, delta / expected);
+
+                        index++;
+                    }
             }
             finally
             {
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
-
             return this;
         }
 
-        /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
-        /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
-        /// <param name="Accuracy">Точность сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public DoubleCollectionChecker IsEqualTo([NotNull] ICollection<double> ExpectedCollection, double Accuracy, string Message = null)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
+        void IDisposable.Dispose()
         {
-            Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совпадают");
-
-            IEnumerator<double> expected_collection_enumerator = null;
-            IEnumerator<double> actual_collection_enumerator = null;
-            try
-            {
-                expected_collection_enumerator = ExpectedCollection.GetEnumerator();
-                actual_collection_enumerator = _ActualCollection.GetEnumerator();
-
-                var index = -1;
-                Service.CheckSeparator(ref Message);
-                while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
-                {
-                    index++;
-                    var expected = expected_collection_enumerator.Current;
-                    var actual = actual_collection_enumerator.Current;
-                    var delta = Math.Abs(expected - actual);
-                    Assert.AreEqual(
-                        expected, actual, Accuracy,
-                        "{0}error[{1}]: ожидалось({2}), получено({3}), eps:{4}, err:{5}(rel:{6})",
-                        Message, index, expected, actual, Accuracy,
-                        delta.ToString("e3", CultureInfo.InvariantCulture),
-                        (delta / expected).ToString(CultureInfo.InvariantCulture));
-                }
-            }
-            finally
-            {
-                expected_collection_enumerator?.Dispose();
-                actual_collection_enumerator?.Dispose();
-            }
-
-            return this;
+            if (_IsChecked) return;
+            Assert.Fail($"Проверка на {(_Not ? "не" : null)}равенство не выполнена");
         }
-
-        /// <summary>Все элементы коллекции равны заданному значению</summary>
-        /// <param name="ExpectedValue">Ожидаемое значение</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, string Message = null)
-        {
-            var index = 0;
-            foreach (var actual_value in _ActualCollection)
-                Assert.AreEqual(ExpectedValue, actual_value,
-                    "{0}error[{1}]:{2:e2}", Message.AddSeparator(), index++, Math.Abs(ExpectedValue - actual_value));
-
-            return this;
-        }
-
-        /// <summary>Все элементы коллекции равны заданному значению</summary>
-        /// <param name="ExpectedValue">Ожидаемое значение</param>
-        /// <param name="Accuracy"></param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, double Accuracy, string Message = null)
-        {
-            var index = 0;
-            foreach (var actual_value in _ActualCollection)
-                Assert.AreEqual(ExpectedValue, actual_value, Accuracy,
-                    "{0}error[{1}]:{2}({3}), eps:{4}",
-                    Message.AddSeparator(), index++,
-                    Math.Abs(ExpectedValue - actual_value).ToString("e2", CultureInfo.InvariantCulture),
-                    ((ExpectedValue - actual_value) / ExpectedValue).ToString("e3", CultureInfo.InvariantCulture),
-                    Accuracy);
-
-            return this;
-        }
-
-        /// <summary>Критерий проверки элементов коллекции</summary>
-        /// <param name="ActualValue">Проверяемое значение</param>
-        /// <returns>Истина, если элемент соответствует критерию проверки</returns>
-        public delegate bool ElementChecker(double ActualValue);
-
-        /// <summary>Все элементы коллекции удовлетворяют условию</summary>
-        /// <param name="Condition">Условие проверки всех элементов</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public DoubleCollectionChecker ElementsAreSatisfyCondition([NotNull] ElementChecker Condition, string Message = null)
-        {
-            var index = 0;
-            Service.CheckSeparator(ref Message);
-            foreach (var actual_value in _ActualCollection)
-                Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
-
-            return this;
-        }
-
-        /// <summary>Позиционный критерий проверки элементов коллекции</summary>
-        /// <param name="ActualValue">Проверяемое значение</param>
-        /// <param name="ItemIndex">Индекс проверяемого элемента в коллекции</param>
-        /// <returns>Истина, если элемент соответствует критерию проверки</returns>
-        public delegate bool PositionElementChecker(double ActualValue, int ItemIndex);
-
-        /// <summary>Все элементы коллекции удовлетворяют условию</summary>
-        /// <param name="Condition">Условие проверки всех элементов</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        public DoubleCollectionChecker ElementsAreSatisfyCondition([NotNull] PositionElementChecker Condition, string Message = null)
-        {
-            var index = 0;
-            Service.CheckSeparator(ref Message);
-            foreach (var actual_value in _ActualCollection)
-                Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value);
-
-            return this;
-        }
-
-        /// <summary>Максимальное значение в коллекции</summary>
-        /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Max() => Assert.That.Value(_ActualCollection.Max());
-
-        /// <summary>Минимальное значение в коллекции</summary>
-        /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Min() => Assert.That.Value(_ActualCollection.Min());
-
-        /// <summary>Среднее значение в коллекции</summary>
-        /// <returns>Объект проверки вещественного значения</returns>
-        public DoubleValueChecker Average() => Assert.That.Value(_ActualCollection.Average());
     }
+
+    /// <summary>Проверяемая коллекция</summary>
+    private readonly ICollection<double> _ActualCollection;
+
+    /// <summary>Инициализация нового объекта проверки коллекции вещественных чисел</summary>
+    /// <param name="ActualCollection"></param>
+    internal DoubleCollectionChecker(ICollection<double> ActualCollection) => _ActualCollection = ActualCollection;
+
+    /// <summary>Проверка значений коллекции на равенство</summary>
+    /// <param name="ExpectedValues">Ожидаемые значения</param>
+    /// <returns>Объект сравнения с задаваемой точностью</returns>
+    public EqualityCheckerWithAccuracy ValuesAreEqualTo(params double[] ExpectedValues)
+    {
+        Assert.That
+           .Value(_ActualCollection.Count)
+           .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}");
+
+        return new(_ActualCollection, ExpectedValues);
+    }
+
+    /// <summary>Проверка значений коллекции на равенство</summary>
+    /// <param name="ExpectedValues">Ожидаемые значения</param>
+    /// <returns>Объект сравнения с задаваемой точностью</returns>
+    public EqualityCheckerWithAccuracy ValuesAreNotEqualTo(params double[] ExpectedValues)
+    {
+        Assert.That
+           .Value(_ActualCollection.Count)
+           .IsEqual(ExpectedValues.Length, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedValues.Length}");
+
+        return new(_ActualCollection, ExpectedValues, Not: true);
+    }
+
+    /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
+    /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
+    public DoubleCollectionChecker ValuesAreEqual(params double[] ExpectedValues)
+    {
+        IsEqualTo(ExpectedValues);
+        return this;
+    }
+
+    /// <summary>Проверка на эквивалентность с задаваемым набором значений</summary>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    /// <param name="ExpectedValues">Ожидаемые значения коллекции</param>
+    public DoubleCollectionChecker ValuesAreEqual(string Message, params double[] ExpectedValues)
+    {
+        IsEqualTo(ExpectedValues, Message);
+        return this;
+    }
+
+    /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+    /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker IsEqualTo(ICollection<double> ExpectedCollection, string? Message = null)
+    {
+        Assert.That
+           .Value(_ActualCollection.Count)
+           .IsEqual(ExpectedCollection.Count, $"Размер коллекции {_ActualCollection.Count} не совпадает с ожидаемым размером {ExpectedCollection.Count}");
+
+        IEnumerator<double>? expected_collection_enumerator = null;
+        IEnumerator<double>? actual_collection_enumerator = null;
+        try
+        {
+            expected_collection_enumerator = ExpectedCollection.GetEnumerator();
+            actual_collection_enumerator = _ActualCollection.GetEnumerator();
+
+            var index = 0;
+            Service.CheckSeparator(ref Message);
+            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+            {
+                var expected = expected_collection_enumerator.Current;
+                var actual = actual_collection_enumerator.Current;
+                var delta = Math.Abs(expected - actual);
+
+                if (!expected.Equals(actual))
+                {
+                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                }
+
+                //Assert.AreEqual(
+                //    expected, actual,
+                //    "{0}error[{1}]: ожидалось({2}), получено({3}), err:{4}(rel:{5})",
+                //    Message, index, expected, actual,
+                //    delta.ToString("e3", CultureInfo.InvariantCulture),
+                //    (delta / expected).ToString(CultureInfo.InvariantCulture));
+
+                index++;
+            }
+        }
+        finally
+        {
+            expected_collection_enumerator?.Dispose();
+            actual_collection_enumerator?.Dispose();
+        }
+
+        return this;
+    }
+
+    /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+    /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker IsEqualTo(ICollection<double> ExpectedCollection, double Accuracy, string? Message = null)
+    {
+        if (double.IsNaN(Accuracy))
+            throw new ArgumentException("Значение точности не может быть равно NaN", nameof(Accuracy));
+
+        Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совпадают");
+
+        IEnumerator<double>? expected_collection_enumerator = null;
+        IEnumerator<double>? actual_collection_enumerator = null;
+        try
+        {
+            expected_collection_enumerator = ExpectedCollection.GetEnumerator();
+            actual_collection_enumerator = _ActualCollection.GetEnumerator();
+
+            var index = 0;
+            Service.CheckSeparator(ref Message);
+            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+            {
+                var expected = expected_collection_enumerator.Current;
+                var actual = actual_collection_enumerator.Current;
+                var delta = Math.Abs(expected - actual);
+
+                if (double.IsNaN(actual)) 
+                    throw new AssertFailedException($"{Message}error[{index}]: полученное значение  равно NaN");
+
+                if (double.IsNaN(actual))
+                    throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
+
+                if (Math.Abs(expected - actual) > delta)
+                {
+                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    eps:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                }
+
+                //Assert.AreEqual(
+                //    expected, actual, Accuracy,
+                //    "{0}error[{1}]: ожидалось({2}), получено({3}), eps:{4}, err:{5}(rel:{6})",
+                //    Message, index, expected, actual, Accuracy,
+                //    delta.ToString("e3", CultureInfo.InvariantCulture),
+                //    (delta / expected).ToString(CultureInfo.InvariantCulture));
+
+                index++;
+            }
+        }
+        finally
+        {
+            expected_collection_enumerator?.Dispose();
+            actual_collection_enumerator?.Dispose();
+        }
+
+        return this;
+    }
+
+    /// <summary>Все элементы коллекции равны заданному значению</summary>
+    /// <param name="ExpectedValue">Ожидаемое значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, string? Message = null)
+    {
+        var index = 0;
+        foreach (var actual_value in _ActualCollection)
+        {
+            if (!actual_value.Equals(ExpectedValue))
+            {
+                var msg = Message.AddSeparator();
+                var delta = Math.Abs(ExpectedValue - actual_value);
+                FormattableString message = $"{msg}error[{index}]:\r\n    {actual_value}\r\n != {ExpectedValue}\r\n    err:{delta:e2}";
+                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+            }
+
+            //Assert.AreEqual(ExpectedValue, actual_value,
+            //    "{0}error[{1}]:{2:e2}", Message.AddSeparator(), index, Math.Abs(ExpectedValue - actual_value));
+
+            index++;
+        }
+
+        return this;
+    }
+
+    /// <summary>Все элементы коллекции равны заданному значению</summary>
+    /// <param name="ExpectedValue">Ожидаемое значение</param>
+    /// <param name="Accuracy"></param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, double Accuracy, string? Message = null)
+    {
+        if (double.IsNaN(Accuracy))
+            throw new ArgumentException("Значение точности не может быть равно NaN", nameof(Accuracy));
+
+        var index = 0;
+        foreach (var actual_value in _ActualCollection)
+        {
+            if (double.IsNaN(actual_value))
+                throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
+
+            var abs_delta = Math.Abs(ExpectedValue - actual_value);
+            if (abs_delta > Accuracy)
+            {
+                var msg = Message.AddSeparator();
+                var rel_delta = (ExpectedValue - actual_value) / ExpectedValue;
+                FormattableString message = $"{msg}error[{index}]:\r\n    {actual_value}\r\n != {ExpectedValue}\r\n    err:{abs_delta:e2}(rel.err:{rel_delta:e3})\r\n    eps:{Accuracy}";
+                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+            }
+
+            //Assert.AreEqual(
+            //    ExpectedValue, actual_value, Accuracy,
+            //    "{0}error[{1}]:{2}({3}), eps:{4}",
+            //    Message.AddSeparator(), index,
+            //    Math.Abs(ExpectedValue - actual_value).ToString("e2", CultureInfo.InvariantCulture),
+            //    ((ExpectedValue - actual_value) / ExpectedValue).ToString("e3", CultureInfo.InvariantCulture),
+            //    Accuracy);
+
+            index++;
+        }
+
+        return this;
+    }
+
+    /// <summary>Критерий проверки элементов коллекции</summary>
+    /// <param name="ActualValue">Проверяемое значение</param>
+    /// <returns>Истина, если элемент соответствует критерию проверки</returns>
+    public delegate bool ElementChecker(double ActualValue);
+
+    /// <summary>Все элементы коллекции удовлетворяют условию</summary>
+    /// <param name="Condition">Условие проверки всех элементов</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker ElementsAreSatisfyCondition(ElementChecker Condition, string? Message = null)
+    {
+        var index = 0;
+        Service.CheckSeparator(ref Message);
+        foreach (var actual_value in _ActualCollection)
+            Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value.ToString(CultureInfo.InvariantCulture));
+
+        return this;
+    }
+
+    /// <summary>Позиционный критерий проверки элементов коллекции</summary>
+    /// <param name="ActualValue">Проверяемое значение</param>
+    /// <param name="ItemIndex">Индекс проверяемого элемента в коллекции</param>
+    /// <returns>Истина, если элемент соответствует критерию проверки</returns>
+    public delegate bool PositionElementChecker(double ActualValue, int ItemIndex);
+
+    /// <summary>Все элементы коллекции удовлетворяют условию</summary>
+    /// <param name="Condition">Условие проверки всех элементов</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker ElementsAreSatisfyCondition(PositionElementChecker Condition, string? Message = null)
+    {
+        var index = 0;
+        Service.CheckSeparator(ref Message);
+        foreach (var actual_value in _ActualCollection)
+            Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value.ToString(CultureInfo.InvariantCulture));
+
+        return this;
+    }
+
+    /// <summary>Максимальное значение в коллекции</summary>
+    /// <returns>Объект проверки вещественного значения</returns>
+    public DoubleValueChecker Max() => Assert.That.Value(_ActualCollection.Max());
+
+    /// <summary>Минимальное значение в коллекции</summary>
+    /// <returns>Объект проверки вещественного значения</returns>
+    public DoubleValueChecker Min() => Assert.That.Value(_ActualCollection.Min());
+
+    /// <summary>Среднее значение в коллекции</summary>
+    /// <returns>Объект проверки вещественного значения</returns>
+    public DoubleValueChecker Average() => Assert.That.Value(_ActualCollection.Average());
 }

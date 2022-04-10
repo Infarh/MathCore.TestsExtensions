@@ -5,12 +5,13 @@
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IncludeSymbols>false</IncludeSymbols>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.35.2</Version>
+    <Version>0.1.36</Version>
     <PackageReleaseNotes>
-      ToleranceComparer становится структурой и приобретает интерфейс IEqualityComparer
+      Рефакторинг строкового вывода
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -29,11 +30,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="System"/>
-    <Using Include="System.Linq"/>
-    <Using Include="System.Collections.Generic"/>
-    <Using Include="System.Threading.Tasks"/>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+    <Using Include="System" />
+    <Using Include="System.Linq" />
+    <Using Include="System.Collections.Generic" />
+    <Using Include="System.Threading.Tasks" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
   <ItemGroup>
