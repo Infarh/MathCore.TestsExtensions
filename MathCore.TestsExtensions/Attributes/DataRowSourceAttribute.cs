@@ -10,10 +10,10 @@ public class DataRowSourceAttribute : Attribute
     public object[] Data { get; }
 
     /// <summary>Получает или задает отображаемое имя в результатах теста для настройки.</summary>
-    public string DisplayName { get; set; }
+    public string? DisplayName { get; set; }
 
     /// <summary>Добавляемый к имени теста префикс</summary>
-    public string Prefix { get; set; }
+    public string? Prefix { get; set; }
 
     /// <summary>
     /// Имя метода-источника данных.<br/>
@@ -24,13 +24,13 @@ public class DataRowSourceAttribute : Attribute
     /// Если указан тип <see cref="SourceType"/>, то поиск метода осуществляется в нём.<br/>
     /// Иначе выполняется попытка обнаружить статический метод в классе модульного теста.
     /// </summary>
-    public string MethodSourceName { get; set; }
+    public string? MethodSourceName { get; set; }
 
     /// <summary>
     /// Тип, содержащий метод-источник данных.<br/>
     /// Если тип не указан, то поиск осуществляется в классе модульного теста.
     /// </summary>
-    public Type SourceType { get; set; }
+    public Type? SourceType { get; set; }
 
     public DataRowSourceAttribute() => Data = Array.Empty<object>();
 
@@ -41,7 +41,7 @@ public class DataRowSourceAttribute : Attribute
     /// <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.DataRowSourceAttribute" />, принимающий массив аргументов.</summary>
     /// <param name="data">Объект данных.</param>
     /// <param name="MoreData">Дополнительные данные.</param>
-    public DataRowSourceAttribute(object data, params object[] MoreData)
+    public DataRowSourceAttribute(object data, params object[]? MoreData)
     {
         if (MoreData is null)
         {
@@ -115,7 +115,7 @@ public class DataRowSourceAttribute : Attribute
         }
     }
 
-    public string GetDisplayName(MethodInfo TestMethod, object[] data)
+    public string? GetDisplayName(MethodInfo TestMethod, object[]? data)
     {
         if (!string.IsNullOrWhiteSpace(DisplayName)) return DisplayName;
         if (data is null) return null;

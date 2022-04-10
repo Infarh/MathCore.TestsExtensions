@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -84,6 +85,24 @@ namespace MathCore.TestsExtensions.Tests
             const double eps = 0.1;
 
             Assert.That.Value(actual_value).GreaterOrEqualsThan(expected_value, eps);
+        }
+
+        [TestMethod]
+        public void GreaterOrEqualsThan_WithAccuracy_ValueChecker_Fail()
+        {
+            const double expected_value = 1;
+            const double actual_value = 0.89;
+            const double eps = 0.1;
+
+            try
+            {
+                Assert.That.Value(actual_value).GreaterOrEqualsThan(expected_value, eps);
+            }
+            catch (AssertFailedException)
+            {
+                return;
+            }
+            Assert.Fail();
         }
 
         [TestMethod]

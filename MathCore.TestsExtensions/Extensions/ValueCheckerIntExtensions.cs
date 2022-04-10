@@ -1,157 +1,178 @@
-﻿using System;
-using System.Globalization;
-using MathCore.Tests.Annotations;
+﻿using System.Globalization;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace Microsoft.VisualStudio.TestTools.UnitTesting
+namespace Microsoft.VisualStudio.TestTools.UnitTesting;
+
+/// <summary>Методы-расширения для объекта проверки целочисленных значений</summary>
+public static class ValueCheckerIntExtensions
 {
-    /// <summary>Методы-расширения для объекта проверки целочисленных значений</summary>
-    public static class ValueCheckerIntExtensions
+    /// <summary>Проверка, что проверяемое значение равно ожидаемому с заданной точностью</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Ожидаемое значение</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> IsEqual(this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string? Message = null)
     {
-        /// <summary>Проверка, что проверяемое значение равно ожидаемому с заданной точностью</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Ожидаемое значение</param>
-        /// <param name="Accuracy">Точность сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> IsEqual([NotNull] this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string Message = null)
-        {
-            Assert.AreEqual(
-                ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}err:{1}(rel:{2}), eps:{3}",
-                Message.AddSeparator(), 
-                Math.Abs(ExpectedValue - Checker.ActualValue),
-                ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
-                Accuracy);
+        var delta = Math.Abs(ExpectedValue - Checker.ActualValue);
+        if (delta <= Accuracy)
             return Checker;
-        }
 
-        /// <summary>Проверка, что проверяемое значение не равно ожидаемому с заданной точностью</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Ожидаемое значение</param>
-        /// <param name="Accuracy">Точность сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> IsNotEqual([NotNull] this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string Message = null)
-        {
-            Assert.AreNotEqual(
-                ExpectedValue, Checker.ActualValue, Accuracy,
-                "{0}err:{1}(rel:{2}), eps:{3}",
-                Message.AddSeparator(),
-                 Math.Abs(ExpectedValue - Checker.ActualValue),
-                ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
-                Accuracy);
-            return Checker;
-        }
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}actual:{Checker.ActualValue}\r\n    != {ExpectedValue}\r\n         err:{delta}(err.rel:{(ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue:e3})\r\n    accuracy:{Accuracy}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
 
-        /// <summary>Проверка, что значение больше заданного</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Опорное значение</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> GreaterThan([NotNull] this ValueChecker<int> Checker, int ExpectedValue, string Message = null)
-        {
-            if (!(Checker.ActualValue > ExpectedValue))
-                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть больше {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue}");
-            return Checker;
-        }
+        //Assert.AreEqual(
+        //    ExpectedValue, Checker.ActualValue, Accuracy,
+        //    "{0}err:{1}(rel:{2}), eps:{3}",
+        //    Message.AddSeparator(), 
+        //    delta,
+        //    ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
+        //    Accuracy);
+    }
 
-        /// <summary>Проверка, что значение больше, либо равно заданному</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Опорное значение</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> GreaterOrEqualsThan([NotNull] this ValueChecker<int> Checker, int ExpectedValue, string Message = null)
-        {
-            if (!(Checker.ActualValue >= ExpectedValue))
-                throw new AssertFailedException(
-                    $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}). delta:{ExpectedValue - Checker.ActualValue}");
+    /// <summary>Проверка, что проверяемое значение не равно ожидаемому с заданной точностью</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Ожидаемое значение</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> IsNotEqual(this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string? Message = null)
+    {
+        var delta = Math.Abs(ExpectedValue - Checker.ActualValue);
+        if (delta >= Accuracy)
             return Checker;
-        }
 
-        /// <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Опорное значение</param>
-        /// <param name="Accuracy">Точность сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> GreaterOrEqualsThan([NotNull] this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string Message = null)
-        {
-            if (!(Checker.ActualValue - ExpectedValue <= Accuracy))
-                throw new AssertFailedException($"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy}. delta:{ExpectedValue - Checker.ActualValue}");
-            return Checker;
-        }
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}actual:{Checker.ActualValue}\r\n    == {ExpectedValue}\r\n         err:{delta}(err.rel:{(ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue:e3})\r\n    accuracy:{Accuracy}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
 
-        /// <summary>Проверка, что значение меньше заданного</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Опорное значение</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> LessThan([NotNull] this ValueChecker<int> Checker, int ExpectedValue, string Message = null)
-        {
-            if (!(Checker.ActualValue < ExpectedValue))
-                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue}");
-            return Checker;
-        }
+        //Assert.AreNotEqual(
+        //    ExpectedValue, Checker.ActualValue, Accuracy,
+        //    "{0}err:{1}(rel:{2}), eps:{3}",
+        //    Message.AddSeparator(),
+        //    Math.Abs(ExpectedValue - Checker.ActualValue),
+        //    ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
+        //    Accuracy);
+    }
 
-        /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Опорное значение</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> LessOrEqualsThan([NotNull] this ValueChecker<int> Checker, int ExpectedValue, string Message = null)
-        {
-            if (!(Checker.ActualValue <= ExpectedValue))
-                throw new AssertFailedException($"{Message.AddSeparator()}Значение {Checker.ActualValue} должно быть меньше, либо равно {ExpectedValue}. delta:{ExpectedValue - Checker.ActualValue}");
+    /// <summary>Проверка, что значение больше заданного</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> GreaterThan(this ValueChecker<int> Checker, int ExpectedValue, string? Message = null)
+    {
+        if (Checker.ActualValue > ExpectedValue)
             return Checker;
-        }
 
-        /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="ExpectedValue">Опорное значение</param>
-        /// <param name="Accuracy">Точность сравнения</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> LessOrEqualsThan([NotNull] this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string Message = null)
-        {
-            if (!(ExpectedValue - Checker.ActualValue <= Accuracy))
-                throw new AssertFailedException(
-                    $"{Message.AddSeparator()}Нарушено условие ({Checker.ActualValue} >= {ExpectedValue}) при точности {Accuracy}. delta:{ExpectedValue - Checker.ActualValue}");
-            return Checker;
-        }
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть больше\r\n    {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
 
-        /// <summary>Проверка - является ли число чётным?</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> IsEven([NotNull] this ValueChecker<int> Checker, string Message = null)
-        {
-            if (Checker.ActualValue % 2 != 0)
-                throw new AssertFailedException($"{Message.AddSeparator()}Число {Checker.ActualValue} не является чётным");
+    /// <summary>Проверка, что значение больше, либо равно заданному</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> GreaterOrEqualsThan(this ValueChecker<int> Checker, int ExpectedValue, string? Message = null)
+    {
+        if (Checker.ActualValue >= ExpectedValue)
             return Checker;
-        }
 
-        /// <summary>Проверка - является ли число нечётным?</summary>
-        /// <param name="Checker">Объект проверки целочисленного значения</param>
-        /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
-        /// <returns>Объект проверки целочисленного значения</returns>
-        [NotNull]
-        public static ValueChecker<int> IsOdd([NotNull] this ValueChecker<int> Checker, string Message = null)
-        {
-            if (Checker.ActualValue % 2 == 0)
-                throw new AssertFailedException($"{Message.AddSeparator()}Число {Checker.ActualValue} является чётным");
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> GreaterOrEqualsThan(this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string? Message = null)
+    {
+        if (Checker.ActualValue - ExpectedValue <= Accuracy)
             return Checker;
-        }
+
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})\r\n    accuracy:{Accuracy}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение меньше заданного</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> LessThan(this ValueChecker<int> Checker, int ExpectedValue, string? Message = null)
+    {
+        if (Checker.ActualValue < ExpectedValue)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть меньше\r\n    {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> LessOrEqualsThan(this ValueChecker<int> Checker, int ExpectedValue, string? Message = null)
+    {
+        if (Checker.ActualValue <= ExpectedValue)
+            return Checker;
+
+        FormattableString message = $"{Message.AddSeparator()}Значение\r\n    {Checker.ActualValue} должно быть меньше, либо равно\r\n    {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> LessOrEqualsThan(this ValueChecker<int> Checker, int ExpectedValue, int Accuracy, string? Message = null)
+    {
+        if (ExpectedValue - Checker.ActualValue <= Accuracy)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})\r\n    accuracy:{Accuracy}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка - является ли число чётным?</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> IsEven(this ValueChecker<int> Checker, string? Message = null)
+    {
+        if (Checker.ActualValue % 2 == 0)
+            return Checker;
+
+        FormattableString message = $"{Message.AddSeparator()}Число {Checker.ActualValue} не является чётным";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка - является ли число нечётным?</summary>
+    /// <param name="Checker">Объект проверки целочисленного значения</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки</param>
+    /// <returns>Объект проверки целочисленного значения</returns>
+    public static ValueChecker<int> IsOdd(this ValueChecker<int> Checker, string? Message = null)
+    {
+        if (Checker.ActualValue % 2 != 0)
+            return Checker;
+
+        FormattableString message = $"{Message.AddSeparator()}Число {Checker.ActualValue} является чётным";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
     }
 }
