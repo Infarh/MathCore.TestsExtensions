@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable UnusedMember.Global
@@ -51,22 +52,29 @@ public class DoubleCollectionChecker
                 actual_collection_enumerator = _ActualValues.GetEnumerator();
 
                 var index = 0;
-                Service.CheckSeparator(ref Message);
-
+                var assert_fails = new List<FormattableString>();
+                var min_delta = double.PositiveInfinity;
+                var max_delta = double.NegativeInfinity;
+                var max_error = double.NegativeInfinity;
                 if (_Not)
                     while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
                     {
                         var expected = expected_collection_enumerator.Current;
                         var actual = actual_collection_enumerator.Current;
-                        var delta = Math.Abs(expected - actual);
+                        var delta = expected - actual;
+                        var delta_abs = Math.Abs(delta);
 
                         if (double.IsNaN(actual))
                             throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
 
-                        if (Math.Abs(expected - actual) < Accuracy)
+                        if (delta_abs < Accuracy)
                         {
-                            FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    accuracy:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
-                            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                            assert_fails.Add($"[{index,3}]\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta_abs:e3}(rel.err:{delta_abs / expected})\r\n    eps:{Accuracy}");
+                            //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    accuracy:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                            //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                            min_delta = Math.Min(min_delta, delta);
+                            max_delta = Math.Max(max_delta, delta);
+                            max_error = Math.Max(max_error, delta_abs);
                         }
 
                         //Assert.AreNotEqual(
@@ -81,15 +89,20 @@ public class DoubleCollectionChecker
                     {
                         var expected = expected_collection_enumerator.Current;
                         var actual = actual_collection_enumerator.Current;
-                        var delta = Math.Abs(expected - actual);
+                        var delta = expected - actual;
+                        var delta_abs = Math.Abs(delta);
 
                         if (double.IsNaN(actual))
                             throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
 
-                        if (Math.Abs(expected - actual) > Accuracy)
+                        if (delta_abs > Accuracy)
                         {
-                            FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    accuracy:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
-                            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                            assert_fails.Add($"[{index,3}]\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta_abs:e3}(rel.err:{delta_abs / expected})\r\n    eps:{Accuracy}");
+                            //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    accuracy:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                            //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                            min_delta = Math.Min(min_delta, delta);
+                            max_delta = Math.Max(max_delta, delta);
+                            max_error = Math.Max(max_error, delta_abs);
                         }
 
                         //Assert.AreEqual(
@@ -99,13 +112,27 @@ public class DoubleCollectionChecker
 
                         index++;
                     }
+
+                if (assert_fails.Count == 0) return this;
+
+                if (assert_fails.Count > 1)
+                {
+                    assert_fails.Add($"  min delta:{min_delta:e3}");
+                    assert_fails.Add($"  max delta:{max_delta:e3}");
+                    assert_fails.Add($"  max error:{max_error:e3}");
+                }
+
+                var message = assert_fails.Aggregate(
+                    new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                    (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                    S => S.ToString());
+                throw new AssertFailedException(message);
             }
             finally
             {
                 expected_collection_enumerator?.Dispose();
                 actual_collection_enumerator?.Dispose();
             }
-            return this;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
@@ -181,17 +208,26 @@ public class DoubleCollectionChecker
             actual_collection_enumerator = _ActualCollection.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
+            var min_delta = double.PositiveInfinity;
+            var max_delta = double.NegativeInfinity;
+            var max_error = double.NegativeInfinity;
             while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
-                var delta = Math.Abs(expected - actual);
+                var delta = expected - actual;
+                var delta_abs = Math.Abs(delta);
 
                 if (!expected.Equals(actual))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta_abs:e3}(rel.err:{delta_abs / expected})");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+
+                    min_delta = Math.Min(min_delta, delta);
+                    max_delta = Math.Max(max_delta, delta);
+                    max_error = Math.Max(max_error, delta_abs);
                 }
 
                 //Assert.AreEqual(
@@ -203,14 +239,27 @@ public class DoubleCollectionChecker
 
                 index++;
             }
+
+            if (assert_fails.Count == 0) return this;
+
+            if (assert_fails.Count > 1)
+            {
+                assert_fails.Add($"  min delta:{min_delta:e3}");
+                assert_fails.Add($"  max delta:{max_delta:e3}");
+                assert_fails.Add($"  max error:{max_error:e3}");
+            }
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             expected_collection_enumerator?.Dispose();
             actual_collection_enumerator?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
@@ -232,23 +281,37 @@ public class DoubleCollectionChecker
             actual_collection_enumerator = _ActualCollection.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
+            var min_delta = double.PositiveInfinity;
+            var max_delta = double.NegativeInfinity;
+            var max_error = double.NegativeInfinity;
             while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
-                var delta = Math.Abs(expected - actual);
-
-                if (double.IsNaN(actual)) 
-                    throw new AssertFailedException($"{Message}error[{index}]: полученное значение  равно NaN");
+                var delta = expected - actual;
+                var delta_abs = Math.Abs(delta);
 
                 if (double.IsNaN(actual))
-                    throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
-
-                if (Math.Abs(expected - actual) > delta)
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    eps:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]: полученное значение  равно NaN");
+                    //throw new AssertFailedException($"{Message}error[{index}]: полученное значение  равно NaN");
+                }
+
+                if (double.IsNaN(actual))
+                {
+                    assert_fails.Add($"[{index,3}]: значение было равно NaN");
+                    //throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
+                }
+
+                if (delta_abs > Accuracy)
+                {
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    err:{delta_abs:e3}(rel.err:{delta_abs / expected})\r\n    eps:{Accuracy}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    eps:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    min_delta = Math.Min(min_delta, delta);
+                    max_delta = Math.Max(max_delta, delta);
+                    max_error = Math.Max(max_error, delta_abs);
                 }
 
                 //Assert.AreEqual(
@@ -260,14 +323,26 @@ public class DoubleCollectionChecker
 
                 index++;
             }
+
+            if (assert_fails.Count == 0) return this;
+
+            if (assert_fails.Count > 1)
+            {
+                assert_fails.Add($"  min delta:{min_delta:e3}");
+                assert_fails.Add($"  max delta:{max_delta:e3}");
+                assert_fails.Add($"  max error:{max_error:e3}");
+            }
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)));
+            throw new AssertFailedException(message.ToString());
         }
         finally
         {
             expected_collection_enumerator?.Dispose();
             actual_collection_enumerator?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>Все элементы коллекции равны заданному значению</summary>
@@ -276,14 +351,21 @@ public class DoubleCollectionChecker
     public DoubleCollectionChecker ElementsAreEqualTo(double ExpectedValue, string? Message = null)
     {
         var index = 0;
+        var assert_fails = new List<FormattableString>();
+        var min_delta = double.PositiveInfinity;
+        var max_delta = double.NegativeInfinity;
+        var max_error = double.NegativeInfinity;
         foreach (var actual_value in _ActualCollection)
         {
             if (!actual_value.Equals(ExpectedValue))
             {
-                var msg = Message.AddSeparator();
-                var delta = Math.Abs(ExpectedValue - actual_value);
-                FormattableString message = $"{msg}error[{index}]:\r\n    {actual_value}\r\n != {ExpectedValue}\r\n    err:{delta:e2}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                var delta = ExpectedValue - actual_value;
+                var delta_abs = Math.Abs(delta);
+                assert_fails.Add($"[{index,3}]:\r\n    {actual_value}\r\n != {ExpectedValue}\r\n    err:{delta_abs:e2}(err.rel:{delta_abs / ExpectedValue:e2})");
+                min_delta = Math.Min(min_delta, delta);
+                max_delta = Math.Max(max_delta, delta);
+                max_error = Math.Max(max_error, delta_abs);
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
             }
 
             //Assert.AreEqual(ExpectedValue, actual_value,
@@ -292,7 +374,20 @@ public class DoubleCollectionChecker
             index++;
         }
 
-        return this;
+        if (assert_fails.Count == 0) return this;
+
+        if (assert_fails.Count > 1)
+        {
+            assert_fails.Add($"  min delta:{min_delta:e3}");
+            assert_fails.Add($"  max delta:{max_delta:e3}");
+            assert_fails.Add($"  max error:{max_error:e3}");
+        }
+
+        var message = assert_fails.Aggregate(
+            new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+            (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+            S => S.ToString());
+        throw new AssertFailedException(message);
     }
 
     /// <summary>Все элементы коллекции равны заданному значению</summary>
@@ -305,18 +400,25 @@ public class DoubleCollectionChecker
             throw new ArgumentException("Значение точности не может быть равно NaN", nameof(Accuracy));
 
         var index = 0;
+        var assert_fails = new List<FormattableString>();
+        var min_delta = double.PositiveInfinity;
+        var max_delta = double.NegativeInfinity;
+        var max_error = double.NegativeInfinity;
         foreach (var actual_value in _ActualCollection)
         {
             if (double.IsNaN(actual_value))
                 throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
 
-            var abs_delta = Math.Abs(ExpectedValue - actual_value);
-            if (abs_delta > Accuracy)
+            var delta = ExpectedValue - actual_value;
+            var delta_abs = Math.Abs(delta);
+            if (delta_abs > Accuracy)
             {
-                var msg = Message.AddSeparator();
-                var rel_delta = (ExpectedValue - actual_value) / ExpectedValue;
-                FormattableString message = $"{msg}error[{index}]:\r\n    {actual_value}\r\n != {ExpectedValue}\r\n    err:{abs_delta:e2}(rel.err:{rel_delta:e3})\r\n    eps:{Accuracy}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                var rel_delta = delta / ExpectedValue;
+                assert_fails.Add($"[{index,3}]:\r\n    {actual_value}\r\n != {ExpectedValue}\r\n    err:{delta_abs:e2}(rel.err:{rel_delta:e3})\r\n    eps:{Accuracy}");
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                min_delta = Math.Min(min_delta, delta);
+                max_delta = Math.Max(max_delta, delta);
+                max_error = Math.Max(max_error, delta_abs);
             }
 
             //Assert.AreEqual(
@@ -330,7 +432,20 @@ public class DoubleCollectionChecker
             index++;
         }
 
-        return this;
+        if (assert_fails.Count == 0) return this;
+
+        if (assert_fails.Count > 1)
+        {
+            assert_fails.Add($"    min delta:{min_delta:e3}");
+            assert_fails.Add($"    max delta:{max_delta:e3}");
+            assert_fails.Add($"    max error:{max_error:e3}");
+        }
+
+        var message = assert_fails.Aggregate(
+            new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+            (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+            S => S.ToString());
+        throw new AssertFailedException(message);
     }
 
     /// <summary>Критерий проверки элементов коллекции</summary>
@@ -344,11 +459,22 @@ public class DoubleCollectionChecker
     public DoubleCollectionChecker ElementsAreSatisfyCondition(ElementChecker Condition, string? Message = null)
     {
         var index = 0;
-        Service.CheckSeparator(ref Message);
+        var assert_fails = new List<FormattableString>();
         foreach (var actual_value in _ActualCollection)
-            Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index++, actual_value.ToString(CultureInfo.InvariantCulture));
+        {
+            if (!Condition(actual_value))
+                assert_fails.Add($"[{index,3}]:{actual_value} не удовлетворяет заданному условию");
+            //Assert.IsTrue(Condition(actual_value), "{0}err.value[{1}]:{2}", Message, index, actual_value.ToString(CultureInfo.InvariantCulture));
+            index++;
+        }
 
-        return this;
+        if (assert_fails.Count == 0) return this;
+
+        var message = assert_fails.Aggregate(
+            new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+            (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+            S => S.ToString());
+        throw new AssertFailedException(message);
     }
 
     /// <summary>Позиционный критерий проверки элементов коллекции</summary>
@@ -363,11 +489,22 @@ public class DoubleCollectionChecker
     public DoubleCollectionChecker ElementsAreSatisfyCondition(PositionElementChecker Condition, string? Message = null)
     {
         var index = 0;
-        Service.CheckSeparator(ref Message);
+        var assert_fails = new List<FormattableString>();
         foreach (var actual_value in _ActualCollection)
-            Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index++, actual_value.ToString(CultureInfo.InvariantCulture));
+        {
+            if (!Condition(actual_value, index))
+                assert_fails.Add($"[{index,3}]:{actual_value} не удовлетворяет заданному условию");
+            //Assert.IsTrue(Condition(actual_value, index), "{0}err.value[{1}]:{2}", Message, index, actual_value.ToString(CultureInfo.InvariantCulture));
+            index++;
+        }
 
-        return this;
+        if (assert_fails.Count == 0) return this;
+
+        var message = assert_fails.Aggregate(
+            new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+            (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+            S => S.ToString());
+        throw new AssertFailedException(message);
     }
 
     /// <summary>Максимальное значение в коллекции</summary>

@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.37.1</Version>
+    <Version>0.1.37.2</Version>
     <PackageReleaseNotes>
       Новый формат проверки коллекций - результат возвращает все найденные несовпадения
     </PackageReleaseNotes>
