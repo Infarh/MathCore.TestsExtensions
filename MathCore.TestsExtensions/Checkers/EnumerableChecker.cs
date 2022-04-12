@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Globalization;
+using System.Text;
 
 // ReSharper disable UnusedMember.Global
 
@@ -30,9 +31,9 @@ public class EnumerableChecker<T>
         using var actual_collection_enumerator = ActualValue.GetEnumerator();
 
         var index = 0;
-        Service.CheckSeparator(ref Message);
         bool actual_move_next, expected_move_next;
         var comparer = EqualityComparer<T>.Default;
+        var assert_fails = new List<FormattableString>();
         while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
         {
             var expected = expected_collection_enumerator.Current;
@@ -40,16 +41,24 @@ public class EnumerableChecker<T>
 
             if (!comparer.Equals(expected, actual))
             {
-                FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
             }
 
             index++;
         }
         if (actual_move_next != expected_move_next)
-            throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+        //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
 
-        return this;
+        if (assert_fails.Count == 0) return this;
+
+        var message = assert_fails.Aggregate(
+            new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+            (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+            S => S.ToString());
+        throw new AssertFailedException(message);
     }
 
     /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -72,7 +81,7 @@ public class EnumerableChecker<T>
             actual_collection_enumerator = ActualValue.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -81,23 +90,31 @@ public class EnumerableChecker<T>
 
                 if (!Comparer(expected, actual))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.IsTrue(Comparer(expected, actual), "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index, expected, actual);
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+                //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             expected_collection_enumerator?.Dispose();
             actual_collection_enumerator?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -121,7 +138,7 @@ public class EnumerableChecker<T>
             actual_collection_enumerator = ActualValue.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -129,23 +146,31 @@ public class EnumerableChecker<T>
                 var actual = actual_collection_enumerator.Current;
                 if (!Comparer(expected, actual, index))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.IsTrue(Comparer(expected, actual, index), "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index, expected, actual);
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             expected_collection_enumerator?.Dispose();
             actual_collection_enumerator?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
@@ -162,7 +187,7 @@ public class EnumerableChecker<T>
             actual_collection_enumerator = ActualValue.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -171,8 +196,9 @@ public class EnumerableChecker<T>
 
                 if (!Comparer.Equals(expected, actual))
                 {
-                    FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.IsTrue(Comparer.Equals(expected, actual),
@@ -182,15 +208,22 @@ public class EnumerableChecker<T>
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             expected_collection_enumerator?.Dispose();
             actual_collection_enumerator?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>Максимальное значение в перечислении</summary>
@@ -213,16 +246,12 @@ public class EnumerableChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public EnumerableChecker<T> Contains(T item, string? Message = null)
     {
-        if (!ActualValue.Contains(item))
-        {
-            var msg = Message.AddSeparator();
-            FormattableString message = $"{msg}Перечисление не содержит элемент {item}";
-            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-        }
+        if (ActualValue.Contains(item))
+            return this;
 
-        //Assert.IsTrue(ActualValue.Contains(item), "{0}Перечисление не содержит элемент {1}", Message.AddSeparator(), item);
-
-        return this;
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Перечисление не содержит элемент {item}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
     }
 
     /// <summary>Проверка, что перечисление содержит элемент, удовлетворяющий указанному критерию</summary>
@@ -231,14 +260,11 @@ public class EnumerableChecker<T>
     public EnumerableChecker<T> Contains(Func<T, bool> Predicate, string? Message = null)
     {
         if (!ActualValue.Any(Predicate))
-        {
-            var msg = Message.AddSeparator();
-            FormattableString message = $"{msg}Перечисление не содержит элемент";
-            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-        }
+            return this;
 
-        //Assert.IsTrue(ActualValue.Any(Predicate), "{0}Перечисление не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
-        return this;
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Перечисление не содержит элемент";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
     }
 
     /// <summary>Проверка, что указанного элемента нет в перечислении</summary>
@@ -246,15 +272,12 @@ public class EnumerableChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public EnumerableChecker<T> NotContains(T item, string? Message = null)
     {
-        if (ActualValue.Contains(item))
-        {
-            var msg = Message.AddSeparator();
-            FormattableString message = $"{msg}Перечисление содержит элемент {item}";
-            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-        }
+        if (!ActualValue.Contains(item))
+            return this;
 
-        //Assert.IsTrue(!ActualValue.Contains(item), "{0}Перечисление содержит элемент {1}", Message.AddSeparator(), item);
-        return this;
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Перечисление содержит элемент {item}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
     }
 
     /// <summary>Проверка, что перечисление НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
@@ -262,15 +285,12 @@ public class EnumerableChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
     public EnumerableChecker<T> NotContains(Func<T, bool> Predicate, string? Message = null)
     {
-        if (ActualValue.Any(Predicate))
-        {
-            var msg = Message.AddSeparator();
-            FormattableString message = $"{msg}Перечисление не содержит элемент, удовлетворяющий заданным параметрам";
-            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-        }
+        if (!ActualValue.Any(Predicate))
+            return this;
 
-        //Assert.IsFalse(ActualValue.Any(Predicate), "{0}Перечисление не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
-        return this;
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Перечисление не содержит элемент, удовлетворяющий заданным параметрам";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
     }
 
     /// <summary>Выполнение проверки для всех элементов перечисления</summary>
@@ -386,7 +406,7 @@ public class EnumerableChecker
             actual_collection_enumerator = _ActualEnumerable.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -395,8 +415,9 @@ public class EnumerableChecker
 
                 if (!Equals(expected, actual))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.AreEqual(expected, actual, "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index, expected, actual);
@@ -404,15 +425,22 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+                //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             (expected_collection_enumerator as IDisposable)?.Dispose();
             (actual_collection_enumerator as IDisposable)?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -436,7 +464,7 @@ public class EnumerableChecker
             actual_collection_enumerator = _ActualEnumerable.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -445,8 +473,9 @@ public class EnumerableChecker
 
                 if (!Comparer(expected, actual))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.IsTrue(
@@ -457,15 +486,22 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+                //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             (expected_collection_enumerator as IDisposable)?.Dispose();
             (actual_collection_enumerator as IDisposable)?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -490,7 +526,7 @@ public class EnumerableChecker
             actual_collection_enumerator = _ActualEnumerable.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -499,8 +535,9 @@ public class EnumerableChecker
 
                 if (!Comparer(expected, actual, index))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.IsTrue(Comparer(expected, actual, index), "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index, expected, actual);
@@ -508,15 +545,22 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+                //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             (expected_collection_enumerator as IDisposable)?.Dispose();
             (actual_collection_enumerator as IDisposable)?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
@@ -533,7 +577,7 @@ public class EnumerableChecker
             actual_collection_enumerator = _ActualEnumerable.GetEnumerator();
 
             var index = 0;
-            Service.CheckSeparator(ref Message);
+            var assert_fails = new List<FormattableString>();
             bool actual_move_next, expected_move_next = false;
             while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
@@ -542,8 +586,9 @@ public class EnumerableChecker
 
                 if (!Comparer.Equals(expected, actual))
                 {
-                    FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 
                 //Assert.IsTrue(
@@ -554,15 +599,22 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+                //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
         }
         finally
         {
             (expected_collection_enumerator as IDisposable)?.Dispose();
             (actual_collection_enumerator as IDisposable)?.Dispose();
         }
-
-        return this;
     }
 
     /// <summary>Минимальное значение в перечислении</summary>
