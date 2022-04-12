@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.36</Version>
+    <Version>0.1.37</Version>
     <PackageReleaseNotes>
-      Рефакторинг строкового вывода
+      Новый формат проверки коллекций - результат возвращает все найденные несовпадения
     </PackageReleaseNotes>
   </PropertyGroup>
 
