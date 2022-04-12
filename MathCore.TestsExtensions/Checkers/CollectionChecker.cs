@@ -297,6 +297,8 @@ public class CollectionChecker<T>
             index++;
         }
 
+        if (assert_fails.Count == 0) return this;
+
         var message = assert_fails.Aggregate(
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
@@ -338,7 +340,9 @@ public class CollectionChecker<T>
             }
             if (actual_move_next != expected_move_next)
                 assert_fails.Add($"Размеры коллекций не совпадают. В актуальной коллекции найдено {index} элементов");
-                //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
 
             var message = assert_fails.Aggregate(
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
