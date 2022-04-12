@@ -67,7 +67,7 @@ public class DoubleDimensionArrayChecker
                 var delta = Math.Abs(expected - actual);
                 if (delta > Accuracy)
                 {
-                    FormattableString message = $"{Message}Несовпадение по индексу [{i},{j}]\r\n    ожидалось:{expected}; получено:{actual}\r\n    delta:{Accuracy}\r\n    err:{delta:e3}(rel:{delta / expected:e3})";
+                    FormattableString message = $"{Message}Несовпадение по индексу [{i},{j}]\r\n    ожидалось:{expected}; получено:{actual}\r\n      err:{delta:e3}(rel:{delta / expected:e3})\r\n      eps:{Accuracy}";
                     throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
 

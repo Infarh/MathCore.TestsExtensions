@@ -51,7 +51,7 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
             if (delta < Accuracy)
             {
                 var msg = Message.AddSeparator();
-                FormattableString message = $"{msg}  actual:{_ActualValue} ==\r\nexpected:{_ExpectedValue}\r\n    err:{delta:e2}(rel:{delta_rel:e2})\r\n    accuracy:{Accuracy}";
+                FormattableString message = $"{msg}  actual:{_ActualValue} ==\r\nexpected:{_ExpectedValue}\r\n      err:{delta:e2}(rel:{delta_rel:e2})\r\n      eps:{Accuracy}";
                 throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
             }
 
@@ -69,7 +69,7 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
             if (delta > Accuracy)
             {
                 var msg = Message.AddSeparator();
-                FormattableString message = $"{msg} actual:{_ActualValue} !=\r\nexpected:{_ExpectedValue}\r\n    err:{delta:e2}(rel:{delta_rel:e2})\r\n    accuracy:{Accuracy}";
+                FormattableString message = $"{msg} actual:{_ActualValue} !=\r\nexpected:{_ExpectedValue}\r\n      err:{delta:e2}(rel:{delta_rel:e2})\r\n      eps:{Accuracy}";
                 throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
             }
 
