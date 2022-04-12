@@ -43,7 +43,7 @@ namespace MathCore.TestsExtensions.Tests
             {
                 Assert.That.Enumerable(actual).IsEqualTo(expected);
             }
-            catch (AssertFailedException e) when (e.Message == "Размеры перечислений не совпадают")
+            catch (AssertFailedException)
             {
                 return;
             }
