@@ -35,8 +35,8 @@ public static class TestingExtensions
            .IsEqualTo(args);
 
     public static CollectionChecker<T> AssertEquals<T>(
-        this ICollection<T> collection, 
-        IComparer<T> Comparer, 
+        this ICollection<T> collection,
+        IEqualityComparer<T> Comparer, 
         params T[] args) =>
         Assert.That
            .Collection(collection)
@@ -53,7 +53,7 @@ public static class TestingExtensions
 
     public static EnumerableChecker<T> AssertEquals<T>(
         this IEnumerable<T> items, 
-        IComparer<T> Comparer, 
+        IEqualityComparer<T> Comparer, 
         params T[] values) => 
         Assert.That
            .Enumerable(items)
