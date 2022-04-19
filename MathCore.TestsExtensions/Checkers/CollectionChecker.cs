@@ -190,7 +190,7 @@ public class CollectionChecker<T>
     /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
     /// <param name="Comparer">Объект проверки элементов коллекции</param>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
-    public void IsEqualTo(ICollection<T> ExpectedCollection, IEqualityComparer<T> Comparer, string? Message = null)
+    public CollectionChecker<T> IsEqualTo(ICollection<T> ExpectedCollection, IEqualityComparer<T> Comparer, string? Message = null)
     {
         Assert.That.Value(ActualValue.Count).IsEqual(ExpectedCollection.Count);
 
@@ -222,7 +222,58 @@ public class CollectionChecker<T>
                 index++;
             }
 
-            if (assert_fails.Count == 0) return;
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
+        }
+        finally
+        {
+            expected_collection_enumerator?.Dispose();
+            actual_collection_enumerator?.Dispose();
+        }
+    }
+
+    /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+    /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+    /// <param name="Comparer">Объект проверки элементов коллекции</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public CollectionChecker<T> IsEqualTo(ICollection<T> ExpectedCollection, IComparer<T> Comparer, string? Message = null)
+    {
+        Assert.That.Value(ActualValue.Count).IsEqual(ExpectedCollection.Count);
+
+        IEnumerator<T>? expected_collection_enumerator = null;
+        IEnumerator<T>? actual_collection_enumerator = null;
+        try
+        {
+            expected_collection_enumerator = ExpectedCollection.GetEnumerator();
+            actual_collection_enumerator = ActualValue.GetEnumerator();
+
+            var index = 0;
+            var assert_fails = new List<FormattableString>();
+            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+            {
+                var expected = expected_collection_enumerator.Current;
+                var actual = actual_collection_enumerator.Current;
+
+                if (Comparer.Compare(expected, actual) != 0)
+                {
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                }
+
+                //Assert.IsTrue(Comparer.Equals(expected, actual),
+                //    "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}",
+                //    Message, index, expected, actual);
+
+                index++;
+            }
+
+            if (assert_fails.Count == 0) return this;
 
             var message = assert_fails.Aggregate(
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),

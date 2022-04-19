@@ -226,6 +226,59 @@ public class EnumerableChecker<T>
         }
     }
 
+    /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
+    /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
+    /// <param name="Comparer">Объект проверки элементов перечисления</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public EnumerableChecker<T> IsEqualTo(IEnumerable<T> ExpectedEnumerable, IComparer<T> Comparer, string? Message = null)
+    {
+        IEnumerator<T>? expected_collection_enumerator = null;
+        IEnumerator<T>? actual_collection_enumerator = null;
+        try
+        {
+            expected_collection_enumerator = ExpectedEnumerable.GetEnumerator();
+            actual_collection_enumerator = ActualValue.GetEnumerator();
+
+            var index = 0;
+            var assert_fails = new List<FormattableString>();
+            bool actual_move_next, expected_move_next = false;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            {
+                var expected = expected_collection_enumerator.Current;
+                var actual = actual_collection_enumerator.Current;
+
+                if (Comparer.Compare(expected, actual) != 0)
+                {
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                    //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                }
+
+                //Assert.IsTrue(Comparer.Equals(expected, actual),
+                //    "{0}error[{1}]: ожидалось({2}), получено({3})",
+                //    Message, index, expected, actual);
+
+                index++;
+            }
+            if (actual_move_next != expected_move_next)
+                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
+            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+
+            if (assert_fails.Count == 0) return this;
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
+                S => S.ToString());
+            throw new AssertFailedException(message);
+        }
+        finally
+        {
+            expected_collection_enumerator?.Dispose();
+            actual_collection_enumerator?.Dispose();
+        }
+    }
+
     /// <summary>Максимальное значение в перечислении</summary>
     /// <param name="Selector">Метод оценки элемента перечисления</param>
     /// <returns>Объект проверки вещественного значения</returns>
