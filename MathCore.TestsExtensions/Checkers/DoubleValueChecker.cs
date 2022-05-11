@@ -18,12 +18,10 @@ public sealed class DoubleValueChecker : ValueChecker<double>
     /// <returns>Объект проверки вещественного значения</returns>
     public override ValueChecker<double> IsEqual(double ExpectedValue, string? Message = null)
     {
-        Assert.AreEqual(
-            ExpectedValue, ActualValue,
-            "{0}error:{1}",
-            Message.AddSeparator(), 
-            Math.Abs(ExpectedValue - ActualValue).ToString("e2", CultureInfo.InvariantCulture));
-        return this;
+        if (Equals(ExpectedValue, ActualValue)) return this;
+
+        FormattableString msg = $"{Message.AddSeparator()} получено значение\r\n    {ActualValue:F18} не равно ожидаемому\r\n    {ExpectedValue:F18}\r\n    err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})";
+        throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture));
     }
 
     /// <summary>Проверка на неравенство</summary>
@@ -32,11 +30,9 @@ public sealed class DoubleValueChecker : ValueChecker<double>
     /// <returns>Объект проверки вещественного значения</returns>
     public override ValueChecker<double> IsNotEqual(double ExpectedValue, string? Message = null)
     {
-        Assert.AreNotEqual(
-            ExpectedValue, ActualValue,
-            "{0}error:{1}",
-            Message.AddSeparator(), 
-            Math.Abs(ExpectedValue - ActualValue).ToString("e2", CultureInfo.InvariantCulture));
-        return this;
+        if (!Equals(ExpectedValue, ActualValue)) return this;
+
+        FormattableString msg = $"{Message.AddSeparator()} полученное значение\r\n    {ActualValue:F18} равно ожидаемому\r\n    {ExpectedValue:F18}\r\n    err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})";
+        throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture));
     }
 }

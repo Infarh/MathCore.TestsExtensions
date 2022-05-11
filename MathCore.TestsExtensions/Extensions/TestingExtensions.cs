@@ -6,6 +6,15 @@ public static class TestingExtensions
 {
     public static ValueChecker<T> AssertThatValue<T>(this T value) => Assert.That.Value(value);
 
+    public static DoubleValueChecker AssertEquals(
+        this double value,
+        double ActualValue,
+        [CallerArgumentExpression("value")]
+        string? Message = null) =>
+        (DoubleValueChecker)Assert.That
+           .Value(value)
+           .IsEqual(ActualValue, Message);
+
     public static ValueChecker<T> AssertEquals<T>(
         this T value, 
         T ActualValue, 
@@ -15,13 +24,13 @@ public static class TestingExtensions
            .Value(value)
            .IsEqual(ActualValue, Message);
 
-    public static ValueChecker<double> AssertEquals(
+    public static DoubleValueChecker AssertEquals(
         this double value, 
         double ActualValue, 
         double Eps, 
         [CallerArgumentExpression("value")] 
-        string? Message = null) => 
-        Assert.That
+        string? Message = null) =>
+        (DoubleValueChecker)Assert.That
            .Value(value)
            .IsEqual(ActualValue, Eps, Message);
 
@@ -34,10 +43,23 @@ public static class TestingExtensions
            .Collection(collection)
            .IsEqualTo(args);
 
+    public static DoubleCollectionChecker AssertEquals<T>(this ICollection<double> collection, params double[] args) =>
+        Assert.That
+           .Collection(collection)
+           .IsEqualTo(args);
+
     public static CollectionChecker<T> AssertEquals<T>(
         this ICollection<T> collection,
         IEqualityComparer<T> Comparer, 
         params T[] args) =>
+        Assert.That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static DoubleCollectionChecker AssertEquals<T>(
+        this ICollection<double> collection,
+        IEqualityComparer<double> Comparer, 
+        params double[] args) =>
         Assert.That
            .Collection(collection)
            .IsEqualTo(args, Comparer);

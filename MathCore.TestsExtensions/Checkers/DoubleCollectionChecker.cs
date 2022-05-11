@@ -345,6 +345,88 @@ public class DoubleCollectionChecker
         }
     }
 
+    /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
+    /// <param name="ExpectedCollection">Ожидаемая коллекция значений</param>
+    /// <param name="Comparer">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
+    public DoubleCollectionChecker IsEqualTo(ICollection<double> ExpectedCollection, IEqualityComparer<double> Comparer, string? Message = null)
+    {
+        if (Comparer is null) throw new ArgumentNullException(nameof(Comparer));
+
+        Assert.That.Value(_ActualCollection.Count).IsEqual(ExpectedCollection.Count, "Размеры коллекций не совпадают");
+
+        IEnumerator<double>? expected_collection_enumerator = null;
+        IEnumerator<double>? actual_collection_enumerator = null;
+        try
+        {
+            expected_collection_enumerator = ExpectedCollection.GetEnumerator();
+            actual_collection_enumerator = _ActualCollection.GetEnumerator();
+
+            var index = 0;
+            var assert_fails = new List<FormattableString>();
+            var min_delta = double.PositiveInfinity;
+            var max_delta = double.NegativeInfinity;
+            var max_error = double.NegativeInfinity;
+            while (actual_collection_enumerator.MoveNext() && expected_collection_enumerator.MoveNext())
+            {
+                var expected = expected_collection_enumerator.Current;
+                var actual = actual_collection_enumerator.Current;
+                var delta = expected - actual;
+                var delta_abs = Math.Abs(delta);
+
+                if (double.IsNaN(actual))
+                {
+                    assert_fails.Add($"[{index,3}]: полученное значение  равно NaN");
+                    //throw new AssertFailedException($"{Message}error[{index}]: полученное значение  равно NaN");
+                }
+
+                if (double.IsNaN(actual))
+                {
+                    assert_fails.Add($"[{index,3}]: значение было равно NaN");
+                    //throw new AssertFailedException($"{Message}error[{index}]: значение было равно NaN");
+                }
+
+                if (!Comparer.Equals(actual, expected))
+                {
+                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n      err:{delta_abs:e3}(rel.err:{delta_abs / expected})");
+                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}\r\n    eps:{Accuracy}\r\n    err:{delta:e3}(rel.err:{delta / expected})";
+                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    min_delta = Math.Min(min_delta, delta);
+                    max_delta = Math.Max(max_delta, delta);
+                    max_error = Math.Max(max_error, delta_abs);
+                }
+
+                //Assert.AreEqual(
+                //    expected, actual, Accuracy,
+                //    "{0}error[{1}]: ожидалось({2}), получено({3}), eps:{4}, err:{5}(rel:{6})",
+                //    Message, index, expected, actual, Accuracy,
+                //    delta.ToString("e3", CultureInfo.InvariantCulture),
+                //    (delta / expected).ToString(CultureInfo.InvariantCulture));
+
+                index++;
+            }
+
+            if (assert_fails.Count == 0) return this;
+
+            if (assert_fails.Count > 1)
+            {
+                assert_fails.Add($"  min delta:{min_delta:e3}");
+                assert_fails.Add($"  max delta:{max_delta:e3}");
+                assert_fails.Add($"  max error:{max_error:e3}");
+            }
+
+            var message = assert_fails.Aggregate(
+                new StringBuilder(Message.AddSeparator(Environment.NewLine)),
+                (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)));
+            throw new AssertFailedException(message.ToString());
+        }
+        finally
+        {
+            expected_collection_enumerator?.Dispose();
+            actual_collection_enumerator?.Dispose();
+        }
+    }
+
     /// <summary>Все элементы коллекции равны заданному значению</summary>
     /// <param name="ExpectedValue">Ожидаемое значение</param>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
