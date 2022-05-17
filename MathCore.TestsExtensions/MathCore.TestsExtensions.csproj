@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.38.3</Version>
+    <Version>0.1.38.4</Version>
     <PackageReleaseNotes>
       Добавлен атрибут CallerArgumentExpression к методам-расширения для проверки значений
       Улучшение читаемости сообщений об обшибках
