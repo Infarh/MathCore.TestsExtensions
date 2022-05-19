@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
 
 namespace MathCore.TestsExtensions.Tests
 {
@@ -113,6 +115,106 @@ namespace MathCore.TestsExtensions.Tests
 
             Assert.That.Value(actual_value).GreaterThan(expected_value);
             Assert.That.Value(actual_value + __Eps).GreaterThan(expected_value);
+        }
+
+        public readonly struct TupleAccuracyComparer : IEqualityComparer<(double a, double b)>
+        {
+            private double Eps { get; init; }
+
+            public TupleAccuracyComparer(double Eps)
+            {
+                if (Eps < 0.0)
+                    throw new ArgumentOutOfRangeException(nameof(Eps), (object)Eps, "Значение точности не должно быть меньше нуля");
+                this.Eps = !double.IsNaN(Eps) ? Eps : throw new ArgumentException("Значение точности не должно быть NaN", nameof(Eps));
+            }
+
+            public bool Equals((double a, double b) x, (double a, double b) y)
+            {
+                var (xa, xb) = x;
+                var (ya, yb) = y;
+
+                var eps = Eps;
+                var (delta_re, delta_im) = (xa - ya, xb - yb);
+                return Math.Abs(delta_re) <= eps
+                    && Math.Abs(delta_im) <= eps;
+            }
+
+            public int GetHashCode((double a, double b) z)
+            {
+                var (a, b) = z;
+
+                if (double.IsNaN(a) || double.IsNaN(b)) return z.GetHashCode();
+                var eps = Eps;
+                var value = new Complex(
+                    Math.Round(a * eps) / eps,
+                    Math.Round(b * eps) / eps
+                );
+                return value.GetHashCode();
+            }
+        }
+
+        [TestMethod]
+        public void AssertEquals_Collection_with_Accuracy_Success()
+        {
+            IEnumerable<(double, double)> values = new[]
+            {
+                (-0.425984051389412477, 2.141566444565760730),
+                (-0.425984051389412477, -2.141566444565760730),
+                (-1.213099943899241140, 1.815532366728786817),
+                (-1.213099943899241140, -1.815532366728786817),
+                (-1.815532366728786817, 1.213099943899241584),
+                (-1.815532366728786817, -1.213099943899241584),
+                (-2.141566444565760730, 0.425984051389413365), 
+                (-2.141566444565760730, -0.425984051389413365)
+            };
+
+            var equality_comparer = new TupleAccuracyComparer(1e-14);
+            values.AssertEquals(equality_comparer,
+                /*[ 0]*/ (-0.425984051389412477, 2.141566444565760730),
+                /*[ 1]*/ (-0.425984051389412477, -2.141566444565760730),
+                /*[ 2]*/ (-1.213099943899241140, 1.815532366728786817),
+                /*[ 3]*/ (-1.213099943899241140, -1.815532366728786817),
+                /*[ 4]*/ (-1.815532366728786817, 1.213099943899241584),
+                /*[ 5]*/ (-1.815532366728786817, -1.213099943899241584),
+                /*[ 6]*/ (-2.141566444565760730, 0.425984051389413365),
+                /*[ 7]*/ (-2.141566444565760730, -0.425984051389413365)
+            );
+        }
+
+        [TestMethod]
+        public void AssertEquals_Collection_with_Accuracy_Fail()
+        {
+            IEnumerable<(double, double)> values = new[]
+            {
+                (-0.425984051389412477, 2.141566444565760730),
+                (-0.425984051389412477, -2.141566444565760730),
+                (-1.213099943899241140, 1.815532366728786817),
+                (-1.213099943899241140, -1.815532366728786817),
+                (-1.815532366728786817, 1.213099943899241584),
+                (-1.815532366728786817, -1.213099943899241584),
+                (-2.141566444565760730, 0.425984051389413365), 
+                (-2.141566444565760730, -0.425984051389413365)
+            };
+
+            var equality_comparer = new TupleAccuracyComparer(1e-14);
+            try
+            {
+                values.AssertEquals(equality_comparer,
+                    /*[ 0]*/ (-0.425984051389412477, 2.141566444565760730),
+                    /*[ 1]*/ (-0.425984051389412477, -2.141566444565760730),
+                    /*[ 2]*/ (-1.213099943899241140, 1.815532366728786817),
+                    /*[ 3]*/ (-1.213099943899241140, -1.815532366728786817),
+                    /*[ 4]*/ (-1.815532366728786817, 1.213099943899241584),
+                    /*[ 5]*/ (-1.815532366728786817, -1.213099943899241584),
+                    /*[ 6]*/ (-2.141566444565760730, 0.425984051389413365)
+                );
+
+                Assert.Fail("Проверка была выполнена и не нашла проблемы");
+            }
+            catch (AssertFailedException)
+            {
+                
+            }
         }
     }
 }
