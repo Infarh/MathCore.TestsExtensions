@@ -211,6 +211,12 @@ public class EnumerableChecker<T>
     /// <param name="ActualEnumerable">Проверяемое перечисление</param>
     internal EnumerableChecker(IEnumerable<T> ActualEnumerable) => ActualValue = ActualEnumerable;
 
+    private static void CountItems(bool IsNotEmpty, IEnumerator enumerator, ref int count)
+    {
+        if(!IsNotEmpty) return;
+        do { count++; } while (enumerator.MoveNext());
+    }
+
     /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
     /// <param name="ExpectedEnumerable">Ожидаемое перечисление значений</param>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
@@ -238,9 +244,15 @@ public class EnumerableChecker<T>
 
             index++;
         }
+
         if (actual_move_next != expected_move_next)
-            assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-        //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+        {
+            var count_expected = index;
+            var count_actual = index;
+            CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+            CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+            assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+        }
 
         if (assert_fails.Count == 0) return this;
 
@@ -274,8 +286,8 @@ public class EnumerableChecker<T>
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -293,8 +305,13 @@ public class EnumerableChecker<T>
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -335,8 +352,8 @@ public class EnumerableChecker<T>
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -352,8 +369,13 @@ public class EnumerableChecker<T>
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -387,8 +409,8 @@ public class EnumerableChecker<T>
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -408,8 +430,13 @@ public class EnumerableChecker<T>
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -443,8 +470,8 @@ public class EnumerableChecker<T>
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -464,8 +491,13 @@ public class EnumerableChecker<T>
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -642,6 +674,12 @@ public class EnumerableChecker<T>
 /// <summary>Объект проверки перечисления</summary>
 public class EnumerableChecker
 {
+    private static void CountItems(bool IsNotEmpty, IEnumerator enumerator, ref int count)
+    {
+        if (!IsNotEmpty) return;
+        do { count++; } while (enumerator.MoveNext());
+    }
+
     /// <summary>Проверяемое перечисление</summary>
     private readonly IEnumerable _ActualEnumerable;
 
@@ -663,8 +701,8 @@ public class EnumerableChecker
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -687,8 +725,13 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -727,8 +770,8 @@ public class EnumerableChecker
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -754,8 +797,13 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -795,8 +843,8 @@ public class EnumerableChecker
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -819,8 +867,13 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
@@ -852,8 +905,8 @@ public class EnumerableChecker
 
             var index = 0;
             var assert_fails = new List<FormattableString>();
-            bool actual_move_next, expected_move_next = false;
-            while ((actual_move_next = actual_collection_enumerator.MoveNext()) && (expected_move_next = expected_collection_enumerator.MoveNext()))
+            bool actual_move_next, expected_move_next;
+            while ((actual_move_next = actual_collection_enumerator.MoveNext()) & (expected_move_next = expected_collection_enumerator.MoveNext()))
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
@@ -879,8 +932,13 @@ public class EnumerableChecker
                 index++;
             }
             if (actual_move_next != expected_move_next)
-                assert_fails.Add($"Размеры перечислений не совпадают. Проверено {index} элементов");
-            //throw new AssertFailedException($"{Message.AddSeparator()}Размеры перечислений не совпадают");
+            {
+                var count_expected = index;
+                var count_actual = index;
+                CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
+                CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
+                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            }
 
             if (assert_fails.Count == 0) return this;
 
