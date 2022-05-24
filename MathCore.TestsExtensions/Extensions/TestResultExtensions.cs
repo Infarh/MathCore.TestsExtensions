@@ -41,7 +41,7 @@ public static class TestResultExtensions
         foreach (var item in items)
         {
             if (i > 0)
-                Debug.WriteLine(",");
+                log.AppendLine(",");
 
             FormattableString msg = $"            /*[{i,2}]*/ {item}";
             log.AppendLine(msg.ToString(culture));
