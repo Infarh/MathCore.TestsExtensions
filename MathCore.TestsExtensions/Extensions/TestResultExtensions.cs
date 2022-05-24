@@ -44,7 +44,7 @@ public static class TestResultExtensions
                 Debug.WriteLine(",");
 
             FormattableString msg = $"            /*[{i,2}]*/ {item}";
-            log.Append(msg.ToString(culture));
+            log.AppendLine(msg.ToString(culture));
 
             i++;
         }
@@ -65,7 +65,7 @@ public static class TestResultExtensions
         foreach (var item in items)
         {
             if (i > 0)
-                Debug.WriteLine(",");
+                log.AppendLine(",");
 
             FormattableString msg = $"            /*[{i,2}]*/ {item}";
             log.Append(msg.ToString(culture));
