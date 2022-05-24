@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -23,15 +25,10 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}actual:{Checker.ActualValue}\r\n    != {ExpectedValue}\r\n         err:{delta}(err.rel:{(ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue:e3})\r\n    accuracy:{Accuracy}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-
-        //Assert.AreEqual(
-        //    ExpectedValue, Checker.ActualValue, Accuracy,
-        //    "{0}err:{1}(rel:{2}), eps:{3}",
-        //    Message.AddSeparator(), 
-        //    delta,
-        //    ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
-        //    Accuracy);
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue)
+           .AddData(Accuracy);
     }
 
     /// <summary>Проверка, что проверяемое значение не равно ожидаемому с заданной точностью</summary>
@@ -48,15 +45,10 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}actual:{Checker.ActualValue}\r\n    == {ExpectedValue}\r\n         err:{delta}(err.rel:{(ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue:e3})\r\n    accuracy:{Accuracy}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-
-        //Assert.AreNotEqual(
-        //    ExpectedValue, Checker.ActualValue, Accuracy,
-        //    "{0}err:{1}(rel:{2}), eps:{3}",
-        //    Message.AddSeparator(),
-        //    Math.Abs(ExpectedValue - Checker.ActualValue),
-        //    ((ExpectedValue - Checker.ActualValue) / (double)Checker.ActualValue).ToString(CultureInfo.InvariantCulture),
-        //    Accuracy);
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue)
+           .AddData(Accuracy);
     }
 
     /// <summary>Проверка, что значение больше заданного</summary>
@@ -71,7 +63,9 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть больше\r\n    {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue);
     }
 
     /// <summary>Проверка, что значение больше, либо равно заданному</summary>
@@ -86,7 +80,9 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue);
     }
 
     /// <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
@@ -102,7 +98,10 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})\r\n    accuracy:{Accuracy}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue)
+           .AddData(Accuracy);
     }
 
     /// <summary>Проверка, что значение меньше заданного</summary>
@@ -117,7 +116,9 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть меньше\r\n    {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue);
     }
 
     /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
@@ -131,7 +132,9 @@ public static class ValueCheckerIntExtensions
             return Checker;
 
         FormattableString message = $"{Message.AddSeparator()}Значение\r\n    {Checker.ActualValue} должно быть меньше, либо равно\r\n    {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue);
     }
 
     /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
@@ -147,7 +150,10 @@ public static class ValueCheckerIntExtensions
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    err:{ExpectedValue - Checker.ActualValue:e3}(err.rel:{(ExpectedValue - Checker.ActualValue) / ExpectedValue:e3})\r\n    accuracy:{Accuracy}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", Checker.ActualValue)
+           .AddData(Accuracy);
     }
 
     /// <summary>Проверка - является ли число чётным?</summary>
@@ -160,7 +166,8 @@ public static class ValueCheckerIntExtensions
             return Checker;
 
         FormattableString message = $"{Message.AddSeparator()}Число {Checker.ActualValue} не является чётным";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Actual", Checker.ActualValue);
     }
 
     /// <summary>Проверка - является ли число нечётным?</summary>
@@ -173,6 +180,7 @@ public static class ValueCheckerIntExtensions
             return Checker;
 
         FormattableString message = $"{Message.AddSeparator()}Число {Checker.ActualValue} является чётным";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Actual", Checker.ActualValue);
     }
 }

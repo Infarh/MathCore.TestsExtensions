@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable UnusedMethodReturnValue.Global
 // ReSharper disable UnusedMember.Global
 
@@ -21,7 +23,9 @@ public sealed class DoubleValueChecker : ValueChecker<double>
         if (Equals(ExpectedValue, ActualValue)) return this;
 
         FormattableString msg = $"{Message.AddSeparator()} получено значение\r\n    {ActualValue:F18} не равно ожидаемому\r\n    {ExpectedValue:F18}\r\n    err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})";
-        throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка на неравенство</summary>
@@ -33,6 +37,8 @@ public sealed class DoubleValueChecker : ValueChecker<double>
         if (!Equals(ExpectedValue, ActualValue)) return this;
 
         FormattableString msg = $"{Message.AddSeparator()} полученное значение\r\n    {ActualValue:F18} равно ожидаемому\r\n    {ExpectedValue:F18}\r\n    err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})";
-        throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 }
