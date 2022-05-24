@@ -6,6 +6,8 @@
 using System.Globalization;
 using System.Text;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>Объект проверки коллекции</summary>
@@ -64,7 +66,9 @@ public class CollectionChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -121,7 +125,9 @@ public class CollectionChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -177,7 +183,9 @@ public class CollectionChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -228,7 +236,9 @@ public class CollectionChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -269,7 +279,9 @@ public class CollectionChecker<T>
             new StringBuilder(),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData("Expected", items)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка коллекции на совпадение с указанным набором значений</summary>
@@ -303,7 +315,9 @@ public class CollectionChecker<T>
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData("Expected", items)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>По размеру и поэлементно эквивалентна ожидаемой коллекции</summary>
@@ -348,7 +362,9 @@ public class CollectionChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedItems)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -365,7 +381,9 @@ public class CollectionChecker<T>
     {
         var actual_count = ActualValue.Count;
         if (actual_count != ExpectedCount)
-            throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} не соответствует ожидаемому {ExpectedCount}");
+            throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} не соответствует ожидаемому {ExpectedCount}")
+               .AddData("ExpectedCount", ExpectedCount)
+               .AddData("Actual", ActualValue); ;
         return this;
     }
 
@@ -393,7 +411,9 @@ public class CollectionChecker<T>
             return this;
 
         FormattableString message = $"{Message.AddSeparator()}Коллекция не содержит элемент {item}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("ExpectedItem", item)
+           .AddData("Actual", ActualValue);
 
         //Assert.IsTrue(ActualValue.Contains(item), "{0}Коллекция не содержит элемент {1}", Message.AddSeparator(), item);
     }

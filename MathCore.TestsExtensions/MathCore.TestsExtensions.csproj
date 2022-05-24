@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.38.5</Version>
+    <Version>0.1.39</Version>
     <PackageReleaseNotes>
-      Исправление ошибок при тестировании коллекций
+      Добавление актуального и ожидаемого значения в объект исключения
     </PackageReleaseNotes>
   </PropertyGroup>
 

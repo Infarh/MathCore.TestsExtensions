@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
 // ReSharper disable UnusedMethodReturnValue.Global
@@ -46,14 +48,20 @@ public sealed class DoubleCompareCheckerWithAccuracy : IDisposable
                 {
                     var msg = Message.AddSeparator();
                     FormattableString message = $"{msg}Значени\r\n    {_ActualValue} должно быть меньше, либо равно\r\n    {_ExpectedValue}\r\n      err:{_ExpectedValue - _ActualValue:e2}(err.rel:{(_ExpectedValue - _ActualValue)/_ExpectedValue:e2})\r\n      eps:{Accuracy}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                       .AddData("Expected", _ExpectedValue)
+                       .AddData("Actual", _ActualValue)
+                       .AddData("Accuracy", Accuracy);
                 }
                 else
                 if (!(_ActualValue - Math.Abs(Accuracy) < _ExpectedValue))
                 {
                     var msg = Message.AddSeparator();
                     FormattableString message = $"{msg}Значение\r\n    {_ActualValue} должно быть меньше\r\n    {_ExpectedValue}\r\n      err:{_ExpectedValue - _ActualValue:e2}(err.rel:{(_ExpectedValue - _ActualValue) / _ExpectedValue:e2})\r\n      eps{Accuracy}.";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                       .AddData("Expected", _ExpectedValue)
+                       .AddData("Actual", _ActualValue)
+                       .AddData("Accuracy", Accuracy);
                 }
         }
         else
@@ -63,14 +71,20 @@ public sealed class DoubleCompareCheckerWithAccuracy : IDisposable
                 {
                     var msg = Message.AddSeparator();
                     FormattableString message = $"{msg}Значение\r\n    {_ActualValue} должно быть больше, либо равно\r\n    {_ExpectedValue}\r\n     err:{_ExpectedValue - _ActualValue:e2}(err.rel:{(_ExpectedValue - _ActualValue) / _ExpectedValue:e2})\r\n      eps:{Accuracy}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                       .AddData("Expected", _ExpectedValue)
+                       .AddData("Actual", _ActualValue)
+                       .AddData(Accuracy);
                 }
                 else 
                 if (!(_ActualValue + Math.Abs(Accuracy) > _ExpectedValue))
                 {
                     var msg = Message.AddSeparator();
                     FormattableString message = $"{msg}Значение\r\n    {_ActualValue} должно быть больше\r\n    {_ExpectedValue}\r\n     err:{_ExpectedValue - _ActualValue:e2}(err.rel:{(_ExpectedValue - _ActualValue)/_ExpectedValue:e2})\r\n      eps:{Accuracy}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                       .AddData("Expected", _ExpectedValue)
+                       .AddData("Actual", _ActualValue)
+                       .AddData(Accuracy);
                 }
         }
         return this;

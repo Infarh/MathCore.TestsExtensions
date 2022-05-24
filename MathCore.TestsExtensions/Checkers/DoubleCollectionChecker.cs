@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
 using System.Text;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -126,7 +128,10 @@ public class DoubleCollectionChecker
                     new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                     (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                     S => S.ToString());
-                throw new AssertFailedException(message);
+                throw new AssertFailedException(message)
+                   .AddData("Expected", _ExpectedValues)
+                   .AddData("Actual", _ActualValues)
+                   .AddData("Accuracy", Accuracy);
             }
             finally
             {
@@ -253,7 +258,9 @@ public class DoubleCollectionChecker
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", _ActualCollection);
         }
         finally
         {
@@ -336,7 +343,10 @@ public class DoubleCollectionChecker
             var message = assert_fails.Aggregate(
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)));
-            throw new AssertFailedException(message.ToString());
+            throw new AssertFailedException(message.ToString())
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", _ActualCollection)
+               .AddData("Accuracy", Accuracy);
         }
         finally
         {
@@ -418,7 +428,10 @@ public class DoubleCollectionChecker
             var message = assert_fails.Aggregate(
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)));
-            throw new AssertFailedException(message.ToString());
+            throw new AssertFailedException(message.ToString())
+               .AddData("Expected", ExpectedCollection)
+               .AddData("Actual", _ActualCollection)
+               .AddData("Comparer", Comparer);
         }
         finally
         {
@@ -469,7 +482,9 @@ public class DoubleCollectionChecker
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", _ActualCollection);
     }
 
     /// <summary>Все элементы коллекции равны заданному значению</summary>
@@ -527,7 +542,10 @@ public class DoubleCollectionChecker
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", _ActualCollection)
+           .AddData("Accuracy", Accuracy);
     }
 
     /// <summary>Критерий проверки элементов коллекции</summary>
@@ -556,7 +574,9 @@ public class DoubleCollectionChecker
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData("Condition", Condition)
+           .AddData("Actual", _ActualCollection);
     }
 
     /// <summary>Позиционный критерий проверки элементов коллекции</summary>
@@ -586,7 +606,9 @@ public class DoubleCollectionChecker
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData(Condition)
+           .AddData("Actual", _ActualCollection);
     }
 
     /// <summary>Максимальное значение в коллекции</summary>

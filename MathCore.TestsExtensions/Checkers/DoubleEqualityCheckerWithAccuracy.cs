@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable UnusedMethodReturnValue.Global
 // ReSharper disable UnusedMember.Global
 
@@ -52,7 +54,10 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
             {
                 var msg = Message.AddSeparator();
                 FormattableString message = $"{msg}  actual:{_ActualValue} ==\r\nexpected:{_ExpectedValue}\r\n      err:{delta:e2}(rel:{delta_rel:e2})\r\n      eps:{Accuracy}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                   .AddData("Expected", _ExpectedValue)
+                   .AddData("Actual", _ActualValue)
+                   .AddData(Accuracy);
             }
 
             //Assert.AreNotEqual(
@@ -70,7 +75,10 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
             {
                 var msg = Message.AddSeparator();
                 FormattableString message = $"{msg} actual:{_ActualValue} !=\r\nexpected:{_ExpectedValue}\r\n      err:{delta:e2}(rel:{delta_rel:e2})\r\n      eps:{Accuracy}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                   .AddData("Expected", _ExpectedValue)
+                   .AddData("Actual", _ActualValue)
+                   .AddData(Accuracy);
             }
 
             //Assert.AreEqual(

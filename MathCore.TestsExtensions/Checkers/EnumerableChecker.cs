@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable UnusedMember.Global
 
 // ReSharper disable UnusedType.Global
@@ -260,7 +262,9 @@ public class EnumerableChecker<T>
             new StringBuilder(Message.AddSeparator(Environment.NewLine)),
             (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
             S => S.ToString());
-        throw new AssertFailedException(message);
+        throw new AssertFailedException(message)
+           .AddData("Expected", ExpectedEnumerable)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Метод сравнения значений элементов перечисления</summary>
@@ -319,7 +323,9 @@ public class EnumerableChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -383,7 +389,9 @@ public class EnumerableChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -444,7 +452,9 @@ public class EnumerableChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -505,7 +515,9 @@ public class EnumerableChecker<T>
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", ActualValue);
         }
         finally
         {
@@ -552,7 +564,9 @@ public class EnumerableChecker<T>
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Перечисление не содержит элемент";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData(Predicate)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка, что указанного элемента нет в перечислении</summary>
@@ -565,7 +579,9 @@ public class EnumerableChecker<T>
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Перечисление содержит элемент {item}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("NotExpected", item)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка, что перечисление НЕ содержит элемент, удовлетворяющий указанному критерию</summary>
@@ -578,7 +594,9 @@ public class EnumerableChecker<T>
 
         var msg = Message.AddSeparator();
         FormattableString message = $"{msg}Перечисление не содержит элемент, удовлетворяющий заданным параметрам";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData(Predicate)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Выполнение проверки для всех элементов перечисления</summary>
@@ -634,7 +652,9 @@ public class EnumerableChecker<T>
     {
         var count = ActualValue.Count();
         if (count != ExpectedCount)
-            throw new AssertFailedException($"{Message.AddSeparator()}Размер перечисления {count} не совпадает с ожидаемым {ExpectedCount}");
+            throw new AssertFailedException($"{Message.AddSeparator()}Размер перечисления {count} не совпадает с ожидаемым {ExpectedCount}")
+               .AddData(ExpectedCount)
+               .AddData("Actual", ActualValue);
         return this;
     }
 
@@ -645,7 +665,9 @@ public class EnumerableChecker<T>
     {
         var count = ActualValue.Count();
         if (count != 0)
-            throw new AssertFailedException($"{Message.AddSeparator()}Число элементов перечисления {count} не равно 0 - перечисление не пуста");
+            throw new AssertFailedException($"{Message.AddSeparator()}Число элементов перечисления {count} не равно 0 - перечисление не пуста")
+               .AddData("ItemsCount", count)
+               .AddData("Actual", ActualValue);
         return this;
     }
 
@@ -655,7 +677,8 @@ public class EnumerableChecker<T>
     public EnumerableChecker<T> IsNotEmpty(string Message)
     {
         if (!ActualValue.Any())
-            throw new AssertFailedException($"{Message.AddSeparator()}Перечисление пуста");
+            throw new AssertFailedException($"{Message.AddSeparator()}Перечисление пуста")
+               .AddData("Actual", ActualValue);
         return this;
     }
 
@@ -666,7 +689,9 @@ public class EnumerableChecker<T>
     {
         var count = ActualValue.Count();
         if (count != 1)
-            throw new AssertFailedException($"{Message.AddSeparator()}Число элементов перечисления {count} не равно 1 - перечисление содержит не один единственный элемент");
+            throw new AssertFailedException($"{Message.AddSeparator()}Число элементов перечисления {count} не равно 1 - перечисление содержит не один единственный элемент")
+               .AddData("ItemsCount", count)
+               .AddData("Actual", ActualValue);
         return this;
     }
 }
@@ -739,7 +764,9 @@ public class EnumerableChecker
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", _ActualEnumerable);
         }
         finally
         {
@@ -811,7 +838,9 @@ public class EnumerableChecker
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", _ActualEnumerable);
         }
         finally
         {
@@ -881,7 +910,9 @@ public class EnumerableChecker
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", _ActualEnumerable);
         }
         finally
         {
@@ -946,7 +977,9 @@ public class EnumerableChecker
                 new StringBuilder(Message.AddSeparator(Environment.NewLine)),
                 (S, s) => S.AppendLine(s.ToString(CultureInfo.InvariantCulture)),
                 S => S.ToString());
-            throw new AssertFailedException(message);
+            throw new AssertFailedException(message)
+               .AddData("Expected", ExpectedEnumerable)
+               .AddData("Actual", _ActualEnumerable);
         }
         finally
         {

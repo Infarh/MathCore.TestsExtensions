@@ -2,6 +2,8 @@
 
 using MathCore.Tests.Annotations;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -107,9 +109,12 @@ public static class ValueCheckerStringExtensions
     public static ValueChecker<string> IsNotNullOrEmpty(this ValueChecker<string> Checker, string? Message = null)
     {
         var str = Checker.ActualValue;
-        if(string.IsNullOrEmpty(str))
-            throw new AssertFailedException($"{Message.AddSeparator()}Строка является пустой {(str is null ? "ссылкой" : "строкой")}");
-        return Checker;
+        if (!string.IsNullOrEmpty(str)) return Checker;
+
+        throw new AssertFailedException($"{Message.AddSeparator()}Строка является пустой {(str is null ? "ссылкой" : "строкой")}")
+        {
+            Data = { { "Actual", Checker.ActualValue } }
+        };
     }
 
     /// <summary>Проверка, что ссылка на строку пуста, либо строка пуста</summary>
@@ -120,7 +125,10 @@ public static class ValueCheckerStringExtensions
     {
         var str = Checker.ActualValue;
         if (!string.IsNullOrEmpty(str))
-            throw new AssertFailedException($"{Message.AddSeparator()}Строка не пуста");
+            throw new AssertFailedException($"{Message.AddSeparator()}Строка не пуста")
+            {
+                Data = { { "Actual", Checker.ActualValue } }
+            };
         return Checker;
     }
 
@@ -132,7 +140,10 @@ public static class ValueCheckerStringExtensions
     {
         var str = Checker.ActualValue;
         if (string.IsNullOrWhiteSpace(str))
-            throw new AssertFailedException($"{Message.AddSeparator()}Строка является {(str is null ? "пустой ссылкой" : string.IsNullOrWhiteSpace(str) ? "строкой из пробелов" : "пустой строкой")}");
+            throw new AssertFailedException($"{Message.AddSeparator()}Строка является {(str is null ? "пустой ссылкой" : string.IsNullOrWhiteSpace(str) ? "строкой из пробелов" : "пустой строкой")}")
+            {
+                Data = { { "Actual", Checker.ActualValue } }
+            };
         return Checker;
     }
 
@@ -144,7 +155,10 @@ public static class ValueCheckerStringExtensions
     {
         var str = Checker.ActualValue;
         if (!string.IsNullOrWhiteSpace(str))
-            throw new AssertFailedException($"{Message.AddSeparator()}Строка не пуста");
+            throw new AssertFailedException($"{Message.AddSeparator()}Строка не пуста")
+            {
+                Data = { { "Actual", Checker.ActualValue } }
+            };
         return Checker;
     }
 }

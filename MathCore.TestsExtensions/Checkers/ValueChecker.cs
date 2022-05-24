@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
 using System.Reflection;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ConvertToAutoPropertyWhenPossible
 // ReSharper disable UnusedMethodReturnValue.Global
@@ -13,7 +15,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 public class ValueChecker<T>
 {
     /// <summary>Проверяемое значение</summary>
-    public T ActualValue { get; }
+    public T? ActualValue { get; }
 
     /// <summary>Продолжение (перезапуск) цепочки тестирования</summary>
     public Assert And => Assert.That;
@@ -31,12 +33,9 @@ public class ValueChecker<T>
             return this;
 
         FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-
-        //Assert.AreEqual(
-        //    ExpectedValue, ActualValue,
-        //    "{0}Актуальное значение {1} не соответствует ожидаемому {2}",
-        //    Message.AddSeparator(), ActualValue, ExpectedValue);
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка значение на эквивалентность ожидаемому</summary>
@@ -49,7 +48,9 @@ public class ValueChecker<T>
             return this;
 
         FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Метод сравнения значений</summary>
@@ -69,7 +70,9 @@ public class ValueChecker<T>
 
         FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
 
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка значения на идентичность ожидаемому (при сравнении ссылок)</summary>
@@ -82,7 +85,9 @@ public class ValueChecker<T>
 
         FormattableString message = $"{Message.AddSeparator()}Объект актуального значения\r\n    {ActualValue} не является ожидаемым\r\n    {ExpectedValue} при сравнении ссылок";
 
-        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка значения на не эквивалентность ожидаемому</summary>
@@ -90,14 +95,13 @@ public class ValueChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public virtual ValueChecker<T> IsNotEqual(T ExpectedValue, string? Message = null)
     {
-        if (Equals(ExpectedValue, ActualValue))
-        {
-            var msg = Message.AddSeparator();
-            FormattableString message = $"{msg}Актуальное значение\r\n    {ActualValue} соответствует ожидаемому\r\n    {ExpectedValue}";
-            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-        }
+        if (!Equals(ExpectedValue, ActualValue)) return this;
 
-        return this;
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Актуальное значение\r\n    {ActualValue} соответствует ожидаемому\r\n    {ExpectedValue}";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Проверка значения на не идентичность ожидаемому (при сравнении ссылок)</summary>
@@ -105,14 +109,13 @@ public class ValueChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public ValueChecker<T> IsNotReferenceEquals(T ExpectedValue, string? Message = null)
     {
-        if (ReferenceEquals(ActualValue, ExpectedValue))
-        {
-            var msg = Message.AddSeparator();
-            FormattableString message = $"{msg}Объект актуального значения\r\n    {ActualValue} является ожидаемым\r\n    {ExpectedValue} при сравнении ссылок";
-            throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-        }
+        if (!ReferenceEquals(ActualValue, ExpectedValue)) return this;
 
-        return this;
+        var msg = Message.AddSeparator();
+        FormattableString message = $"{msg}Объект актуального значения\r\n    {ActualValue} является ожидаемым\r\n    {ExpectedValue} при сравнении ссылок";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+           .AddData("Expected", ExpectedValue)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Ссылка на значение должна быть пустой</summary>
@@ -183,7 +186,10 @@ public class ValueChecker<T>
         IsNotNull(Message);
         if (expected_type.GetTypeInfo().IsAssignableFrom(ActualValue!.GetType().GetTypeInfo()))
             return new ValueChecker<TExpectedType>((TExpectedType)ActualValue);
-        throw new AssertFailedException($"{Message.AddSeparator()}Значение\r\n    {ActualValue?.GetType()} не является значением типа\r\n    {expected_type}");
+
+        throw new AssertFailedException($"{Message.AddSeparator()}Значение\r\n    {ActualValue?.GetType()} не является значением типа\r\n    {expected_type}")
+           .AddData("ExpectedType", expected_type)
+           .AddData("Actual", ActualValue);
     }
 
     /// <summary>Объект является объектом более специфичного типа и можно определить производное значение указанным методом</summary>
