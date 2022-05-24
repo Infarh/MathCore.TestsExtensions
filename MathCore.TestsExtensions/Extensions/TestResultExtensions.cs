@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -27,6 +28,30 @@ public static class TestResultExtensions
             result.LogWriteLine(msg.ToString(CultureInfo.InvariantCulture));
         }
 
+        return result;
+    }
+
+    public static TestResult ToDebugEnum(this TestResult result, IEnumerable items, [CallerArgumentExpression("items")] string? Name = null)
+    {
+        var log = new StringBuilder(result.LogOutput);
+        if (Name is { Length: > 0 })
+            log.AppendFormat("object[] {0} = {{\r\n", Name);
+        var i = 0;
+        var culture = CultureInfo.InvariantCulture;
+        foreach (var item in items)
+        {
+            if (i > 0)
+                Debug.WriteLine(",");
+
+            FormattableString msg = $"            /*[{i,2}]*/ {item}";
+            log.Append(msg.ToString(culture));
+
+            i++;
+        }
+        log.AppendLine("");
+        log.AppendLine("}");
+
+        result.LogOutput = log.ToString();
         return result;
     }
 
