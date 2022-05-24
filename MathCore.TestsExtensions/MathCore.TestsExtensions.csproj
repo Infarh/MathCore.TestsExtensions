@@ -9,9 +9,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.39</Version>
+    <Version>0.1.39.1</Version>
     <PackageReleaseNotes>
       Добавление актуального и ожидаемого значения в объект исключения
+      Добавлен механизм записи данных в журнал отладки теста в методе-обработчике результата
     </PackageReleaseNotes>
   </PropertyGroup>
 
