@@ -1,11 +1,39 @@
 ﻿using System.Runtime.CompilerServices;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
 
 public static class TestingExtensions
 {
+    /// <summary>Результат является истинным</summary>
+    /// <param name="value">Проверяемое выражение</param>
+    /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
+    /// <returns>Объект проверки выражения типа <see cref="bool"/></returns>
+    public static ValueChecker<bool> AssertTrue(this bool value, [CallerArgumentExpression("value")] string? Message = null) =>
+        Assert.That
+           .Value(value)
+           .IsEqual(true, Message);
+
+    /// <summary>Результат является ложным</summary>
+    /// <param name="value">Проверяемое выражение</param>
+    /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
+    /// <returns>Объект проверки выражения типа <see cref="bool"/></returns>
+    public static ValueChecker<bool> AssertFalse(this bool value, [CallerArgumentExpression("value")] string? Message = null) =>
+        Assert.That
+           .Value(value)
+           .IsEqual(false, Message);
+
+    /// <summary>Проверка выражения</summary>
+    /// <typeparam name="T">Тип значения</typeparam>
+    /// <param name="value">Проверяемое значение</param>
+    /// <returns>Объект проверки значения</returns>
     public static ValueChecker<T> AssertThatValue<T>(this T value) => Assert.That.Value(value);
 
+    /// <summary>Проверка что вещественное значение равно указанному ожидаемому</summary>
+    /// <param name="value">Проверяемое значение</param>
+    /// <param name="ActualValue">Ожидаемое значение</param>
+    /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
+    /// <returns>Объект проверки вещественного значения</returns>
     public static DoubleValueChecker AssertEquals(
         this double value,
         double ActualValue,
