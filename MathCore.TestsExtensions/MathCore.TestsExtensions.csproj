@@ -41,17 +41,8 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DocumentationFile>$(MSBuildProjectName.Replace(" ", "_")).xml</DocumentationFile>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>MathCore.TestsExtensions.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="MathCore.TestsExtensions.csproj.DotSettings" />
-    <None Remove="MathCore.TestsExtensions.xml" />
-  </ItemGroup>
 
 </Project>
