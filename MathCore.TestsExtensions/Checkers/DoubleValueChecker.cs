@@ -1,8 +1,4 @@
-﻿using System.Globalization;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
-
-// ReSharper disable UnusedMethodReturnValue.Global
+﻿// ReSharper disable UnusedMethodReturnValue.Global
 // ReSharper disable UnusedMember.Global
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;

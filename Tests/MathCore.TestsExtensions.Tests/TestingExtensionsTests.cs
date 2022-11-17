@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
-
-namespace MathCore.TestsExtensions.Tests;
+﻿namespace MathCore.TestsExtensions.Tests;
 
 [TestClass]
 public class TestingExtensionsTests

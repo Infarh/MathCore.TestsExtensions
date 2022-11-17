@@ -2,8 +2,6 @@
 
 using MathCore.Tests.Annotations;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
-
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global

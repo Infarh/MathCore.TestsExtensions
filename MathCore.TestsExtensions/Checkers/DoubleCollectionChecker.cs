@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Text;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+﻿using System.Text;
 
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable UnusedMember.Global

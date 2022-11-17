@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Concurrent;
-using System.Globalization;
 using System.Reflection;
 using System.Text;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
 
 // ReSharper disable UnusedMember.Global
 
@@ -661,7 +658,7 @@ public class EnumerableChecker<T>
     /// <summary>Проверка - перечисление должна быть пуста</summary>
     /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
     /// <returns>Объект проверки перечисления</returns>
-    public EnumerableChecker<T> IsEmpty(string Message)
+    public EnumerableChecker<T> IsEmpty(string? Message = null)
     {
         var count = ActualValue.Count();
         if (count != 0)
@@ -674,10 +671,10 @@ public class EnumerableChecker<T>
     /// <summary>Проверка - перечисление должна быть не пуста</summary>
     /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
     /// <returns>Объект проверки перечисления</returns>
-    public EnumerableChecker<T> IsNotEmpty(string Message)
+    public EnumerableChecker<T> IsNotEmpty(string? Message = null)
     {
         if (!ActualValue.Any())
-            throw new AssertFailedException($"{Message.AddSeparator()}Перечисление пуста")
+            throw new AssertFailedException($"{Message.AddSeparator()}Перечисление пусто")
                .AddData("Actual", ActualValue);
         return this;
     }
@@ -685,7 +682,7 @@ public class EnumerableChecker<T>
     /// <summary>Проверка - перечисление должна содержать один единственный элемент</summary>
     /// <param name="Message">Сообщение, выводимое в случае нарушения условия</param>
     /// <returns>Объект проверки перечисления</returns>
-    public EnumerableChecker<T> IsSingleItem(string Message)
+    public EnumerableChecker<T> IsSingleItem(string? Message = null)
     {
         var count = ActualValue.Count();
         if (count != 1)

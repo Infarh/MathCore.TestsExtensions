@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-// ReSharper disable UnusedType.Global
+﻿// ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ArgumentsStyleLiteral
@@ -107,10 +105,48 @@ public static class ValueCheckerDoubleExtensions
     /// <summary>Проверка, что значение больше заданного</summary>
     /// <param name="Checker">Объект проверки вещественного значения</param>
     /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    public static DoubleValueChecker GreaterThan(
+        this DoubleValueChecker Checker,
+        double ExpectedValue,
+        string? Message = null)
+    {
+        if (Checker.ActualValue > ExpectedValue)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        var delta = ExpectedValue - Checker.ActualValue;
+        FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть больше\r\n    {ExpectedValue}\r\n    err:{delta:e2}(err.rel:{delta / ExpectedValue:e2})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение больше заданного</summary>
+    /// <param name="Checker">Объект проверки вещественного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
     /// <param name="Accuracy">Точность</param>
     /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
     public static ValueChecker<double> GreaterThan(
         this ValueChecker<double> Checker,
+        double ExpectedValue,
+        double Accuracy,
+        string? Message = null)
+    {
+        if (Checker.ActualValue + Math.Abs(Accuracy) > ExpectedValue)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        var delta = ExpectedValue - Checker.ActualValue;
+        FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть больше\r\n    {ExpectedValue} при точности {Accuracy}\r\n    err:{delta:e2}(err.rel:{delta / ExpectedValue})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение больше заданного</summary>
+    /// <param name="Checker">Объект проверки вещественного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Accuracy">Точность</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    public static DoubleValueChecker GreaterThan(
+        this DoubleValueChecker Checker,
         double ExpectedValue,
         double Accuracy,
         string? Message = null)
@@ -130,6 +166,24 @@ public static class ValueCheckerDoubleExtensions
     /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
     public static ValueChecker<double> GreaterOrEqualsThan(
         this ValueChecker<double> Checker,
+        double ExpectedValue,
+        string? Message = null)
+    {
+        if (Checker.ActualValue >= ExpectedValue)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        var delta = ExpectedValue - Checker.ActualValue;
+        FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    delta:{delta:e2}(err.rel:{delta / ExpectedValue:e2})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение больше, либо равно заданному</summary>
+    /// <param name="Checker">Объект проверки вещественного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    public static DoubleValueChecker GreaterOrEqualsThan(
+        this DoubleValueChecker Checker,
         double ExpectedValue,
         string? Message = null)
     {
@@ -162,12 +216,32 @@ public static class ValueCheckerDoubleExtensions
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
     }
 
+    /// <summary>Проверка, что значение больше, либо равно заданному с заданной точностью</summary>
+    /// <param name="Checker">Объект проверки вещественного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    public static DoubleValueChecker GreaterOrEqualsThan(
+        this DoubleValueChecker Checker,
+        double ExpectedValue,
+        double Accuracy,
+        string? Message = null)
+    {
+        if (Checker.ActualValue >= (ExpectedValue - Accuracy))
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        var delta = ExpectedValue - Checker.ActualValue;
+        FormattableString message = $"{msg}Нарушено условие\r\n    {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    точность:{Accuracy:e2}\r\n    err:{delta:e2}(err.rel:{delta / ExpectedValue:e2})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
     /// <summary>Проверка, что значение меньше заданного</summary>
     /// <param name="Checker">Объект проверки вещественного значения</param>
     /// <param name="ExpectedValue">Опорное значение</param>
     /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-    public static ValueChecker<double> LessThan(
-        this ValueChecker<double> Checker,
+    public static DoubleValueChecker LessThan(
+        this DoubleValueChecker Checker,
         double ExpectedValue,
         string? Message = null)
     {
@@ -185,8 +259,8 @@ public static class ValueCheckerDoubleExtensions
     /// <param name="ExpectedValue">Опорное значение</param>
     /// <param name="Accuracy">Точность</param>
     /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
-    public static ValueChecker<double> LessThan(
-        this ValueChecker<double> Checker,
+    public static DoubleValueChecker LessThan(
+        this DoubleValueChecker Checker,
         double ExpectedValue,
         double Accuracy,
         string? Message = null)
@@ -221,10 +295,48 @@ public static class ValueCheckerDoubleExtensions
     /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
     /// <param name="Checker">Объект проверки вещественного значения</param>
     /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    public static DoubleValueChecker LessOrEqualsThan(
+        this DoubleValueChecker Checker,
+        double ExpectedValue,
+        string? Message = null)
+    {
+        if (Checker.ActualValue <= ExpectedValue)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        var delta = ExpectedValue - Checker.ActualValue;
+        FormattableString message = $"{msg}Значение\r\n    {Checker.ActualValue} должно быть меньше, либо равно\r\n    {ExpectedValue}\r\n    err:{delta:e2}(err.rel:{delta / ExpectedValue:e2})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
+    /// <param name="Checker">Объект проверки вещественного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
     /// <param name="Accuracy">Точность сравнения</param>
     /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
     public static ValueChecker<double> LessOrEqualsThan(
         this ValueChecker<double> Checker,
+        double ExpectedValue,
+        double Accuracy,
+        string? Message = null)
+    {
+        if (Checker.ActualValue <= ExpectedValue + Accuracy)
+            return Checker;
+
+        var msg = Message.AddSeparator();
+        var delta = ExpectedValue - Checker.ActualValue;
+        FormattableString message = $"{msg}Нарушено условие\r\n   {Checker.ActualValue}\r\n >= {ExpectedValue}\r\n    точность:{Accuracy:e2}\r\n    err:{delta:e2}(err.rel:{delta / ExpectedValue})";
+        throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Проверка, что значение меньше, либо равно заданному</summary>
+    /// <param name="Checker">Объект проверки вещественного значения</param>
+    /// <param name="ExpectedValue">Опорное значение</param>
+    /// <param name="Accuracy">Точность сравнения</param>
+    /// <param name="Message">Сообщение, выводимое в случае ошибки сравнения</param>
+    public static DoubleValueChecker LessOrEqualsThan(
+        this DoubleValueChecker Checker,
         double ExpectedValue,
         double Accuracy,
         string? Message = null)

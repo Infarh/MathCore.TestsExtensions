@@ -1,12 +1,9 @@
-﻿// ReSharper disable UnusedMember.Global
+﻿using System.Text;
+
+// ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable UnusedMethodReturnValue.Global
-
-using System.Globalization;
-using System.Text;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -382,6 +379,46 @@ public class CollectionChecker<T>
         var actual_count = ActualValue.Count;
         if (actual_count != ExpectedCount)
             throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} не соответствует ожидаемому {ExpectedCount}")
+               .AddData("ExpectedCount", ExpectedCount)
+               .AddData("Actual", ActualValue); ;
+        return this;
+    }
+
+    public CollectionChecker<T> CountGreaterThan(int ExpectedCount, string? Message = null)
+    {
+        var actual_count = ActualValue.Count;
+        if (actual_count > ExpectedCount)
+            throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} должен быть больше {ExpectedCount}")
+               .AddData("ExpectedCount", ExpectedCount)
+               .AddData("Actual", ActualValue); ;
+        return this;
+    }
+
+    public CollectionChecker<T> CountLessThan(int ExpectedCount, string? Message = null)
+    {
+        var actual_count = ActualValue.Count;
+        if (actual_count < ExpectedCount)
+            throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} должен быть меньше {ExpectedCount}")
+               .AddData("ExpectedCount", ExpectedCount)
+               .AddData("Actual", ActualValue); ;
+        return this;
+    }
+
+    public CollectionChecker<T> CountGreaterOrEqualThan(int ExpectedCount, string? Message = null)
+    {
+        var actual_count = ActualValue.Count;
+        if (actual_count >= ExpectedCount)
+            throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} должен быть больше, либо равен {ExpectedCount}")
+               .AddData("ExpectedCount", ExpectedCount)
+               .AddData("Actual", ActualValue); ;
+        return this;
+    }
+
+    public CollectionChecker<T> CountLessOrEqualThan(int ExpectedCount, string? Message = null)
+    {
+        var actual_count = ActualValue.Count;
+        if (actual_count <= ExpectedCount)
+            throw new AssertFailedException($"{Message.AddSeparator()}Размер коллекции {actual_count} должен быть меньше, либо равен {ExpectedCount}")
                .AddData("ExpectedCount", ExpectedCount)
                .AddData("Actual", ActualValue); ;
         return this;
