@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
 
 public static class TestResultExtensions

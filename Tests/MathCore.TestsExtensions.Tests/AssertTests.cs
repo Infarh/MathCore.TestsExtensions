@@ -1,28 +1,23 @@
-﻿using System;
+﻿namespace MathCore.TestsExtensions.Tests;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace MathCore.TestsExtensions.Tests
+public abstract class AssertTests
 {
-    public abstract class AssertTests
+    protected static AssertFailedException IsAssertFail(Action AssertAction) => ExpectedException<AssertFailedException>(AssertAction);
+
+    protected static TException ExpectedException<TException>(Action AssertAction) where TException : Exception
     {
-        protected static AssertFailedException IsAssertFail(Action AssertAction) => ExpectedException<AssertFailedException>(AssertAction);
-
-        protected static TException ExpectedException<TException>(Action AssertAction) where TException : Exception
+        TException expected_exception = null;
+        try
         {
-            TException expected_exception = null;
-            try
-            {
-                AssertAction();
-            }
-            catch (TException exception)
-            {
-                expected_exception = exception;
-            }
-            if (expected_exception is null)
-                throw new AssertFailedException($"Требуемое исключение типа {typeof(TException).Name} выброшено не было");
-
-            return expected_exception;
+            AssertAction();
         }
+        catch (TException exception)
+        {
+            expected_exception = exception;
+        }
+        if (expected_exception is null)
+            throw new AssertFailedException($"Требуемое исключение типа {typeof(TException).Name} выброшено не было");
+
+        return expected_exception;
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace MathCore.TestsExtensions.Tests;
+﻿namespace MathCore.TestsExtensions.Tests;
 
 [TestClass]
 public class TestMethodHandlerAttributeTests

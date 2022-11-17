@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace MathCore.TestsExtensions.Tests;
+﻿namespace MathCore.TestsExtensions.Tests;
 
 [TestClassHandler("ResultHandler", HandlePassed = true)]
 public class TestClassHandlerAttributeTests

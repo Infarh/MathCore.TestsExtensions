@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.40</Version>
+    <Version>0.1.41</Version>
     <PackageReleaseNotes>
-      Добавлен метод-расширения для проверки булевого значения
+      Методы-расширения для упрощения тестирования на null и размер коллекции
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -27,14 +27,17 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MathCore.TestsExtensions.snk</AssemblyOriginatorKeyFile>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure" />
     <Using Include="System" />
     <Using Include="System.Linq" />
     <Using Include="System.Collections.Generic" />
     <Using Include="System.Threading.Tasks" />
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="System.Globalization" />
   </ItemGroup>
 
   <ItemGroup>

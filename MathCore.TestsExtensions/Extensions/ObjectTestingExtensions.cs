@@ -1,10 +1,15 @@
 ﻿using System.Runtime.CompilerServices;
+// ReSharper disable UnusedMethodReturnValue.Global
+// ReSharper disable UnusedMember.Global
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
 
-public static class TestingExtensions
+public static class ObjectTestingExtensions
 {
+    public static ValueChecker<T> AssertNotNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) => 
+        value.AssertThatValue().AsNotNull(Message);
+
     /// <summary>Результат является истинным</summary>
     /// <param name="value">Проверяемое выражение</param>
     /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
@@ -66,6 +71,26 @@ public static class TestingExtensions
         Assert.That
            .Collection(collection);
 
+    public static CollectionChecker<T> AssertCount<T>(this ICollection<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .CountEquals(Count, Message);
+
+    public static CollectionChecker<T> AssertIsEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsEmpty(Message);
+
+    public static CollectionChecker<T> AssertIsNotEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsNotEmpty(Message);
+
+    public static CollectionChecker<T> AssertIsSingle<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsSingleItem(Message);
+
     public static CollectionChecker<T> AssertEquals<T>(this ICollection<T> collection, params T[] args) =>
         Assert.That
            .Collection(collection)
@@ -96,6 +121,26 @@ public static class TestingExtensions
         Assert.That
            .Enumerable(items);
 
+    public static EnumerableChecker<T> AssertEnumerableIsEmpty<T>(this IEnumerable<T> items, [CallerArgumentExpression("items")] string? Message = null) => 
+        Assert.That
+           .Enumerable(items)
+           .IsEmpty(Message);
+
+    public static EnumerableChecker<T> AssertEnumerableIsNotEmpty<T>(this IEnumerable<T> items, [CallerArgumentExpression("items")] string? Message = null) => 
+        Assert.That
+           .Enumerable(items)
+           .IsNotEmpty(Message);
+
+    public static EnumerableChecker<T> AssertEnumerableIsSingleItem<T>(this IEnumerable<T> items, [CallerArgumentExpression("items")] string? Message = null) => 
+        Assert.That
+           .Enumerable(items)
+           .IsSingleItem(Message);
+
+    public static EnumerableChecker<T> AssertEnumerableCount<T>(this IEnumerable<T> items, int ExpectedCount, [CallerArgumentExpression("items")] string? Message = null) => 
+        Assert.That
+           .Enumerable(items)
+           .IsItemsCount(ExpectedCount, Message);
+
     public static EnumerableChecker<T> AssertEquals<T>(this IEnumerable<T> items, params T[] values) => 
         Assert.That
            .Enumerable(items)
@@ -109,7 +154,7 @@ public static class TestingExtensions
            .Enumerable(items)
            .IsEqualTo(values, Comparer);
 
-    public static ValueChecker<double> AssertLessThan(
+    public static DoubleValueChecker AssertLessThan(
         this double value, 
         double ExpectedValue, 
         [CallerArgumentExpression("value")] 
@@ -118,7 +163,7 @@ public static class TestingExtensions
            .Value(value)
            .LessThan(ExpectedValue, Message);
     
-    public static ValueChecker<double> AssertLessThan(
+    public static DoubleValueChecker AssertLessThan(
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
@@ -128,7 +173,7 @@ public static class TestingExtensions
            .Value(value)
            .LessThan(ExpectedValue, Accuracy, Message);
     
-    public static ValueChecker<double> AssertLessOrEqualsThan(
+    public static DoubleValueChecker AssertLessOrEqualsThan(
         this double value, 
         double ExpectedValue, 
         [CallerArgumentExpression("value")] 
@@ -137,7 +182,7 @@ public static class TestingExtensions
            .Value(value)
            .LessOrEqualsThan(ExpectedValue, Message);
     
-    public static ValueChecker<double> AssertLessOrEqualsThan(
+    public static DoubleValueChecker AssertLessOrEqualsThan(
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
@@ -147,7 +192,7 @@ public static class TestingExtensions
            .Value(value)
            .LessOrEqualsThan(ExpectedValue, Accuracy, Message);
     
-    public static ValueChecker<double> AssertGreaterThan(
+    public static DoubleValueChecker AssertGreaterThan(
         this double value, 
         double ExpectedValue, 
         [CallerArgumentExpression("value")] 
@@ -156,7 +201,7 @@ public static class TestingExtensions
            .Value(value)
            .GreaterThan(ExpectedValue, Message);
     
-    public static ValueChecker<double> AssertGreaterThan(
+    public static DoubleValueChecker AssertGreaterThan(
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
@@ -166,7 +211,7 @@ public static class TestingExtensions
            .Value(value)
            .GreaterThan(ExpectedValue, Accuracy, Message);
     
-    public static ValueChecker<double> AssertGreaterOrEqualsThan(
+    public static DoubleValueChecker AssertGreaterOrEqualsThan(
         this double value, 
         double ExpectedValue, 
         [CallerArgumentExpression("value")] 
@@ -175,7 +220,7 @@ public static class TestingExtensions
            .Value(value)
            .GreaterOrEqualsThan(ExpectedValue, Message);
     
-    public static ValueChecker<double> AssertGreaterOrEqualsThan(
+    public static DoubleValueChecker AssertGreaterOrEqualsThan(
         this double value, 
         double ExpectedValue, 
         double Accuracy, 

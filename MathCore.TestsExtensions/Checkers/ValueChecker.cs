@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Reflection;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
+﻿using System.Reflection;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ConvertToAutoPropertyWhenPossible

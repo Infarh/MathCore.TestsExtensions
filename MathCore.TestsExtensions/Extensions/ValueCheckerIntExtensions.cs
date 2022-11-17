@@ -1,8 +1,4 @@
-﻿using System.Globalization;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
-
-// ReSharper disable UnusedMember.Global
+﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 // ReSharper disable MemberCanBePrivate.Global
 

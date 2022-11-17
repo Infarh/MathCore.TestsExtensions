@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <IsTestProject>true</IsTestProject>
     <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MathCore.TestsExtensions\MathCore.TestsExtensions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting.Extensions" />
+    <Using Include="System.Diagnostics" />
   </ItemGroup>
 
 </Project>
