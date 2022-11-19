@@ -209,7 +209,32 @@ public class ExtensionsTests : AssertTests
         }
         catch (AssertFailedException)
         {
-                
+
         }
     }
+
+    [TestMethod]
+    public void AssertExpressionTest_Success()
+    {
+        var str = "Hello World!";
+
+        str.Assert(s => s.Length > 0);
+    }
+
+    [TestMethod]
+    public void AssertExpressionTest_Fail()
+    {
+        var str = "";
+        try
+        {
+            str.Assert(s => s.Length > 0);
+        }
+        catch (AssertFailedException)
+        {
+            return;
+        }
+
+        Assert.Fail();
+    }
+
 }
