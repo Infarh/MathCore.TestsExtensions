@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 
 // ReSharper disable ArgumentsStyleLiteral
 // ReSharper disable UnusedMember.Global
@@ -7,7 +8,7 @@
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>Объект проверки коллекций вещественных чисел</summary>
-public class DoubleReadOnlyCollectionChecker
+public class DoubleReadOnlyCollectionChecker : IReadOnlyCollection<double>
 {
     /// <summary>Объект проверки равенства элементов вещественной коллекции чисел с заданной точностью</summary>
     public sealed class EqualityCheckerWithAccuracy : IDisposable
@@ -619,4 +620,17 @@ public class DoubleReadOnlyCollectionChecker
     /// <summary>Среднее значение в коллекции</summary>
     /// <returns>Объект проверки вещественного значения</returns>
     public DoubleValueChecker Average() => Assert.That.Value(_ActualReadOnlyCollection.Average());
+
+    #region Implementation of IEnumerable
+
+    public IEnumerator<double> GetEnumerator() => _ActualReadOnlyCollection.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_ActualReadOnlyCollection).GetEnumerator();
+
+    #endregion
+
+    #region Implementation of IReadOnlyCollection<out double>
+
+    public int Count => _ActualReadOnlyCollection.Count;
+
+    #endregion
 }
