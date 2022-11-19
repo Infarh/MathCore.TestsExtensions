@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.42.3</Version>
+    <Version>0.1.43</Version>
     <PackageReleaseNotes>
-      Методы-расширения для упрощения тестирования на null и размер коллекции
+      Методы-расширения для проверки значения с помощью выражения value.Assert(v => test_value)
     </PackageReleaseNotes>
   </PropertyGroup>
 
