@@ -71,6 +71,16 @@ public static class ObjectTestingExtensions
         Assert.That
            .Collection(collection);
 
+    public static CollectionChecker<T> AssertCount<T>(this T[] collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .CountEquals(Count, Message);
+
+    public static CollectionChecker<T> AssertCount<T>(this List<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .CountEquals(Count, Message);
+
     public static CollectionChecker<T> AssertCount<T>(this ICollection<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
         Assert.That
            .Collection(collection)
@@ -81,12 +91,42 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEmpty(Message);
 
+    public static CollectionChecker<T> AssertIsEmpty<T>(this T[] collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsEmpty(Message);
+
+    public static CollectionChecker<T> AssertIsEmpty<T>(this List<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsEmpty(Message);
+
     public static CollectionChecker<T> AssertIsNotEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
         Assert.That
            .Collection(collection)
            .IsNotEmpty(Message);
 
+    public static CollectionChecker<T> AssertIsNotEmpty<T>(this T[] collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsNotEmpty(Message);
+
+    public static CollectionChecker<T> AssertIsNotEmpty<T>(this List<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsNotEmpty(Message);
+
     public static CollectionChecker<T> AssertIsSingle<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsSingleItem(Message);
+
+    public static CollectionChecker<T> AssertIsSingle<T>(this T[] collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+        Assert.That
+           .Collection(collection)
+           .IsSingleItem(Message);
+
+    public static CollectionChecker<T> AssertIsSingle<T>(this List<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
         Assert.That
            .Collection(collection)
            .IsSingleItem(Message);
