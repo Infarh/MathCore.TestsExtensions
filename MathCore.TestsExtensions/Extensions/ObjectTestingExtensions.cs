@@ -117,6 +117,60 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEqualTo(args, Comparer);
 
+    /* ------------------------------------------------------------------------------------------------------------- */
+
+    public static ReadOnlyCollectionChecker<T> AssertThatCollection<T>(this IReadOnlyCollection<T> collection) =>
+        Assert.That
+           .Collection(collection);
+
+    public static ReadOnlyCollectionChecker<T> AssertCount<T>(this IReadOnlyCollection<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) =>
+        Assert.That
+           .Collection(collection)
+           .CountEquals(Count, Message);
+
+    public static ReadOnlyCollectionChecker<T> AssertIsEmpty<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) =>
+        Assert.That
+           .Collection(collection)
+           .IsEmpty(Message);
+
+    public static ReadOnlyCollectionChecker<T> AssertIsNotEmpty<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) =>
+        Assert.That
+           .Collection(collection)
+           .IsNotEmpty(Message);
+
+    public static ReadOnlyCollectionChecker<T> AssertIsSingle<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) =>
+        Assert.That
+           .Collection(collection)
+           .IsSingleItem(Message);
+
+    public static ReadOnlyCollectionChecker<T> AssertEquals<T>(this IReadOnlyCollection<T> collection, params T[] args) =>
+        Assert.That
+           .Collection(collection)
+           .IsEqualTo(args);
+
+    public static DoubleReadOnlyCollectionChecker AssertEquals<T>(this IReadOnlyCollection<double> collection, params double[] args) =>
+        Assert.That
+           .Collection(collection)
+           .IsEqualTo(args);
+
+    public static ReadOnlyCollectionChecker<T> AssertEquals<T>(
+        this IReadOnlyCollection<T> collection,
+        IEqualityComparer<T> Comparer,
+        params T[] args) =>
+        Assert.That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static DoubleReadOnlyCollectionChecker AssertEquals<T>(
+        this IReadOnlyCollection<double> collection,
+        IEqualityComparer<double> Comparer,
+        params double[] args) =>
+        Assert.That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    /* ------------------------------------------------------------------------------------------------------------- */
+
     public static EnumerableChecker<T> AssertThatEnumerable<T>(this IEnumerable<T> items) => 
         Assert.That
            .Enumerable(items);
