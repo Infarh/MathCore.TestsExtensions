@@ -56,6 +56,21 @@ public static class AssertExtensions
     /// <returns>Объект проверки</returns>
     public static DoubleCollectionChecker Collection(this Assert assert, ICollection<double> ActualCollection) => new(ActualCollection);
 
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static DoubleCollectionChecker Collection(this Assert assert, double[] ActualCollection) => new(ActualCollection);
+
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static DoubleCollectionChecker Collection(this Assert assert, List<double> ActualCollection) => new(ActualCollection);
+
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static DoubleReadOnlyCollectionChecker Collection(this Assert assert, IReadOnlyCollection<double> ActualCollection) => new(ActualCollection);
+
     /// <summary>Проверка двумерного массива вещественных чисел</summary>
     /// <param name="assert">Объект-помощник проверки</param>
     /// <param name="ActualArray">Проверяемый двумерный массив</param>
@@ -68,6 +83,27 @@ public static class AssertExtensions
     /// <param name="ActualCollection">Проверяемая коллекция</param>
     /// <returns>Объект проверки</returns>
     public static CollectionChecker<T> Collection<T>(this Assert assert, ICollection<T> ActualCollection) => new(ActualCollection);
+
+    /// <summary>Проверка коллекции</summary>
+    /// <typeparam name="T">Тип элементов коллекции</typeparam>
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static CollectionChecker<T> Collection<T>(this Assert assert, T[] ActualCollection) => new(ActualCollection);
+
+    /// <summary>Проверка коллекции</summary>
+    /// <typeparam name="T">Тип элементов коллекции</typeparam>
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static CollectionChecker<T> Collection<T>(this Assert assert, List<T> ActualCollection) => new(ActualCollection);
+
+    /// <summary>Проверка коллекции</summary>
+    /// <typeparam name="T">Тип элементов коллекции</typeparam>
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static ReadOnlyCollectionChecker<T> Collection<T>(this Assert assert, IReadOnlyCollection<T> ActualCollection) => new(ActualCollection);
 
     #endregion
 
