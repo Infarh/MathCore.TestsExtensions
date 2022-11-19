@@ -10,6 +10,9 @@ public static class ObjectTestingExtensions
     public static ValueChecker<T> AssertNotNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) => 
         value.AssertThatValue().AsNotNull(Message);
 
+    public static void AssertIsNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) =>
+        value.AssertThatValue().IsNull();
+
     /// <summary>Результат является истинным</summary>
     /// <param name="value">Проверяемое выражение</param>
     /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
