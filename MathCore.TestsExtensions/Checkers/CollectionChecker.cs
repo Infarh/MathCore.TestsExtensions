@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -9,7 +10,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>Объект проверки коллекции</summary>
 /// <typeparam name="T">Тип элементов коллекции</typeparam>
-public class CollectionChecker<T>
+public class CollectionChecker<T> : ICollection<T>
 {
     /// <summary>Проверяемая коллекция</summary>
     public ICollection<T> ActualValue { get; }
@@ -549,4 +550,25 @@ public class CollectionChecker<T>
             throw new AssertFailedException($"{Message.AddSeparator()}Число элементов коллекции {count} не равно 1 - коллекция содержит не один единственный элемент");
         return this;
     }
+
+    #region Implementation of IEnumerable
+
+    public IEnumerator<T> GetEnumerator() => ActualValue.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)ActualValue).GetEnumerator();
+
+    #endregion
+
+    #region Implementation of ICollection<T>
+
+    public void Add(T item) => ActualValue.Add(item);
+    public void Clear() => ActualValue.Clear();
+    public bool Contains(T item) => ActualValue.Contains(item);
+    public void CopyTo(T[] array, int arrayIndex) => ActualValue.CopyTo(array, arrayIndex);
+    public bool Remove(T item) => ActualValue.Remove(item);
+
+    public int Count => ActualValue.Count;
+
+    public bool IsReadOnly => ActualValue.IsReadOnly;
+
+    #endregion
 }
