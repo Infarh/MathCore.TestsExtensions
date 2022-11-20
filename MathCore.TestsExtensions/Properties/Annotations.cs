@@ -1,6 +1,8 @@
 ﻿
 // ReSharper disable UnusedType.Global
 
+using System.Diagnostics.CodeAnalysis;
+
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Local
@@ -26,17 +28,6 @@ namespace MathCore.Tests.Annotations;
 /// </code></example>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Delegate | AttributeTargets.Field)]
 internal sealed class CanBeNullAttribute : Attribute { }
-
-/// <summary>
-/// Indicates that the value of the marked element could never be <c>null</c>
-/// </summary>
-/// <example><code>
-/// [NotNull] public object Foo() {
-///   return null; // Warning: Possible 'null' assignment
-/// }
-/// </code></example>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Delegate | AttributeTargets.Field)]
-internal sealed class NotNullAttribute : Attribute { }
 
 /// <summary>
 /// Can be applied to symbols of types derived from IEnumerable as well as to symbols of Task
@@ -200,9 +191,9 @@ internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 internal sealed class ContractAnnotationAttribute : Attribute
 {
-    public ContractAnnotationAttribute([NotNull] string contract) : this(contract, false) { }
+    public ContractAnnotationAttribute(string contract) : this(contract, false) { }
 
-    public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
+    public ContractAnnotationAttribute(string contract, bool forceFullStates)
     {
         Contract = contract;
         ForceFullStates = forceFullStates;
@@ -266,9 +257,9 @@ internal sealed class CannotApplyEqualityOperatorAttribute : Attribute { }
 [BaseTypeRequired(typeof(Attribute))]
 internal sealed class BaseTypeRequiredAttribute : Attribute
 {
-    public BaseTypeRequiredAttribute([NotNull] Type baseType) => BaseType = baseType;
+    public BaseTypeRequiredAttribute(Type baseType) => BaseType = baseType;
 
-    [NotNull] public Type BaseType { get; }
+    public Type BaseType { get; }
 }
 
 /// <summary>
@@ -367,9 +358,9 @@ public enum ImplicitUseTargetFlags
 internal sealed class PublicAPIAttribute : Attribute
 {
     public PublicAPIAttribute() { }
-    public PublicAPIAttribute([NotNull] string comment) => Comment = comment;
+    public PublicAPIAttribute(string comment) => Comment = comment;
 
-    [NotNull] public string Comment { get; }
+    public string Comment { get; }
 }
 
 /// <summary>
@@ -393,7 +384,7 @@ public class PathReferenceAttribute : Attribute
     public PathReferenceAttribute() { }
     public PathReferenceAttribute([PathReference] string basePath) => BasePath = basePath;
 
-    [NotNull] public string BasePath { get; }
+    public string BasePath { get; }
 }
 
 /// <summary>Является регулярным выражением</summary>

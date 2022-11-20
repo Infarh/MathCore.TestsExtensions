@@ -1,6 +1,10 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
+using MathCore.Tests.Annotations;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting.Attributes;
+
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 // ReSharper disable UnusedMethodReturnValue.Global
@@ -50,11 +54,12 @@ public static class ObjectTestingExtensions
         }
     }
 
-    public static ValueChecker<T> AssertNotNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) => 
-        value.AssertThatValue().AsNotNull(Message);
+    [return: System.Diagnostics.CodeAnalysis.NotNull]
+    [return: NotNullIfNotNull("value")]
+    public static T AssertNotNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) => value.AssertThatValue().AsNotNull(Message);
 
     public static void AssertIsNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) =>
-        value.AssertThatValue().IsNull();
+        value.AssertThatValue().IsNull(Message);
 
     /// <summary>Результат является истинным</summary>
     /// <param name="value">Проверяемое выражение</param>
