@@ -182,6 +182,21 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsSingleItem(Message);
 
+    public static CollectionChecker<T> AssertEquals<T>(this T[] collection, params T[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args);
+
+    public static CollectionChecker<T> AssertEquals<T>(this List<T> collection, params T[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args);
+
+    public static CollectionChecker<T> AssertEquals<T>(this IList<T> collection, params T[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args);
+
     public static CollectionChecker<T> AssertEquals<T>(this ICollection<T> collection, params T[] args) =>
         That
            .Collection(collection)
