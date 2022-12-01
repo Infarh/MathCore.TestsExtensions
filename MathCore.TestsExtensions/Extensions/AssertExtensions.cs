@@ -1,6 +1,8 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
+using System.Collections.ObjectModel;
+
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>Класс методов-расширений для объекта-помощника проверки <see cref="Assert.That"/></summary>
@@ -26,19 +28,19 @@ public static class AssertExtensions
     public static ActionChecker Method(this Assert that, Action action) => new(action);
 
     /// <summary>Проверка действия</summary>
-    /// <typeparam name="TValue">Тип параметра действия</typeparam>
+    /// <typeparam name="T">Тип параметра действия</typeparam>
     /// <param name="that">Объект-помощник проверки</param>
     /// <param name="value">Параметр</param>
     /// <param name="action">Проверяемое действие</param>
     /// <returns>Объект проверки исключения</returns>
-    public static ActionChecker<TValue> Method<TValue>(this Assert that, TValue value, Action<TValue> action) => new(action, value);
+    public static ActionChecker<T> Method<T>(this Assert that, T value, Action<T> action) => new(action, value);
 
     /// <summary>Проверка функции</summary>
-    /// <typeparam name="TResult">Тип результата функции</typeparam>
+    /// <typeparam name="T">Тип результата функции</typeparam>
     /// <param name="that">Объект-помощник проверки</param>
     /// <param name="function">Проверяемая функция</param>
     /// <returns>Объект проверки исключения</returns>
-    public static FunctionChecker<TResult> Method<TResult>(this Assert that, Func<TResult> function) => new(function);
+    public static FunctionChecker<T> Method<T>(this Assert that, Func<T> function) => new(function);
 
     /// <summary>Проверка функции</summary>
     /// <typeparam name="TResult">Тип результата функции</typeparam>
@@ -70,6 +72,11 @@ public static class AssertExtensions
     /// <param name="ActualCollection">Проверяемая коллекция</param>
     /// <returns>Объект проверки</returns>
     public static DoubleReadOnlyCollectionChecker Collection(this Assert assert, IReadOnlyCollection<double> ActualCollection) => new(ActualCollection);
+
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static DoubleReadOnlyCollectionChecker Collection(this Assert assert, ReadOnlyCollection<double> ActualCollection) => new(ActualCollection);
 
     /// <summary>Проверка двумерного массива вещественных чисел</summary>
     /// <param name="assert">Объект-помощник проверки</param>
@@ -104,6 +111,13 @@ public static class AssertExtensions
     /// <param name="ActualCollection">Проверяемая коллекция</param>
     /// <returns>Объект проверки</returns>
     public static ReadOnlyCollectionChecker<T> Collection<T>(this Assert assert, IReadOnlyCollection<T> ActualCollection) => new(ActualCollection);
+
+    /// <summary>Проверка коллекции</summary>
+    /// <typeparam name="T">Тип элементов коллекции</typeparam>
+    /// <param name="assert">Объект-помощник проверки</param>
+    /// <param name="ActualCollection">Проверяемая коллекция</param>
+    /// <returns>Объект проверки</returns>
+    public static ReadOnlyCollectionChecker<T> Collection<T>(this Assert assert, ReadOnlyCollection<T> ActualCollection) => new(ActualCollection);
 
     #endregion
 
