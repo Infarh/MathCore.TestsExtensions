@@ -272,7 +272,7 @@ public class ExtensionsTests : AssertTests
 
         try
         {
-            actual.AssertEquals(0, 1, 3, 5, 7);
+            actual.AssertEquals(2, 1, 3, 5, 7);
         }
         catch (AssertFailedException)
         {
