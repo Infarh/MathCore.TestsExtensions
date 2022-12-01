@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System.Collections.ObjectModel;
 using System.Numerics;
 
 namespace MathCore.TestsExtensions.Tests;
@@ -14,8 +15,10 @@ public class ExtensionsTests : AssertTests
         var list = new List<int>();
         Assert.That.Value(list)
            .AssertThat(l => l.IsNotNull())
-           .Where(l => l.Count).Check(Count => Count.IsEqual(0))
-           .Where(l => l.Capacity).Check(Capacity => Capacity.IsEqual(0));
+           .Where(l => l.Count)
+           .Check(Count => Count.IsEqual(0))
+           .Where(l => l.Capacity)
+           .Check(Capacity => Capacity.IsEqual(0));
     }
 
     [TestMethod]
@@ -100,6 +103,7 @@ public class ExtensionsTests : AssertTests
         {
             return;
         }
+
         Assert.Fail();
     }
 
@@ -121,6 +125,7 @@ public class ExtensionsTests : AssertTests
         {
             if (Eps < 0.0)
                 throw new ArgumentOutOfRangeException(nameof(Eps), (object)Eps, "Значение точности не должно быть меньше нуля");
+
             this.Eps = !double.IsNaN(Eps) ? Eps : throw new ArgumentException("Значение точности не должно быть NaN", nameof(Eps));
         }
 
@@ -140,6 +145,7 @@ public class ExtensionsTests : AssertTests
             var (a, b) = z;
 
             if (double.IsNaN(a) || double.IsNaN(b)) return z.GetHashCode();
+
             var eps = Eps;
             var value = new Complex(
                 Math.Round(a * eps) / eps,
@@ -160,20 +166,29 @@ public class ExtensionsTests : AssertTests
             (-1.213099943899241140, -1.815532366728786817),
             (-1.815532366728786817, 1.213099943899241584),
             (-1.815532366728786817, -1.213099943899241584),
-            (-2.141566444565760730, 0.425984051389413365), 
+            (-2.141566444565760730, 0.425984051389413365),
             (-2.141566444565760730, -0.425984051389413365)
         };
 
         var equality_comparer = new TupleAccuracyComparer(1e-14);
-        values.AssertEquals(equality_comparer,
-            /*[ 0]*/ (-0.425984051389412477, 2.141566444565760730),
-            /*[ 1]*/ (-0.425984051389412477, -2.141566444565760730),
-            /*[ 2]*/ (-1.213099943899241140, 1.815532366728786817),
-            /*[ 3]*/ (-1.213099943899241140, -1.815532366728786817),
-            /*[ 4]*/ (-1.815532366728786817, 1.213099943899241584),
-            /*[ 5]*/ (-1.815532366728786817, -1.213099943899241584),
-            /*[ 6]*/ (-2.141566444565760730, 0.425984051389413365),
-            /*[ 7]*/ (-2.141566444565760730, -0.425984051389413365)
+        values.AssertEquals(
+            equality_comparer,
+            /*[ 0]*/
+            (-0.425984051389412477, 2.141566444565760730),
+            /*[ 1]*/
+            (-0.425984051389412477, -2.141566444565760730),
+            /*[ 2]*/
+            (-1.213099943899241140, 1.815532366728786817),
+            /*[ 3]*/
+            (-1.213099943899241140, -1.815532366728786817),
+            /*[ 4]*/
+            (-1.815532366728786817, 1.213099943899241584),
+            /*[ 5]*/
+            (-1.815532366728786817, -1.213099943899241584),
+            /*[ 6]*/
+            (-2.141566444565760730, 0.425984051389413365),
+            /*[ 7]*/
+            (-2.141566444565760730, -0.425984051389413365)
         );
     }
 
@@ -188,29 +203,34 @@ public class ExtensionsTests : AssertTests
             (-1.213099943899241140, -1.815532366728786817),
             (-1.815532366728786817, 1.213099943899241584),
             (-1.815532366728786817, -1.213099943899241584),
-            (-2.141566444565760730, 0.425984051389413365), 
+            (-2.141566444565760730, 0.425984051389413365),
             (-2.141566444565760730, -0.425984051389413365)
         };
 
         var equality_comparer = new TupleAccuracyComparer(1e-14);
         try
         {
-            values.AssertEquals(equality_comparer,
-                /*[ 0]*/ (-0.425984051389412477, 2.141566444565760730),
-                /*[ 1]*/ (-0.425984051389412477, -2.141566444565760730),
-                /*[ 2]*/ (-1.213099943899241140, 1.815532366728786817),
-                /*[ 3]*/ (-1.213099943899241140, -1.815532366728786817),
-                /*[ 4]*/ (-1.815532366728786817, 1.213099943899241584),
-                /*[ 5]*/ (-1.815532366728786817, -1.213099943899241584),
-                /*[ 6]*/ (-2.141566444565760730, 0.425984051389413365)
+            values.AssertEquals(
+                equality_comparer,
+                /*[ 0]*/
+                (-0.425984051389412477, 2.141566444565760730),
+                /*[ 1]*/
+                (-0.425984051389412477, -2.141566444565760730),
+                /*[ 2]*/
+                (-1.213099943899241140, 1.815532366728786817),
+                /*[ 3]*/
+                (-1.213099943899241140, -1.815532366728786817),
+                /*[ 4]*/
+                (-1.815532366728786817, 1.213099943899241584),
+                /*[ 5]*/
+                (-1.815532366728786817, -1.213099943899241584),
+                /*[ 6]*/
+                (-2.141566444565760730, 0.425984051389413365)
             );
 
             Assert.Fail("Проверка была выполнена и не нашла проблемы");
         }
-        catch (AssertFailedException)
-        {
-
-        }
+        catch (AssertFailedException) { }
     }
 
     [TestMethod]
@@ -238,10 +258,36 @@ public class ExtensionsTests : AssertTests
     }
 
     [TestMethod]
-    public void AssertEquals_with_int_array()
+    public void AssertEquals_with_int_array_Success()
     {
         int[] actual = { 1, 3, 5, 7 };
 
         actual.AssertEquals(1, 3, 5, 7);
+    }
+
+    [TestMethod]
+    public void AssertEquals_with_int_array_Fail()
+    {
+        int[] actual = { 0, 1, 3, 5, 7 };
+
+        try
+        {
+            actual.AssertEquals(0, 1, 3, 5, 7);
+        }
+        catch (AssertFailedException)
+        {
+            return;
+        }
+
+        Assert.Fail();
+    }
+
+    [TestMethod]
+    public void AssertEquals_ReadOnlyCollection_double()
+    {
+        var actual          = new List<double> { 1, 3, 5, 7 };
+        var actual_readonly = actual.AsReadOnly();
+
+        actual_readonly.AssertEquals(Accuracy.Eps(1e-11), 1, 3, 5, 7);
     }
 }

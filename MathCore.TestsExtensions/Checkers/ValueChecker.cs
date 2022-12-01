@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Attributes;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ConvertToAutoPropertyWhenPossible
 // ReSharper disable UnusedMethodReturnValue.Global
@@ -135,7 +137,7 @@ public class ValueChecker<T>
     public ValueChecker<T> AsNotNull(string? Message = null)
     {
         IsNotNull(Message);
-        return this;
+        return new(ActualValue!);
     }
 
     /// <summary>Значение является значением указанного типа</summary>
@@ -213,14 +215,14 @@ public class ValueChecker<T>
     /// <typeparam name="TValue">Тип вложенного значения</typeparam>
     /// <param name="Selector">Метод определения вложенного значения</param>
     /// <returns>Объект проверки вложенного значения</returns>
-    public NestedValueChecker<TValue, T> Where<TValue>(Func<T, TValue> Selector) => new(Selector(ActualValue), this);
+    public NestedValueChecker<TValue, T> Where<TValue>(Func<T?, TValue> Selector) => new(Selector(ActualValue), this);
 
     /// <summary>Проверка вложенного значения</summary>
     /// <typeparam name="TValue">Тип вложенного значения</typeparam>
     /// <param name="Selector">Метод определения вложенного значения</param>
     /// <param name="Checker">Метод проверки вложенного значения</param>
     /// <returns>Объект проверки текущего значения</returns>
-    public ValueChecker<T> Where<TValue>(Func<T, TValue> Selector, Action<ValueChecker<TValue>> Checker)
+    public ValueChecker<T> Where<TValue>(Func<T?, TValue> Selector, Action<ValueChecker<TValue>> Checker)
     {
         var value_checker = new ValueChecker<TValue>(Selector(ActualValue));
         Checker(value_checker);
@@ -231,14 +233,14 @@ public class ValueChecker<T>
     /// <typeparam name="TItem">Тип элементов коллекции</typeparam>
     /// <param name="Selector">Метод определения вложенного значения</param>
     /// <returns>Объект проверки вложенного значения</returns>
-    public NestedCollectionValueChecker<TItem, T> WhereItems<TItem>(Func<T, ICollection<TItem>> Selector) => new(Selector(ActualValue), this);
+    public NestedCollectionValueChecker<TItem, T> WhereItems<TItem>(Func<T?, ICollection<TItem>> Selector) => new(Selector(ActualValue), this);
 
     /// <summary>Проверка вложенной коллекции элементов</summary>
     /// <param name="Selector">Метод выбора вложенных элементов</param>
     /// <param name="Checker">Метод проверки</param>
     /// <typeparam name="TItem">Тип элементов коллекции</typeparam>
     /// <returns>Исходный объект проверки</returns>
-    public ValueChecker<T> WhereItems<TItem>(Func<T, ICollection<TItem>> Selector, Action<CollectionChecker<TItem>> Checker)
+    public ValueChecker<T> WhereItems<TItem>(Func<T?, ICollection<TItem>> Selector, Action<CollectionChecker<TItem>> Checker)
     {
         var value = Selector(ActualValue);
         var checker = new CollectionChecker<TItem>(value);
@@ -260,7 +262,7 @@ public class ValueChecker<T>
     /// <param name="Checker">Метод проверки вложенной коллекции</param>
     /// <typeparam name="TItem">Тип элементов вложенной коллекции</typeparam>
     /// <returns>Исходный объект проверки</returns>
-    public ValueChecker<T> WhereAll<TItem>(Func<T, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>> Checker)
+    public ValueChecker<T> WhereAll<TItem>(Func<T?, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>> Checker)
     {
         foreach (var item in Selector(ActualValue))
         {
@@ -275,7 +277,7 @@ public class ValueChecker<T>
     /// <param name="Checker">Метод проверки вложенной коллекции</param>
     /// <typeparam name="TItem">Тип элементов вложенной коллекции</typeparam>
     /// <returns>Исходный объект проверки</returns>
-    public ValueChecker<T> WhereAll<TItem>(Func<T, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>, int> Checker)
+    public ValueChecker<T> WhereAll<TItem>(Func<T?, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>, int> Checker)
     {
         var item_index = 0;
         foreach (var item in Selector(ActualValue))
@@ -290,14 +292,14 @@ public class ValueChecker<T>
     /// <summary>Проверка действия над значением</summary>
     /// <param name="action">Действие, выполняемое над значением</param>
     /// <returns>Объект проверки действия</returns>
-    public ActionChecker<T> Method(Action<T> action) => new(action, ActualValue);
+    public ActionChecker<T> Method(Action<T?> action) => new(action, ActualValue);
 
     /// <summary>Проверка функции над значением</summary>
     /// <param name="function">Функция, выполняемая над значением</param>
     /// <returns>Объект проверки функции</returns>
-    public FunctionChecker<T, TResult> Method<TResult>(Func<T, TResult> function) => new(function, ActualValue);
+    public FunctionChecker<T, TResult> Method<TResult>(Func<T?, TResult> function) => new(function, ActualValue);
 
     /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
     /// <param name="Checker">Объект проверки</param>
-    public static implicit operator T(ValueChecker<T> Checker) => Checker.ActualValue;
+    public static implicit operator T?(ValueChecker<T> Checker) => Checker.ActualValue;
 }
