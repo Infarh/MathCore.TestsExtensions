@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.43.4</Version>
+    <Version>0.1.43.5</Version>
     <PackageReleaseNotes>
       Методы-расширения для проверки значения с помощью выражения value.Assert(v => test_value)
     </PackageReleaseNotes>

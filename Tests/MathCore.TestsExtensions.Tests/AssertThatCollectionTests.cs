@@ -289,4 +289,6 @@ public class AssertThatCollectionTests : AssertTests
             // штатно тест должен быть провален на неверном наборе данных
         }
     }
+
+
 }
