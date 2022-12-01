@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 using MathCore.Tests.Annotations;
@@ -192,6 +193,11 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEqualTo(args);
 
+    public static CollectionChecker<T> AssertEquals<T>(this ReadOnlyCollection<T> collection, params T[] args) =>
+        That
+           .Collection((ICollection<T>)collection)
+           .IsEqualTo(args);
+
     public static CollectionChecker<T> AssertEquals<T>(this IList<T> collection, params T[] args) =>
         That
            .Collection(collection)
@@ -202,9 +208,14 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEqualTo(args);
 
-    public static DoubleCollectionChecker AssertEquals<T>(this ICollection<double> collection, params double[] args) =>
+    public static DoubleCollectionChecker AssertEquals(this ICollection<double> collection, params double[] args) =>
         That
            .Collection(collection)
+           .IsEqualTo(args);
+
+    public static DoubleCollectionChecker AssertEquals(this ReadOnlyCollection<double> collection, params double[] args) =>
+        That
+           .Collection((ICollection<double>)collection)
            .IsEqualTo(args);
 
     public static CollectionChecker<T> AssertEquals<T>(this T[] collection, IEqualityComparer<T> Comparer, params T[] args) =>
@@ -215,6 +226,11 @@ public static class ObjectTestingExtensions
     public static CollectionChecker<T> AssertEquals<T>(this List<T> collection, IEqualityComparer<T> Comparer, params T[] args) =>
         That
            .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static CollectionChecker<T> AssertEquals<T>(this ReadOnlyCollection<T> collection, IEqualityComparer<T> Comparer, params T[] args) =>
+        That
+           .Collection((ICollection<T>)collection)
            .IsEqualTo(args, Comparer);
 
     public static CollectionChecker<T> AssertEquals<T>(this ICollection<T> collection, IEqualityComparer<T> Comparer, params T[] args) =>
@@ -235,6 +251,11 @@ public static class ObjectTestingExtensions
     public static DoubleCollectionChecker AssertEquals(this ICollection<double> collection, IEqualityComparer<double> Comparer, params double[] args) =>
         That
            .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static DoubleCollectionChecker AssertEquals(this ReadOnlyCollection<double> collection, IEqualityComparer<double> Comparer, params double[] args) =>
+        That
+           .Collection((ICollection<double>)collection)
            .IsEqualTo(args, Comparer);
 
     /* ------------------------------------------------------------------------------------------------------------- */
@@ -268,7 +289,7 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEqualTo(args);
 
-    public static DoubleReadOnlyCollectionChecker AssertEquals<T>(this IReadOnlyCollection<double> collection, params double[] args) =>
+    public static DoubleReadOnlyCollectionChecker AssertEquals(this IReadOnlyCollection<double> collection, params double[] args) =>
         That
            .Collection(collection)
            .IsEqualTo(args);
@@ -281,7 +302,7 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEqualTo(args, Comparer);
 
-    public static DoubleReadOnlyCollectionChecker AssertEquals<T>(
+    public static DoubleReadOnlyCollectionChecker AssertEquals(
         this IReadOnlyCollection<double> collection,
         IEqualityComparer<double> Comparer,
         params double[] args) =>
