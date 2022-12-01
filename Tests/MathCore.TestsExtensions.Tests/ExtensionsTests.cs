@@ -237,5 +237,11 @@ public class ExtensionsTests : AssertTests
         Assert.Fail();
     }
 
-    public 
+    [TestMethod]
+    public void AssertEquals_with_int_array()
+    {
+        int[] actual = { 1, 3, 5, 7 };
+
+        actual.AssertEquals(1, 3, 5, 7);
+    }
 }
