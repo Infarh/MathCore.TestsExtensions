@@ -207,18 +207,32 @@ public static class ObjectTestingExtensions
            .Collection(collection)
            .IsEqualTo(args);
 
-    public static CollectionChecker<T> AssertEquals<T>(
-        this ICollection<T> collection,
-        IEqualityComparer<T> Comparer, 
-        params T[] args) =>
+    public static CollectionChecker<T> AssertEquals<T>(this T[] collection, IEqualityComparer<T> Comparer, params T[] args) =>
         That
            .Collection(collection)
            .IsEqualTo(args, Comparer);
 
-    public static DoubleCollectionChecker AssertEquals<T>(
-        this ICollection<double> collection,
-        IEqualityComparer<double> Comparer, 
-        params double[] args) =>
+    public static CollectionChecker<T> AssertEquals<T>(this List<T> collection, IEqualityComparer<T> Comparer, params T[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static CollectionChecker<T> AssertEquals<T>(this ICollection<T> collection, IEqualityComparer<T> Comparer, params T[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static DoubleCollectionChecker AssertEquals(this double[] collection, IEqualityComparer<double> Comparer, params double[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static DoubleCollectionChecker AssertEquals(this List<double> collection, IEqualityComparer<double> Comparer, params double[] args) =>
+        That
+           .Collection(collection)
+           .IsEqualTo(args, Comparer);
+
+    public static DoubleCollectionChecker AssertEquals(this ICollection<double> collection, IEqualityComparer<double> Comparer, params double[] args) =>
         That
            .Collection(collection)
            .IsEqualTo(args, Comparer);
