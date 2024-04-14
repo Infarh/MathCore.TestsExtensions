@@ -3,16 +3,14 @@
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [AttributeUsage(AttributeTargets.Method)]
-public class TestMethodHandlerAttribute : TestMethodAttribute
+public class TestMethodHandlerAttribute(string? ExceptionHandlerMethod, string? DisplayName = null)
+    : TestMethodAttribute(DisplayName)
 {
-    public string? ExceptionHandlerMethod { get; set; }
-
-    public bool HandlePassed { get; set; }
-
     public TestMethodHandlerAttribute() : this(null) { }
 
-    public TestMethodHandlerAttribute(string? ExceptionHandlerMethod, string? DisplayName = null) : base(DisplayName) =>
-        this.ExceptionHandlerMethod = ExceptionHandlerMethod;
+    public string? ExceptionHandlerMethod { get; set; } = ExceptionHandlerMethod;
+
+    public bool HandlePassed { get; set; }
 
     public override TestResult[] Execute(ITestMethod Method)
     {
@@ -30,20 +28,20 @@ public class TestMethodHandlerAttribute : TestMethodAttribute
         var handler_method_info =
             //test_class.GetMethod(handler_method_name, public_instance, null, new[] { test_result_type }, null) ??
             //test_class.GetMethod(handler_method_name, private_instance, null, new[] { test_result_type }, null) ??
-            test_class.GetMethod(handler_method_name, public_static, null, new[] { test_result_type }, null) ??
-            test_class.GetMethod(handler_method_name, private_static, null, new[] { test_result_type }, null);
+            test_class.GetMethod(handler_method_name, public_static, null, [test_result_type], null) ??
+            test_class.GetMethod(handler_method_name, private_static, null, [test_result_type], null);
 
         if (handler_method_info is null)
             return base.Execute(Method);
 
         var result = base.Execute(Method);
 
-        IEnumerable<TestResult> results_to_process = HandlePassed
+        var results_to_process = HandlePassed
             ? result
             : result.Where(r => r.Outcome != UnitTestOutcome.Passed);
 
         foreach (var test_result in results_to_process)
-            handler_method_info.Invoke(null, new object[] { test_result });
+            handler_method_info.Invoke(null, [test_result]);
 
         return result;
     }

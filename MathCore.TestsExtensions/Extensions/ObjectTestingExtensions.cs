@@ -14,7 +14,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
 
 public static class ObjectTestingExtensions
 {
-    public static ValueChecker<T> Assert<T>(this T value, Expression<Func<T, bool>> expression, [CallerArgumentExpression("expression")] string? Message = null)
+    public static ValueChecker<T> Assert<T>(this T value, Expression<Func<T, bool>> expression, [CallerArgumentExpression(nameof(expression))] string? Message = null)
     {
         var tester = expression.Compile(true);
 
@@ -27,7 +27,7 @@ public static class ObjectTestingExtensions
 
     }
 
-    public static ValueChecker<TException> AssertThrow<T, TException>(this T value, Expression<Action<T>> ThrowException, [CallerArgumentExpression("ThrowException")] string? Message = null) where TException : Exception
+    public static ValueChecker<TException> AssertThrow<T, TException>(this T value, Expression<Action<T>> ThrowException, [CallerArgumentExpression(nameof(ThrowException))] string? Message = null) where TException : Exception
     {
         var tester = ThrowException.Compile(true);
 
@@ -54,17 +54,17 @@ public static class ObjectTestingExtensions
     }
 
     [return: System.Diagnostics.CodeAnalysis.NotNull]
-    [return: NotNullIfNotNull("value")]
-    public static T AssertNotNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) => value.AssertThatValue().AsNotNull(Message)!;
+    [return: NotNullIfNotNull(nameof(value))]
+    public static T AssertNotNull<T>(this T value, [CallerArgumentExpression(nameof(value))] string? Message = null) => value.AssertThatValue().AsNotNull(Message)!;
 
-    public static void AssertIsNull<T>(this T value, [CallerArgumentExpression("value")] string? Message = null) =>
+    public static void AssertIsNull<T>(this T value, [CallerArgumentExpression(nameof(value))] string? Message = null) =>
         value.AssertThatValue().IsNull(Message);
 
     /// <summary>Результат является истинным</summary>
     /// <param name="value">Проверяемое выражение</param>
     /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
     /// <returns>Объект проверки выражения типа <see cref="bool"/></returns>
-    public static ValueChecker<bool> AssertTrue(this bool value, [CallerArgumentExpression("value")] string? Message = null) =>
+    public static ValueChecker<bool> AssertTrue(this bool value, [CallerArgumentExpression(nameof(value))] string? Message = null) =>
         That
            .Value(value)
            .IsEqual(true, Message);
@@ -73,7 +73,7 @@ public static class ObjectTestingExtensions
     /// <param name="value">Проверяемое выражение</param>
     /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
     /// <returns>Объект проверки выражения типа <see cref="bool"/></returns>
-    public static ValueChecker<bool> AssertFalse(this bool value, [CallerArgumentExpression("value")] string? Message = null) =>
+    public static ValueChecker<bool> AssertFalse(this bool value, [CallerArgumentExpression(nameof(value))] string? Message = null) =>
         That
            .Value(value)
            .IsEqual(false, Message);
@@ -84,7 +84,7 @@ public static class ObjectTestingExtensions
     /// <returns>Объект проверки значения</returns>
     public static ValueChecker<T> AssertThatValue<T>(this T value) => That.Value(value);
 
-    /// <summary>Проверка что вещественное значение равно указанному ожидаемому</summary>
+    /// <summary>Проверка, что вещественное значение равно указанному ожидаемому</summary>
     /// <param name="value">Проверяемое значение</param>
     /// <param name="ActualValue">Ожидаемое значение</param>
     /// <param name="Message">Сообщение об ошибке (при отсутствии указывается проверяемое выражение)</param>
@@ -92,7 +92,7 @@ public static class ObjectTestingExtensions
     public static DoubleValueChecker AssertEquals(
         this double value,
         double ActualValue,
-        [CallerArgumentExpression("value")]
+        [CallerArgumentExpression(nameof(value))]
         string? Message = null) =>
         (DoubleValueChecker)That
            .Value(value)
@@ -101,7 +101,7 @@ public static class ObjectTestingExtensions
     public static ValueChecker<T> AssertEquals<T>(
         this T value, 
         T ActualValue, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -111,7 +111,7 @@ public static class ObjectTestingExtensions
         this double value, 
         double ActualValue, 
         double Eps, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) =>
         (DoubleValueChecker)That
            .Value(value)
@@ -121,62 +121,62 @@ public static class ObjectTestingExtensions
         That
            .Collection(collection);
 
-    public static CollectionChecker<T> AssertCount<T>(this T[] collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertCount<T>(this T[] collection, int Count, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .CountEquals(Count, Message);
 
-    public static CollectionChecker<T> AssertCount<T>(this List<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertCount<T>(this List<T> collection, int Count, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .CountEquals(Count, Message);
 
-    public static CollectionChecker<T> AssertCount<T>(this ICollection<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertCount<T>(this ICollection<T> collection, int Count, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .CountEquals(Count, Message);
 
-    public static CollectionChecker<T> AssertIsEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsEmpty(Message);
 
-    public static CollectionChecker<T> AssertIsEmpty<T>(this T[] collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsEmpty<T>(this T[] collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsEmpty(Message);
 
-    public static CollectionChecker<T> AssertIsEmpty<T>(this List<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsEmpty<T>(this List<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsEmpty(Message);
 
-    public static CollectionChecker<T> AssertIsNotEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsNotEmpty<T>(this ICollection<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsNotEmpty(Message);
 
-    public static CollectionChecker<T> AssertIsNotEmpty<T>(this T[] collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsNotEmpty<T>(this T[] collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsNotEmpty(Message);
 
-    public static CollectionChecker<T> AssertIsNotEmpty<T>(this List<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsNotEmpty<T>(this List<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsNotEmpty(Message);
 
-    public static CollectionChecker<T> AssertIsSingle<T>(this ICollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsSingle<T>(this ICollection<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsSingleItem(Message);
 
-    public static CollectionChecker<T> AssertIsSingle<T>(this T[] collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsSingle<T>(this T[] collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsSingleItem(Message);
 
-    public static CollectionChecker<T> AssertIsSingle<T>(this List<T> collection, [CallerArgumentExpression("collection")] string? Message = null) => 
+    public static CollectionChecker<T> AssertIsSingle<T>(this List<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) => 
         That
            .Collection(collection)
            .IsSingleItem(Message);
@@ -262,22 +262,22 @@ public static class ObjectTestingExtensions
         That
            .Collection(collection);
 
-    public static ReadOnlyCollectionChecker<T> AssertCount<T>(this IReadOnlyCollection<T> collection, int Count, [CallerArgumentExpression("collection")] string? Message = null) =>
+    public static ReadOnlyCollectionChecker<T> AssertCount<T>(this IReadOnlyCollection<T> collection, int Count, [CallerArgumentExpression(nameof(collection))] string? Message = null) =>
         That
            .Collection(collection)
            .CountEquals(Count, Message);
 
-    public static ReadOnlyCollectionChecker<T> AssertIsEmpty<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) =>
+    public static ReadOnlyCollectionChecker<T> AssertIsEmpty<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) =>
         That
            .Collection(collection)
            .IsEmpty(Message);
 
-    public static ReadOnlyCollectionChecker<T> AssertIsNotEmpty<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) =>
+    public static ReadOnlyCollectionChecker<T> AssertIsNotEmpty<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) =>
         That
            .Collection(collection)
            .IsNotEmpty(Message);
 
-    public static ReadOnlyCollectionChecker<T> AssertIsSingle<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression("collection")] string? Message = null) =>
+    public static ReadOnlyCollectionChecker<T> AssertIsSingle<T>(this IReadOnlyCollection<T> collection, [CallerArgumentExpression(nameof(collection))] string? Message = null) =>
         That
            .Collection(collection)
            .IsSingleItem(Message);
@@ -314,22 +314,22 @@ public static class ObjectTestingExtensions
         That
            .Enumerable(items);
 
-    public static EnumerableChecker<T> AssertEnumerableIsEmpty<T>(this IEnumerable<T> items, [CallerArgumentExpression("items")] string? Message = null) => 
+    public static EnumerableChecker<T> AssertEnumerableIsEmpty<T>(this IEnumerable<T> items, [CallerArgumentExpression(nameof(items))] string? Message = null) => 
         That
            .Enumerable(items)
            .IsEmpty(Message);
 
-    public static EnumerableChecker<T> AssertEnumerableIsNotEmpty<T>(this IEnumerable<T> items, [CallerArgumentExpression("items")] string? Message = null) => 
+    public static EnumerableChecker<T> AssertEnumerableIsNotEmpty<T>(this IEnumerable<T> items, [CallerArgumentExpression(nameof(items))] string? Message = null) => 
         That
            .Enumerable(items)
            .IsNotEmpty(Message);
 
-    public static EnumerableChecker<T> AssertEnumerableIsSingleItem<T>(this IEnumerable<T> items, [CallerArgumentExpression("items")] string? Message = null) => 
+    public static EnumerableChecker<T> AssertEnumerableIsSingleItem<T>(this IEnumerable<T> items, [CallerArgumentExpression(nameof(items))] string? Message = null) => 
         That
            .Enumerable(items)
            .IsSingleItem(Message);
 
-    public static EnumerableChecker<T> AssertEnumerableCount<T>(this IEnumerable<T> items, int ExpectedCount, [CallerArgumentExpression("items")] string? Message = null) => 
+    public static EnumerableChecker<T> AssertEnumerableCount<T>(this IEnumerable<T> items, int ExpectedCount, [CallerArgumentExpression(nameof(items))] string? Message = null) => 
         That
            .Enumerable(items)
            .IsItemsCount(ExpectedCount, Message);
@@ -350,7 +350,7 @@ public static class ObjectTestingExtensions
     public static DoubleValueChecker AssertLessThan(
         this double value, 
         double ExpectedValue, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -360,7 +360,7 @@ public static class ObjectTestingExtensions
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -369,7 +369,7 @@ public static class ObjectTestingExtensions
     public static DoubleValueChecker AssertLessOrEqualsThan(
         this double value, 
         double ExpectedValue, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -379,7 +379,7 @@ public static class ObjectTestingExtensions
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -388,7 +388,7 @@ public static class ObjectTestingExtensions
     public static DoubleValueChecker AssertGreaterThan(
         this double value, 
         double ExpectedValue, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -398,7 +398,7 @@ public static class ObjectTestingExtensions
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -407,7 +407,7 @@ public static class ObjectTestingExtensions
     public static DoubleValueChecker AssertGreaterOrEqualsThan(
         this double value, 
         double ExpectedValue, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)
@@ -417,7 +417,7 @@ public static class ObjectTestingExtensions
         this double value, 
         double ExpectedValue, 
         double Accuracy, 
-        [CallerArgumentExpression("value")] 
+        [CallerArgumentExpression(nameof(value))] 
         string? Message = null) => 
         That
            .Value(value)

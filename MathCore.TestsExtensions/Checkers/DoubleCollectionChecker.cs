@@ -15,8 +15,10 @@ public class DoubleCollectionChecker : ICollection<double>
     {
         /// <summary>Проверяемая коллекция значение</summary>
         private readonly ICollection<double> _ActualValues;
+
         /// <summary>Значения, с которыми требуется провести сравнение</summary>
         private readonly ICollection<double> _ExpectedValues;
+
         /// <summary>Проверка на неравенство</summary>
         private readonly bool _Not;
 
@@ -138,7 +140,6 @@ public class DoubleCollectionChecker : ICollection<double>
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
         void IDisposable.Dispose()
         {
             if (_IsChecked) return;

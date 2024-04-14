@@ -9,10 +9,13 @@ public sealed class DoubleCompareCheckerWithAccuracy : IDisposable
 {
     /// <summary>Проверяемое значение</summary>
     private readonly double _ActualValue;
+    
     /// <summary>Ожидаемое значение</summary>
     private readonly double _ExpectedValue;
+    
     /// <summary>Проверка на равенство</summary>
     private readonly bool _IsEquals;
+    
     /// <summary>Проверка - меньше</summary>
     private readonly bool _IsLessChecking;
 
@@ -44,7 +47,7 @@ public sealed class DoubleCompareCheckerWithAccuracy : IDisposable
                 if (!(_ActualValue - Math.Abs(Accuracy) <= _ExpectedValue))
                 {
                     var msg = Message.AddSeparator();
-                    FormattableString message = $"{msg}Значени\r\n    {_ActualValue} должно быть меньше, либо равно\r\n    {_ExpectedValue}\r\n      err:{_ExpectedValue - _ActualValue:e2}(err.rel:{(_ExpectedValue - _ActualValue)/_ExpectedValue:e2})\r\n      eps:{Accuracy}";
+                    FormattableString message = $"{msg}Значение\r\n    {_ActualValue} должно быть меньше, либо равно\r\n    {_ExpectedValue}\r\n      err:{_ExpectedValue - _ActualValue:e2}(err.rel:{(_ExpectedValue - _ActualValue)/_ExpectedValue:e2})\r\n      eps:{Accuracy}";
                     throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
                        .AddData("Expected", _ExpectedValue)
                        .AddData("Actual", _ActualValue)
@@ -87,7 +90,6 @@ public sealed class DoubleCompareCheckerWithAccuracy : IDisposable
         return this;
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
     void IDisposable.Dispose()
     {
         if (_IsChecked) return;

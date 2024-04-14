@@ -14,7 +14,7 @@ public static class TestResultExtensions
         return result;
     }
 
-    public static TestResult ToDebug<T>(this TestResult result, T value, [CallerArgumentExpression("value")] string? Prefix = null)
+    public static TestResult ToDebug<T>(this TestResult result, T value, [CallerArgumentExpression(nameof(value))] string? Prefix = null)
     {
         if (Prefix is { Length: > 0 })
         {
@@ -30,7 +30,7 @@ public static class TestResultExtensions
         return result;
     }
 
-    public static TestResult ToDebugEnum(this TestResult result, IEnumerable items, [CallerArgumentExpression("items")] string? Name = null)
+    public static TestResult ToDebugEnum(this TestResult result, IEnumerable items, [CallerArgumentExpression(nameof(items))] string? Name = null)
     {
         var log = new StringBuilder(result.LogOutput);
         if (Name is { Length: > 0 })
@@ -54,7 +54,7 @@ public static class TestResultExtensions
         return result;
     }
 
-    public static TestResult ToDebugEnum<T>(this TestResult result, IEnumerable<T> items, [CallerArgumentExpression("items")] string? Name = null)
+    public static TestResult ToDebugEnum<T>(this TestResult result, IEnumerable<T> items, [CallerArgumentExpression(nameof(items))] string? Name = null)
     {
         var log = new StringBuilder(result.LogOutput);
         if (Name is { Length: > 0 })

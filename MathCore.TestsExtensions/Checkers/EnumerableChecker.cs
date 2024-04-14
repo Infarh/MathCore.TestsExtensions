@@ -42,7 +42,7 @@ internal static class ErrorFormatterBuilder
         var expected = (byte?)Expected;
         var actual = (byte?)Actual;
 
-        var err = (short?)expected - (short?)actual;
+        var err = expected - actual;
         var err_rel = err / (double?)expected;
 
         return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
@@ -75,7 +75,7 @@ internal static class ErrorFormatterBuilder
         var expected = (short?)Expected;
         var actual = (short?)Actual;
 
-        var err = (int?)expected - (int?)actual;
+        var err = expected - actual;
         var err_rel = err / (double?)expected;
 
         return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
@@ -97,7 +97,7 @@ internal static class ErrorFormatterBuilder
         var expected = (uint?)Expected;
         var actual = (uint?)Actual;
 
-        var err = (long?)expected - (long?)actual;
+        var err = expected - (long?)actual;
         var err_rel = err / (double?)expected;
 
         return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
@@ -131,11 +131,11 @@ internal static class ErrorFormatterBuilder
 
     private static ErrorFormatter MakeFormatter(MethodInfo Subtraction, MethodInfo? Division) => (index, Expected, Actual) =>
     {
-        var err = Subtraction.Invoke(null, new[] { Expected, Actual });
+        var err = Subtraction.Invoke(null, [Expected, Actual]);
         if (Division is null)
             return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err}";
 
-        var err_rel = Division.Invoke(null, new[] { err, Expected });
+        var err_rel = Division.Invoke(null, [err, Expected]);
 
         return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err}(err.rel:{err_rel})";
     };
@@ -193,7 +193,7 @@ internal static class ErrorFormatterBuilder
 
     private static readonly ConcurrentDictionary<Type, ErrorFormatter> __Formatters = new();
 
-    public static ErrorFormatter MakeFormatter(Type type) => __Formatters.GetOrAdd(type, t => MakeFormatterByType(t));
+    public static ErrorFormatter MakeFormatter(Type type) => __Formatters.GetOrAdd(type, MakeFormatterByType);
 }
 
 /// <summary>Объект проверки перечисления</summary>
@@ -213,7 +213,7 @@ public class EnumerableChecker<T>
     private static void CountItems(bool IsNotEmpty, IEnumerator enumerator, ref int count)
     {
         if(!IsNotEmpty) return;
-        do { count++; } while (enumerator.MoveNext());
+        do count++; while (enumerator.MoveNext());
     }
 
     /// <summary>По размеру и поэлементно эквивалентно ожидаемому перечислению</summary>
@@ -235,12 +235,8 @@ public class EnumerableChecker<T>
             var expected = expected_collection_enumerator.Current;
             var actual = actual_collection_enumerator.Current;
 
-            if (!comparer.Equals(expected, actual))
-            {
-                assert_fails.Add(formatter(index, expected, actual));
-                //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-            }
-
+            if (!comparer.Equals(expected, actual)) assert_fails.Add(formatter(index, expected, actual));
+            //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
             index++;
         }
 
@@ -293,15 +289,10 @@ public class EnumerableChecker<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer(expected, actual))
-                {
-                    assert_fails.Add(formatter(index, expected, actual));
-
-                    //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Comparer(expected, actual)) assert_fails.Add(formatter(index, expected, actual));
+                //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer(expected, actual), "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index, expected, actual);
                 index++;
             }
@@ -360,14 +351,10 @@ public class EnumerableChecker<T>
             {
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
-                if (!Comparer(expected, actual, index))
-                {
-                    assert_fails.Add(formatter(index, expected, actual));
-                    //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Comparer(expected, actual, index)) assert_fails.Add(formatter(index, expected, actual));
+                //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer(expected, actual, index), "{0}error[{1}]: ожидалось({2}), получено({3})", Message, index, expected, actual);
                 index++;
             }
@@ -420,14 +407,10 @@ public class EnumerableChecker<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer.Equals(expected, actual))
-                {
-                    assert_fails.Add(formatter(index, expected, actual));
-                    //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Comparer.Equals(expected, actual)) assert_fails.Add(formatter(index, expected, actual));
+                //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer.Equals(expected, actual),
                 //    "{0}error[{1}]: ожидалось({2}), получено({3})",
                 //    Message, index, expected, actual);
@@ -483,14 +466,10 @@ public class EnumerableChecker<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (Comparer.Compare(expected, actual) != 0)
-                {
-                    assert_fails.Add(formatter(index, expected, actual));
-                    //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (Comparer.Compare(expected, actual) != 0) assert_fails.Add(formatter(index, expected, actual));
+                //assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer.Equals(expected, actual),
                 //    "{0}error[{1}]: ожидалось({2}), получено({3})",
                 //    Message, index, expected, actual);
@@ -602,7 +581,7 @@ public class EnumerableChecker<T>
     public EnumerableChecker<T> All(Action<ValueChecker<T>> Check)
     {
         foreach (var item in ActualValue)
-            Check(new ValueChecker<T>(item));
+            Check(new(item));
         return this;
     }
 
@@ -613,7 +592,7 @@ public class EnumerableChecker<T>
     {
         var index = 0;
         foreach (var item in ActualValue)
-            Check(new ValueChecker<T>(item), index++);
+            Check(new(item), index++);
         return this;
     }
 
@@ -699,7 +678,7 @@ public class EnumerableChecker
     private static void CountItems(bool IsNotEmpty, IEnumerator enumerator, ref int count)
     {
         if (!IsNotEmpty) return;
-        do { count++; } while (enumerator.MoveNext());
+        do count++; while (enumerator.MoveNext());
     }
 
     /// <summary>Проверяемое перечисление</summary>

@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.43.5</Version>
+    <Version>0.1.44</Version>
     <PackageReleaseNotes>
-      Методы-расширения для проверки значения с помощью выражения value.Assert(v => test_value)
+      Методы-расшерения для записи данных в System.Diagnostics.Trace
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

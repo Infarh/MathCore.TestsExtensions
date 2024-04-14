@@ -14,7 +14,7 @@ internal static class ExceptionEx
         return exception;
     }
 
-    public static TException AddData<TException, TValue>(this TException exception, TValue value, [CallerArgumentExpression("value")] string? Key = null)
+    public static TException AddData<TException, TValue>(this TException exception, TValue value, [CallerArgumentExpression(nameof(value))] string? Key = null)
         where TException : Exception
     {
         if (Key is not { Length: > 0 }) return exception;

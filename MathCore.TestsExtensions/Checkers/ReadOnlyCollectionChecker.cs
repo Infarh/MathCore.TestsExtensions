@@ -46,13 +46,9 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Equals(expected, actual))
-                {
-                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Equals(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.AreEqual(expected, actual, "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
 
                 index++;
@@ -105,13 +101,9 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer(expected, actual))
-                {
-                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Comparer(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer(expected, actual), "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
 
                 index++;
@@ -163,13 +155,9 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer(expected, actual, index))
-                {
-                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Comparer(expected, actual, index)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer(expected, actual, index), "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
 
                 index++;
@@ -214,13 +202,9 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer.Equals(expected, actual))
-                {
-                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Comparer.Equals(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer.Equals(expected, actual),
                 //    "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}",
                 //    Message, index, expected, actual);
@@ -339,13 +323,9 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Equals(expected, actual))
-                {
-                    assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
-                    //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
-                    //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
-                }
-
+                if (!Equals(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
+                //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.AreEqual(expected, actual, "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
 
                 index++;
@@ -371,7 +351,7 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
         }
     }
 
-    /// <summary>Првоерка на соответствие размера коллекции ожидаемому значению</summary>
+    /// <summary>Проверка на соответствие размера коллекции ожидаемому значению</summary>
     /// <param name="ExpectedCount">Ожидаемый размер коллекции</param>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     /// <returns>Исходный объект проверки значений</returns>

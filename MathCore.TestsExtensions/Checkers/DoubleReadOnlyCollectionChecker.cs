@@ -15,8 +15,10 @@ public class DoubleReadOnlyCollectionChecker : IReadOnlyCollection<double>
     {
         /// <summary>Проверяемая коллекция значение</summary>
         private readonly IReadOnlyCollection<double> _ActualValues;
+        
         /// <summary>Значения, с которыми требуется провести сравнение</summary>
         private readonly IReadOnlyCollection<double> _ExpectedValues;
+        
         /// <summary>Проверка на неравенство</summary>
         private readonly bool _Not;
 
@@ -138,7 +140,6 @@ public class DoubleReadOnlyCollectionChecker : IReadOnlyCollection<double>
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
         void IDisposable.Dispose()
         {
             if (_IsChecked) return;
@@ -624,6 +625,7 @@ public class DoubleReadOnlyCollectionChecker : IReadOnlyCollection<double>
     #region Implementation of IEnumerable
 
     public IEnumerator<double> GetEnumerator() => _ActualReadOnlyCollection.GetEnumerator();
+
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_ActualReadOnlyCollection).GetEnumerator();
 
     #endregion
