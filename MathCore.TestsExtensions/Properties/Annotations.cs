@@ -76,15 +76,13 @@ internal sealed class ItemCanBeNullAttribute : Attribute { }
 ///   ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
 /// }
 /// </code></example>
+/// <param name="formatParameterName">
+/// Specifies which parameter of an annotated method should be treated as format-string
+/// </param>
 [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method)]
-internal sealed class StringFormatMethodAttribute : Attribute
+internal sealed class StringFormatMethodAttribute(string formatParameterName) : Attribute
 {
-    /// <param name="formatParameterName">
-    /// Specifies which parameter of an annotated method should be treated as format-string
-    /// </param>
-    public StringFormatMethodAttribute(string formatParameterName) => FormatParameterName = formatParameterName;
-
-    public string FormatParameterName { get; }
+    public string FormatParameterName { get; } = formatParameterName;
 }
 
 /// <summary>
@@ -189,18 +187,12 @@ internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
 /// </code></item>
 /// </list></examples>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-internal sealed class ContractAnnotationAttribute : Attribute
+internal sealed class ContractAnnotationAttribute(string contract, bool forceFullStates) : Attribute
 {
     public ContractAnnotationAttribute(string contract) : this(contract, false) { }
 
-    public ContractAnnotationAttribute(string contract, bool forceFullStates)
-    {
-        Contract = contract;
-        ForceFullStates = forceFullStates;
-    }
-
-    public string Contract { get; }
-    public bool ForceFullStates { get; }
+    public string Contract { get; } = contract;
+    public bool ForceFullStates { get; } = forceFullStates;
 }
 
 /// <summary>
@@ -213,12 +205,11 @@ internal sealed class ContractAnnotationAttribute : Attribute
 /// }
 /// </code></example>
 [AttributeUsage(AttributeTargets.All)]
-internal sealed class LocalizationRequiredAttribute : Attribute
+internal sealed class LocalizationRequiredAttribute(bool required) : Attribute
 {
     public LocalizationRequiredAttribute() : this(true) { }
-    public LocalizationRequiredAttribute(bool required) => Required = required;
 
-    public bool Required { get; }
+    public bool Required { get; } = required;
 }
 
 /// <summary>
@@ -255,11 +246,9 @@ internal sealed class CannotApplyEqualityOperatorAttribute : Attribute { }
 /// </code></example>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 [BaseTypeRequired(typeof(Attribute))]
-internal sealed class BaseTypeRequiredAttribute : Attribute
+internal sealed class BaseTypeRequiredAttribute(Type baseType) : Attribute
 {
-    public BaseTypeRequiredAttribute(Type baseType) => BaseType = baseType;
-
-    public Type BaseType { get; }
+    public Type BaseType { get; } = baseType;
 }
 
 /// <summary>
@@ -268,7 +257,8 @@ internal sealed class BaseTypeRequiredAttribute : Attribute
 /// will not be marked as unused (as well as by other usage inspections)
 /// </summary>
 [AttributeUsage(AttributeTargets.All)]
-internal sealed class UsedImplicitlyAttribute : Attribute
+internal sealed class UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
+    : Attribute
 {
     public UsedImplicitlyAttribute()
         : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default) { }
@@ -279,14 +269,8 @@ internal sealed class UsedImplicitlyAttribute : Attribute
     public UsedImplicitlyAttribute(ImplicitUseTargetFlags targetFlags)
         : this(ImplicitUseKindFlags.Default, targetFlags) { }
 
-    public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
-    {
-        UseKindFlags = useKindFlags;
-        TargetFlags = targetFlags;
-    }
-
-    public ImplicitUseKindFlags UseKindFlags { get; }
-    public ImplicitUseTargetFlags TargetFlags { get; }
+    public ImplicitUseKindFlags UseKindFlags { get; } = useKindFlags;
+    public ImplicitUseTargetFlags TargetFlags { get; } = targetFlags;
 }
 
 /// <summary>
@@ -295,7 +279,8 @@ internal sealed class UsedImplicitlyAttribute : Attribute
 /// (as well as by other usage inspections)
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-internal sealed class MeansImplicitUseAttribute : Attribute
+internal sealed class MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
+    : Attribute
 {
     public MeansImplicitUseAttribute()
         : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default) { }
@@ -306,15 +291,8 @@ internal sealed class MeansImplicitUseAttribute : Attribute
     public MeansImplicitUseAttribute(ImplicitUseTargetFlags targetFlags)
         : this(ImplicitUseKindFlags.Default, targetFlags) { }
 
-    public MeansImplicitUseAttribute(
-        ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
-    {
-        UseKindFlags = useKindFlags;
-        TargetFlags = targetFlags;
-    }
-
-    [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; }
-    [UsedImplicitly] public ImplicitUseTargetFlags TargetFlags { get; }
+    [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; } = useKindFlags;
+    [UsedImplicitly] public ImplicitUseTargetFlags TargetFlags { get; } = targetFlags;
 }
 
 [Flags]

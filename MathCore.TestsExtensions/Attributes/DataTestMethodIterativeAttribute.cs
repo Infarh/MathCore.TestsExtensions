@@ -5,18 +5,16 @@
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>Итерационное выполнение теста на основе данных с заданием числа итераций для набора статистики</summary>
+/// <remarks>Инициализация итерационного теста на основе данных</remarks>
+/// <param name="IterationsCount">Число итераций</param>
 [AttributeUsage(AttributeTargets.Method)]
-public class DataTestMethodIterativeAttribute : TestMethodAttribute
+public class DataTestMethodIterativeAttribute(int IterationsCount) : TestMethodAttribute
 {
     /// <summary>Число итераций повторения теста</summary>
-    private readonly int _IterationsCount;
+    private readonly int _IterationsCount = IterationsCount;
 
     /// <summary>Остановить процесс выполнения теста при первом сбое</summary>
     public bool StopAtFirstFail { get; set; }
-
-    /// <summary>Инициализация итерационного теста на основе данных</summary>
-    /// <param name="IterationsCount">Число итераций</param>
-    public DataTestMethodIterativeAttribute(int IterationsCount) => _IterationsCount = IterationsCount;
 
     /// <inheritdoc />
     public override TestResult[] Execute(ITestMethod TestMethod)

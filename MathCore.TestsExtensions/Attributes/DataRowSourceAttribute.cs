@@ -32,11 +32,11 @@ public class DataRowSourceAttribute : Attribute
     /// </summary>
     public Type? SourceType { get; set; }
 
-    public DataRowSourceAttribute() => Data = Array.Empty<object>();
+    public DataRowSourceAttribute() => Data = [];
 
     /// <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.DataRowSourceAttribute" />.</summary>
     /// <param name="data">Объект данных.</param>
-    public DataRowSourceAttribute(object data) => Data = new[] { data };
+    public DataRowSourceAttribute(object data) => Data = [data];
 
     /// <summary>Инициализирует новый экземпляр класса <see cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.DataRowSourceAttribute" />, принимающий массив аргументов.</summary>
     /// <param name="data">Объект данных.</param>
@@ -45,7 +45,7 @@ public class DataRowSourceAttribute : Attribute
     {
         if (MoreData is null)
         {
-            Data = new[] { data };
+            Data = [data];
             return;
         }
 
@@ -70,7 +70,7 @@ public class DataRowSourceAttribute : Attribute
         var source_method = type.GetMethod(method_name, BindingFlags.Static | BindingFlags.Public)
             ?? type.GetMethod(method_name, BindingFlags.Static | BindingFlags.NonPublic);
 
-        object instance = null;
+        object? instance = null;
         if (source_method is null)
         {
             source_method = type.GetMethod(method_name, BindingFlags.Instance | BindingFlags.Public)
@@ -120,13 +120,11 @@ public class DataRowSourceAttribute : Attribute
         if (!string.IsNullOrWhiteSpace(DisplayName)) return DisplayName;
         if (data is null) return null;
 
-        var result = new StringBuilder(Prefix ?? TestMethod.Name);
-        result.Append("(");
+        var result = new StringBuilder(Prefix ?? TestMethod.Name).Append('(');
         var parameters = TestMethod.GetParameters();
         for (var i = 0; i < parameters.Length; i++)
         {
-            result.Append(parameters[i].Name);
-            result.Append(": ");
+            result.Append(parameters[i].Name).Append(": ");
             var value = data[i];
             if (value is IEnumerable e)
             {
@@ -135,8 +133,7 @@ public class DataRowSourceAttribute : Attribute
                 foreach (var e_value in e)
                 {
                     any = true;
-                    result.Append(e_value);
-                    result.Append(", ");
+                    result.Append(e_value).Append(", ");
                 }
 
                 if (any)

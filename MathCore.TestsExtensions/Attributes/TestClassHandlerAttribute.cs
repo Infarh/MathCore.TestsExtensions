@@ -1,15 +1,13 @@
 ﻿namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class TestClassHandlerAttribute : TestClassAttribute
+public class TestClassHandlerAttribute(string ExceptionHandlerMethod) : TestClassAttribute
 {
-    public string? ExceptionHandlerMethod { get; set; }
+    public string? ExceptionHandlerMethod { get; set; } = ExceptionHandlerMethod;
 
     public bool HandlePassed { get; set; }
 
-    public TestClassHandlerAttribute() { }
-
-    public TestClassHandlerAttribute(string ExceptionHandlerMethod) => this.ExceptionHandlerMethod = ExceptionHandlerMethod;
+    public TestClassHandlerAttribute() : this(null!) { }
 
     public override TestMethodAttribute GetTestMethodAttribute(TestMethodAttribute Attribute)
     {

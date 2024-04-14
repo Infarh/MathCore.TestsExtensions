@@ -184,7 +184,7 @@ public class ValueChecker<T>
         var expected_type = typeof(TExpectedType);
         IsNotNull(Message);
         if (expected_type.GetTypeInfo().IsAssignableFrom(ActualValue!.GetType().GetTypeInfo()))
-            return new ValueChecker<TExpectedType>((TExpectedType)ActualValue);
+            return new((TExpectedType)ActualValue);
 
         throw new AssertFailedException($"{Message.AddSeparator()}Значение\r\n    {ActualValue?.GetType()} не является значением типа\r\n    {expected_type}")
            .AddData("ExpectedType", expected_type)
@@ -208,7 +208,7 @@ public class ValueChecker<T>
             Message.AddSeparator(),
             ActualValue?.GetType(),
             expected_type);
-        return new ValueChecker<TValue>(Selector((TExpectedType)ActualValue!));
+        return new(Selector((TExpectedType)ActualValue!));
     }
 
     /// <summary>Проверка вложенного значения</summary>
@@ -224,8 +224,7 @@ public class ValueChecker<T>
     /// <returns>Объект проверки текущего значения</returns>
     public ValueChecker<T> Where<TValue>(Func<T?, TValue> Selector, Action<ValueChecker<TValue>> Checker)
     {
-        var value_checker = new ValueChecker<TValue>(Selector(ActualValue));
-        Checker(value_checker);
+        Checker(new(Selector(ActualValue)));
         return this;
     }
 
@@ -243,8 +242,7 @@ public class ValueChecker<T>
     public ValueChecker<T> WhereItems<TItem>(Func<T?, ICollection<TItem>> Selector, Action<CollectionChecker<TItem>> Checker)
     {
         var value = Selector(ActualValue);
-        var checker = new CollectionChecker<TItem>(value);
-        Checker(checker);
+        Checker(new(value));
         return this;
     }
 
@@ -264,11 +262,8 @@ public class ValueChecker<T>
     /// <returns>Исходный объект проверки</returns>
     public ValueChecker<T> WhereAll<TItem>(Func<T?, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>> Checker)
     {
-        foreach (var item in Selector(ActualValue))
-        {
-            var item_checker = new ValueChecker<TItem>(item);
-            Checker(item_checker);
-        }
+        foreach (var item in Selector(ActualValue)) 
+            Checker(new(item));
         return this;
     }
 
@@ -280,12 +275,8 @@ public class ValueChecker<T>
     public ValueChecker<T> WhereAll<TItem>(Func<T?, IEnumerable<TItem>> Selector, Action<ValueChecker<TItem>, int> Checker)
     {
         var item_index = 0;
-        foreach (var item in Selector(ActualValue))
-        {
-            var item_checker = new ValueChecker<TItem>(item);
-            Checker(item_checker, item_index);
-            item_index++;
-        }
+        foreach (var item in Selector(ActualValue)) 
+            Checker(new(item), item_index++);
         return this;
     }
 

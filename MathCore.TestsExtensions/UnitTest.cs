@@ -33,7 +33,7 @@ public class UnitTest
     protected double[] GetRNDDoubleArray(int Count, double Min = 0, double Max = 1)
     {
         if (Count < 0) throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число элементов массива не может быть меньше нуля");
-        if (Count == 0) return Array.Empty<double>();
+        if (Count == 0) return [];
         var result = new double[Count];
 
         for (var i = 0; i < Count; i++)
@@ -50,7 +50,7 @@ public class UnitTest
     protected int[] GetRNDIntArray(int Count, int Min = 0, int Max = 1)
     {
         if (Count < 0) throw new ArgumentOutOfRangeException(nameof(Count), Count, "Число элементов массива не может быть меньше нуля");
-        if (Count == 0) return Array.Empty<int>();
+        if (Count == 0) return [];
         var result = new int[Count];
 
         for (var i = 0; i < Count; i++)
@@ -60,24 +60,23 @@ public class UnitTest
     }
 
     /// <summary>Объект сравнения вещественных чисел с указанной точностью</summary>
-    public readonly struct ToleranceComparer : IComparer<double>, IComparer, IEqualityComparer<double>
+    /// <remarks>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</remarks>
+    /// <param name="Tolerance">Точность сравнения</param>
+    public readonly struct ToleranceComparer(double Tolerance) : IComparer<double>, IComparer, IEqualityComparer<double>
     {
         /// <summary>Точность сравнения</summary>
-        private readonly double _Tolerance;
+        private readonly double _Tolerance = Tolerance;
 
         /// <summary>Точность сравнения</summary>
         /// <exception cref="ArgumentOutOfRangeException">Если значение точности меньше нуля</exception>
         public double Tolerance { get => _Tolerance; init => _Tolerance = value; }
 
-        /// <summary>Инициализация нового объекта сравнения вещественных чисел с указанной точностью</summary>
-        /// <param name="Tolerance">Точность сравнения</param>
-        public ToleranceComparer(double Tolerance) => _Tolerance = Tolerance;
-
         int IComparer<double>.Compare(double x, double y) => Math.Abs(x - y) < _Tolerance ? 0 : Math.Sign(x - y);
 
-        int IComparer.Compare(object x, object y) => ((IComparer<double>)this).Compare(Convert.ToDouble(x), Convert.ToDouble(y));
+        int IComparer.Compare(object? x, object? y) => ((IComparer<double>)this).Compare(Convert.ToDouble(x), Convert.ToDouble(y));
 
         public bool Equals(double x, double y) => Math.Abs(x - y) <= _Tolerance;
+
         public int GetHashCode(double value) => (Math.Round(value / _Tolerance) * _Tolerance).GetHashCode();
     }
 

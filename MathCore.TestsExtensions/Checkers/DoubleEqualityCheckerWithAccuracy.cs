@@ -8,8 +8,10 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
 {
     /// <summary>Проверяемое значение</summary>
     private readonly double _ActualValue;
+    
     /// <summary>Значение, с которым требуется провести сравнение</summary>
     private readonly double _ExpectedValue;
+    
     /// <summary>Проверка на неравенство</summary>
     private readonly bool _Not;
 
@@ -89,7 +91,6 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
         return this;
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Ожидание>")]
     void IDisposable.Dispose()
     {
         if (_IsChecked) return;

@@ -6,8 +6,9 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure;
 internal static class ObjectEx
 {
     [return: System.Diagnostics.CodeAnalysis.NotNull]
-    [return: NotNullIfNotNull("obj")]
-    public static T NotNull<T>(this T? obj, string? Message = null, [CallerArgumentExpression("obj")] string? ParameterName = null) where T : class
+    [return: NotNullIfNotNull(nameof(obj))]
+    public static T NotNull<T>(this T? obj, string? Message = null, [CallerArgumentExpression(nameof(obj))] string? ParameterName = null) 
+        where T : class
     {
         if (obj is not null)
             return obj;

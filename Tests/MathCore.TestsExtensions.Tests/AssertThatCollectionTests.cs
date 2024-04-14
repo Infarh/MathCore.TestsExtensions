@@ -162,7 +162,7 @@ public class AssertThatCollectionTests : AssertTests
     [TestMethod]
     public void IsEquals_ToParamsValues_Success()
     {
-        int[] test_collection = { 1, 3, 5, 7 };
+        int[] test_collection = [1, 3, 5, 7];
 
         Assert.That.Collection(test_collection).IsEqualTo(1, 3, 5, 7);
     }
@@ -190,7 +190,7 @@ public class AssertThatCollectionTests : AssertTests
     [TestMethod]
     public void FluentLambdaCollectionContains_Success()
     {
-        int[] items = { 1, 3, 5, 7 };
+        int[] items = [1, 3, 5, 7];
         Assert.That.Collection(items).Contains(item => item == 5);
     }
 
@@ -208,7 +208,8 @@ public class AssertThatCollectionTests : AssertTests
     [TestMethod]
     public void Collection_IsEqualsTo_WithAccuracy_Success()
     {
-        double[] actual = {
+        double[] actual =
+        [
             +1,
             -4.572417374538311,
             +9.501375642075562,
@@ -222,9 +223,10 @@ public class AssertThatCollectionTests : AssertTests
             +0.8178436415754909,
             -0.5751215311689866,
             +0.17026409592167924
-        };
+        ];
 
-        double[] expected = {
+        double[] expected =
+        [
             +1,
             -4.572417374538311,
             +9.501375642075566,
@@ -238,7 +240,7 @@ public class AssertThatCollectionTests : AssertTests
             +0.8178436415754919,
             -0.5751215311689868,
             +0.17026409592167924
-        };
+        ];
 
         var checker = Assert.That.Collection(actual);
         checker.IsEqualTo(expected, 7.2e-15);
@@ -247,7 +249,8 @@ public class AssertThatCollectionTests : AssertTests
     [TestMethod]
     public void Collection_IsEqualsTo_WithAccuracy_Fail()
     {
-        double[] A = {
+        double[] A =
+        [
             +1,
             -4.572417374538311,
             +9.501375642075566,
@@ -261,9 +264,10 @@ public class AssertThatCollectionTests : AssertTests
             +0.8178436415754919,
             -0.5751215311689868,
             +0.17026409592167924
-        };
+        ];
 
-        double[] B = {
+        double[] B =
+        [
             +0.0342439351432325,
             -0.3108325662349939,
             +1.3810596668728097,
@@ -277,7 +281,7 @@ public class AssertThatCollectionTests : AssertTests
             +1.3810596668728072,
             -0.31083256623499333,
             +0.034243935143232415
-        };
+        ];
 
         try
         {
@@ -289,6 +293,4 @@ public class AssertThatCollectionTests : AssertTests
             // штатно тест должен быть провален на неверном наборе данных
         }
     }
-
-
 }

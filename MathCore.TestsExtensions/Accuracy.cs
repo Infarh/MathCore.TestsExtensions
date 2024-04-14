@@ -9,19 +9,16 @@ public static class Accuracy
     public static IComparer<T> Compare<T>(Comparison<T> Comparer) => new AccuracyComparer<T>(Comparer);
 }
 
-public readonly struct AccuracyComparer : 
-    IEqualityComparer<double>, IComparer<double>, 
+public readonly struct AccuracyComparer(double Eps) :
+    IEqualityComparer<double>, IComparer<double>,
     IEqualityComparer<int>, IComparer<int>
 {
-    private double Eps { get; init; }
-
-    public AccuracyComparer(double Eps) =>
-        this.Eps = Eps switch
-        {
-            < 0 => throw new ArgumentOutOfRangeException(nameof(Eps), Eps, "Значение точности не должно быть меньше нуля"),
-            double.NaN => throw new ArgumentException("Значение точности не должно быть NaN", nameof(Eps)),
-            _ => Eps
-        };
+    private double Eps { get; init; } = Eps switch
+    {
+        < 0 => throw new ArgumentOutOfRangeException(nameof(Eps), Eps, "Значение точности не должно быть меньше нуля"),
+        double.NaN => throw new ArgumentException("Значение точности не должно быть NaN", nameof(Eps)),
+        _ => Eps
+    };
 
     public bool Equals(double x, double y) => Math.Abs(x - y) <= Eps;
 
@@ -59,27 +56,14 @@ public readonly struct AccuracyComparer :
     }
 }
 
-public class AccuracyEqualityComparer<T> : IEqualityComparer<T>
+public class AccuracyEqualityComparer<T>(Func<T, T, bool> Comparer, Func<T, int> Hasher) : IEqualityComparer<T>
 {
-    private readonly Func<T, T, bool> _Comparer;
-    private readonly Func<T, int> _Hasher;
+    public bool Equals(T x, T y) => Comparer(x, y);
 
-    public AccuracyEqualityComparer(Func<T, T, bool> Comparer, Func<T, int> Hasher)
-    {
-        _Comparer = Comparer;
-        _Hasher = Hasher;
-    }
-
-    public bool Equals(T x, T y) => _Comparer(x, y);
-
-    public int GetHashCode(T obj) => _Hasher(obj);
+    public int GetHashCode(T obj) => Hasher(obj);
 }
 
-public class AccuracyComparer<T> : IComparer<T>
+public class AccuracyComparer<T>(Comparison<T> Comparer) : IComparer<T>
 {
-    private readonly Comparison<T> _Comparer;
-
-    public AccuracyComparer(Comparison<T> Comparer) => _Comparer = Comparer;
-
-    public int Compare(T x, T y) => _Comparer(x, y);
+    public int Compare(T x, T y) => Comparer(x, y);
 }

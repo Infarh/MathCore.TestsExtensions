@@ -31,7 +31,7 @@ public class FunctionChecker<TResult>
         {
             return Assert.That.Value(exception).As<TException>("Получено исключение, отличное от ожидаемого");
         }
-        throw new AssertFailedException(Message.AddSeparator());
+        throw new AssertFailedException(Message.AddSeparator()!);
     }
 }
 
@@ -73,6 +73,7 @@ public class FunctionChecker<TValue, TResult>
         {
             return Assert.That.Value(exception).As<TException>($"{Message.AddSeparator()}Получено исключение, отличное от ожидаемого");
         }
-        throw new AssertFailedException(Message.AddSeparator());
+
+        throw new AssertFailedException(Message.AddSeparator()!);
     }
 }
