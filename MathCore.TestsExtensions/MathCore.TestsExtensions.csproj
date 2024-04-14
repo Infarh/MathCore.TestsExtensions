@@ -11,7 +11,7 @@
   <PropertyGroup>
     <Version>0.1.44</Version>
     <PackageReleaseNotes>
-      Методы-расшерения для записи данных в System.Diagnostics.Trace
+      Методы-расширения для записи данных в System.Diagnostics.Trace
     </PackageReleaseNotes>
   </PropertyGroup>
 
