@@ -46,7 +46,7 @@ jobs:
         run: dotnet pack -c Release --no-build -v q -o ${{ github.workspace }}/ReleasePack --include-symbols
       
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4
         with:
           name: Release
           path: ${{ github.workspace }}/ReleasePack
@@ -64,7 +64,7 @@ jobs:
           dotnet-version: 10.0.x
     
       - name: Get artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v5
         id: download
         with:
             name: Release
@@ -85,7 +85,7 @@ jobs:
           dotnet-version: 10.0.x
     
       - name: Get artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v5
         id: download
         with:
             name: Release
@@ -101,6 +101,6 @@ jobs:
     
     steps:
       - name: Delete artefact
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v5
         with:
             name: Release
