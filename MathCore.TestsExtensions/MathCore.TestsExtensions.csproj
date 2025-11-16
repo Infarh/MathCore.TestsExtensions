@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.0.1</Version>
+    <Version>1.0.0.2</Version>
     <PackageReleaseNotes>Актуализация пакета и зависимостей, поддержка netstandard2.0</PackageReleaseNotes>
   </PropertyGroup>
 

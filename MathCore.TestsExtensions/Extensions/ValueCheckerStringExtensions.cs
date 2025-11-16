@@ -21,7 +21,7 @@ public static class ValueCheckerStringExtensions
         public ValueChecker<string> StartWith(string ExpectedPrefix, string? Message = null)
         {
             FormattableString message = $"{Message.AddSeparator()}Указанная строка {Checker.ActualValue} не начинается с ожидаемого префикса {ExpectedPrefix}";
-            Assert.StartsWith(Checker.ActualValue, ExpectedPrefix, message.ToStringInvariant());
+            Assert.StartsWith(ExpectedPrefix, Checker.ActualValue, message.ToStringInvariant());
             return Checker;
         }
 
@@ -32,7 +32,7 @@ public static class ValueCheckerStringExtensions
         public ValueChecker<string> EndWith(string ExpectedSuffix, string? Message = null)
         {
             FormattableString msg = $"{Message.AddSeparator()}Указанная строка {Checker.ActualValue} не заканчивается ожидаемым окончанием {ExpectedSuffix}";
-            Assert.EndsWith(Checker.ActualValue, ExpectedSuffix, msg.ToStringInvariant());
+            Assert.EndsWith(ExpectedSuffix, Checker.ActualValue, msg.ToStringInvariant());
             return Checker;
         }
 
@@ -43,7 +43,7 @@ public static class ValueCheckerStringExtensions
         public ValueChecker<string> Contains(string ExpectedSubstring, string? Message = null)
         {
             FormattableString msg = $"{Message.AddSeparator()}Указанная строка {Checker.ActualValue} не содержит ожидаемой подстроки {ExpectedSubstring}";
-            Assert.Contains(Checker.ActualValue!, ExpectedSubstring, msg.ToStringInvariant());
+            Assert.Contains(ExpectedSubstring, Checker.ActualValue!, msg.ToStringInvariant());
             return Checker;
         }
 
@@ -60,7 +60,7 @@ public static class ValueCheckerStringExtensions
         public ValueChecker<string> Matches(Regex ExpectedRegEx, string? Message = null)
         {
             FormattableString msg = $"{Message.AddSeparator()}Указанная строка {Checker.ActualValue} не соответствует ожидаемому регулярному выражению {ExpectedRegEx}";
-            StringAssert.Matches(Checker.ActualValue, ExpectedRegEx, msg.ToStringInvariant());
+            Assert.MatchesRegex(ExpectedRegEx, Checker.ActualValue, msg.ToStringInvariant());
             return Checker;
         }
 
@@ -77,7 +77,7 @@ public static class ValueCheckerStringExtensions
         public ValueChecker<string> DoesNotMatch(Regex ExpectedRegEx, string? Message = null)
         {
             FormattableString msg = $"{Message.AddSeparator()}Указанная строка {Checker.ActualValue} ошибочно соответствует ожидаемому регулярному выражению {ExpectedRegEx}";
-            StringAssert.DoesNotMatch(Checker.ActualValue, ExpectedRegEx, msg.ToStringInvariant());
+            Assert.DoesNotMatchRegex(ExpectedRegEx, Checker.ActualValue, msg.ToStringInvariant());
             return Checker;
         }
 
