@@ -1,10 +1,12 @@
-﻿namespace Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Runtime.CompilerServices;
+
+namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /// <summary>Итерационное выполнение теста с заданием числа итераций для набора статистики</summary>
 /// <remarks>Инициализация итерационного теста</remarks>
 /// <param name="IterationsCount">Число итераций</param>
 [AttributeUsage(AttributeTargets.Method)]
-public class TestMethodIterativeAttribute(int IterationsCount) : TestMethodAttribute
+public class TestMethodIterativeAttribute(int IterationsCount, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1) : TestMethodAttribute(callerFilePath, callerLineNumber)
 {
     /// <summary>Число итераций повторения теста</summary>
     private readonly int _IterationsCount = IterationsCount;
@@ -13,13 +15,13 @@ public class TestMethodIterativeAttribute(int IterationsCount) : TestMethodAttri
     public bool StopAtFirstFail { get; set; }
 
     /// <inheritdoc />
-    public override TestResult[] Execute(ITestMethod TestMethod)
+    public override async Task<TestResult[]> ExecuteAsync(ITestMethod TestMethod)
     {
         var results = new List<TestResult>();
         var stop_at_first_fail = StopAtFirstFail;
         for (var count = 0; count < _IterationsCount; count++)
         {
-            var test_results = base.Execute(TestMethod);
+            var test_results = await base.ExecuteAsync(TestMethod);
             results.AddRange(test_results);
             if (stop_at_first_fail && test_results.Any(r => r.TestFailureException != null)) break;
         }

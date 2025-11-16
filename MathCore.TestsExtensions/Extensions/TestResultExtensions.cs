@@ -7,74 +7,77 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting.Extensions;
 
 public static class TestResultExtensions
 {
-    public static TestResult LogWriteLine(this TestResult result, string Text)
+    extension(TestResult result)
     {
-        var log = new StringBuilder(result.LogOutput).AppendLine(Text);
-        result.LogOutput = log.ToString();
-        return result;
-    }
-
-    public static TestResult ToDebug<T>(this TestResult result, T value, [CallerArgumentExpression(nameof(value))] string? Prefix = null)
-    {
-        if (Prefix is { Length: > 0 })
+        public TestResult LogWriteLine(string Text)
         {
-            FormattableString msg = $"{Prefix} = {value}";
-            result.LogWriteLine(msg.ToString(CultureInfo.InvariantCulture));
-        }
-        else
-        {
-            FormattableString msg = $"{value}";
-            result.LogWriteLine(msg.ToString(CultureInfo.InvariantCulture));
+            var log = new StringBuilder(result.LogOutput).AppendLine(Text);
+            result.LogOutput = log.ToString();
+            return result;
         }
 
-        return result;
-    }
-
-    public static TestResult ToDebugEnum(this TestResult result, IEnumerable items, [CallerArgumentExpression(nameof(items))] string? Name = null)
-    {
-        var log = new StringBuilder(result.LogOutput);
-        if (Name is { Length: > 0 })
-            log.AppendFormat("object[] {0} = {{\r\n", Name);
-        var i = 0;
-        var culture = CultureInfo.InvariantCulture;
-        foreach (var item in items)
+        public TestResult ToDebug<T>(T value, [CallerArgumentExpression(nameof(value))] string? Prefix = null)
         {
-            if (i > 0)
-                log.AppendLine(",");
+            if (Prefix is { Length: > 0 })
+            {
+                FormattableString msg = $"{Prefix} = {value}";
+                result.LogWriteLine(msg.ToString(CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                FormattableString msg = $"{value}";
+                result.LogWriteLine(msg.ToString(CultureInfo.InvariantCulture));
+            }
 
-            FormattableString msg = $"            /*[{i,2}]*/ {item}";
-            log.AppendLine(msg.ToString(culture));
-
-            i++;
+            return result;
         }
-        log.AppendLine("");
-        log.AppendLine("}");
 
-        result.LogOutput = log.ToString();
-        return result;
-    }
-
-    public static TestResult ToDebugEnum<T>(this TestResult result, IEnumerable<T> items, [CallerArgumentExpression(nameof(items))] string? Name = null)
-    {
-        var log = new StringBuilder(result.LogOutput);
-        if (Name is { Length: > 0 })
-            log.AppendFormat("{0}[] {1} = {{\r\n", typeof(T).Name, Name);
-        var i = 0;
-        var culture = CultureInfo.InvariantCulture;
-        foreach (var item in items)
+        public TestResult ToDebugEnum(IEnumerable items, [CallerArgumentExpression(nameof(items))] string? Name = null)
         {
-            if (i > 0)
-                log.AppendLine(",");
+            var log = new StringBuilder(result.LogOutput);
+            if (Name is { Length: > 0 })
+                log.AppendFormat("object[] {0} = {{\r\n", Name);
+            var i = 0;
+            var culture = CultureInfo.InvariantCulture;
+            foreach (var item in items)
+            {
+                if (i > 0)
+                    log.AppendLine(",");
 
-            FormattableString msg = $"            /*[{i,2}]*/ {item}";
-            log.Append(msg.ToString(culture));
+                FormattableString msg = $"            /*[{i,2}]*/ {item}";
+                log.AppendLine(msg.ToString(culture));
 
-            i++;
+                i++;
+            }
+            log.AppendLine("");
+            log.AppendLine("}");
+
+            result.LogOutput = log.ToString();
+            return result;
         }
-        log.AppendLine("");
-        log.AppendLine("}");
 
-        result.LogOutput = log.ToString();
-        return result;
+        public TestResult ToDebugEnum<T>(IEnumerable<T> items, [CallerArgumentExpression(nameof(items))] string? Name = null)
+        {
+            var log = new StringBuilder(result.LogOutput);
+            if (Name is { Length: > 0 })
+                log.AppendFormat("{0}[] {1} = {{\r\n", typeof(T).Name, Name);
+            var i = 0;
+            var culture = CultureInfo.InvariantCulture;
+            foreach (var item in items)
+            {
+                if (i > 0)
+                    log.AppendLine(",");
+
+                FormattableString msg = $"            /*[{i,2}]*/ {item}";
+                log.Append(msg.ToString(culture));
+
+                i++;
+            }
+            log.AppendLine("");
+            log.AppendLine("}");
+
+            result.LogOutput = log.ToString();
+            return result;
+        }
     }
 }

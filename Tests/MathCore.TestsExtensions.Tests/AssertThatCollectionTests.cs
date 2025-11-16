@@ -1,5 +1,6 @@
 ﻿// ReSharper disable PossibleMultipleEnumeration
 
+// ReSharper disable InconsistentNaming
 namespace MathCore.TestsExtensions.Tests;
 
 [TestClass]

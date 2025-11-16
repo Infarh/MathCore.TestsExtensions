@@ -1,11 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33103.184
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathCore.TestsExtensions", "MathCore.TestsExtensions\MathCore.TestsExtensions.csproj", "{0F039156-E6CB-4EFB-A863-13A1AC2DD4AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathCore.TestsExtensions.Tests", "Tests\MathCore.TestsExtensions.Tests\MathCore.TestsExtensions.Tests.csproj", "{10093BD2-D872-4383-B075-92850E009647}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Service", ".Service", "{29B29638-89EC-4383-B587-AE8C981DED4F}"
+	ProjectSection(SolutionItems) = preProject
+		.github\copilot-instructions.md = .github\copilot-instructions.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{D6A23A02-D860-4101-AB7B-0C7FB57331CB}"
+	ProjectSection(SolutionItems) = preProject
+		.github\copilot-instructions.md = .github\copilot-instructions.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{83B95A2F-1D99-43CB-BA0C-769D88078D6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +36,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D6A23A02-D860-4101-AB7B-0C7FB57331CB} = {29B29638-89EC-4383-B587-AE8C981DED4F}
+		{83B95A2F-1D99-43CB-BA0C-769D88078D6F} = {D6A23A02-D860-4101-AB7B-0C7FB57331CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C7C0D00-B422-4B19-B6D4-19B55F78389C}

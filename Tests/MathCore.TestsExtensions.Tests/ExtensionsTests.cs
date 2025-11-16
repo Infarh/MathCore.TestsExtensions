@@ -14,9 +14,9 @@ public class ExtensionsTests : AssertTests
         var list = new List<int>();
         Assert.That.Value(list)
            .AssertThat(l => l.IsNotNull())
-           .Where(l => l.Count)
+           .Where(l => l!.Count)
            .Check(Count => Count.IsEqual(0))
-           .Where(l => l.Capacity)
+           .Where(l => l!.Capacity)
            .Check(Capacity => Capacity.IsEqual(0));
     }
 

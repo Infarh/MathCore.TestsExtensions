@@ -6,8 +6,8 @@ public class AssertThatEnumerableTests : AssertTests
     [TestMethod]
     public void IsEqualTo_Success()
     {
-        IEnumerable<string> actual   = new[] { "file3.txt", "file4.txt", "file5.txt", "file6.txt" };
-        IEnumerable<string> expected = new[] { "file3.txt", "file4.txt", "file5.txt", "file6.txt" };
+        IEnumerable<string> actual   = ["file3.txt", "file4.txt", "file5.txt", "file6.txt"];
+        IEnumerable<string> expected = ["file3.txt", "file4.txt", "file5.txt", "file6.txt"];
 
         Assert.That.Enumerable(actual).IsEqualTo(expected);
     }
@@ -15,8 +15,8 @@ public class AssertThatEnumerableTests : AssertTests
     [TestMethod]
     public void IsEqualTo_Fail_DifferentValues()
     {
-        IEnumerable<string> actual   = new[] { "file3.txt", "file4.txt", "-------", "file6.txt" };
-        IEnumerable<string> expected = new[] { "file3.txt", "file4.txt", "file5.txt", "file6.txt" };
+        IEnumerable<string> actual   = ["file3.txt", "file4.txt", "-------", "file6.txt"];
+        IEnumerable<string> expected = ["file3.txt", "file4.txt", "file5.txt", "file6.txt"];
 
         try
         {
@@ -32,8 +32,8 @@ public class AssertThatEnumerableTests : AssertTests
     [TestMethod]
     public void IsEqualTo_Fail_DifferentCount()
     {
-        IEnumerable<string> actual   = new[] { "file3.txt", "file4.txt", "file5.txt" };
-        IEnumerable<string> expected = new[] { "file3.txt", "file4.txt", "file5.txt", "file6.txt" };
+        IEnumerable<string> actual   = ["file3.txt", "file4.txt", "file5.txt"];
+        IEnumerable<string> expected = ["file3.txt", "file4.txt", "file5.txt", "file6.txt"];
 
         try
         {

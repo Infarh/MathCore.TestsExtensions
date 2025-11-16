@@ -22,6 +22,7 @@ public static class ValueCheckerExtensions
     {
         var collection = Checker.ActualValue!;
         var count = collection.Count;
+
         for (var i = 0; i < count; i++)
             Check(new(collection[i]), i);
 

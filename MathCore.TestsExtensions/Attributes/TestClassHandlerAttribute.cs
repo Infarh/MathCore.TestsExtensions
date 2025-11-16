@@ -9,7 +9,7 @@ public class TestClassHandlerAttribute(string ExceptionHandlerMethod) : TestClas
 
     public TestClassHandlerAttribute() : this(null!) { }
 
-    public override TestMethodAttribute GetTestMethodAttribute(TestMethodAttribute? Attribute)
+    public override TestMethodAttribute GetTestMethodAttribute(TestMethodAttribute Attribute)
     {
         if(ExceptionHandlerMethod is { Length: > 0 } method_name)
             if (Attribute is TestMethodHandlerAttribute handler_attribute)
@@ -27,6 +27,6 @@ public class TestClassHandlerAttribute(string ExceptionHandlerMethod) : TestClas
                     HandlePassed = HandlePassed,
                 };
 
-        return base.GetTestMethodAttribute(Attribute)!;
+        return base.GetTestMethodAttribute(Attribute!)!;
     }
 }
