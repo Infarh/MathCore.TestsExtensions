@@ -9,10 +9,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.1.44</Version>
-    <PackageReleaseNotes>
-      Методы-расширения для записи данных в System.Diagnostics.Trace
-    </PackageReleaseNotes>
+    <Version>1.0.0</Version>
+    <PackageReleaseNotes>Актуализация пакета и зависимостей, поддержка netstandard2.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,6 +19,11 @@
     <Description>Библиотека средств помощи в процессе тестирования</Description>
     <PackageProjectUrl>https://github.com/Infarh/MathCore.TestsExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Infarh/MathCore.TestsExtensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
     <PackageTags>UnitTest, MSTest</PackageTags>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
     <Copyright>shmachilin@yandex.ru</Copyright>
@@ -29,7 +32,12 @@
     <AssemblyOriginatorKeyFile>MathCore.TestsExtensions.snk</AssemblyOriginatorKeyFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
 
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting.Infrastructure" />
@@ -43,6 +51,7 @@
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" IncludeAssets="All" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
