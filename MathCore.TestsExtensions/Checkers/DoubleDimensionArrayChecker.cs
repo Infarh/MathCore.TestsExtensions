@@ -20,8 +20,9 @@ public class DoubleDimensionArrayChecker
     public DoubleDimensionArrayChecker IsEqualTo(double[,] ExpectedArray, string? Message = null)
     {
         Service.CheckSeparator(ref Message);
-        Assert.AreEqual(ExpectedArray.GetLength(0), ActualValue.GetLength(0), "{0}{1}", Message, "Размеры массивов не совпадают");
-        Assert.AreEqual(ExpectedArray.GetLength(1), ActualValue.GetLength(1), "{0}{1}", Message, "Размеры массивов не совпадают");
+        Message ??= "Размеры массивов не совпадают";
+        Assert.AreEqual(ExpectedArray.GetLength(0), ActualValue.GetLength(0), Message);
+        Assert.AreEqual(ExpectedArray.GetLength(1), ActualValue.GetLength(1), Message);
 
         for (var i = 0; i < ActualValue.GetLength(0); i++)
             for (var j = 0; j < ActualValue.GetLength(1); j++)
@@ -29,10 +30,11 @@ public class DoubleDimensionArrayChecker
                 var expected = ExpectedArray[i, j];
                 var actual = ActualValue[i, j];
                 Assert.AreEqual(expected, actual,
-                    "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}\r\n    err:{5}(rel:{6})",
-                    Message, i, j, expected, actual,
-                    Math.Abs(expected - actual).ToString("e3", CultureInfo.InvariantCulture),
-                    (Math.Abs(expected - actual) / expected).ToString(CultureInfo.InvariantCulture));
+                    FormattableString.Invariant(
+                        $"""
+                        {Message}Несовпадение по индексу [{i},{j}], ожидалось:{expected}; получено:{actual}
+                            err:{Math.Abs(expected - actual):e3}(rel:{(Math.Abs(expected - actual) / expected)})
+                        """));
             }
 
         return this;
@@ -48,8 +50,9 @@ public class DoubleDimensionArrayChecker
             throw new ArgumentException("Значение точности не может быть равно NaN", nameof(Accuracy));
 
         Service.CheckSeparator(ref Message);
-        Assert.AreEqual(ExpectedArray.GetLength(0), ActualValue.GetLength(0), "{0}{1}", Message, "Размеры массивов не совпадают");
-        Assert.AreEqual(ExpectedArray.GetLength(1), ActualValue.GetLength(1), "{0}{1}", Message, "Размеры массивов не совпадают");
+        Message ??= "Размеры массивов не совпадают";
+        Assert.AreEqual(ExpectedArray.GetLength(0), ActualValue.GetLength(0), Message);
+        Assert.AreEqual(ExpectedArray.GetLength(1), ActualValue.GetLength(1), Message);
 
         for (var i = 0; i < ActualValue.GetLength(0); i++)
             for (var j = 0; j < ActualValue.GetLength(1); j++)
@@ -66,15 +69,20 @@ public class DoubleDimensionArrayChecker
                 var delta = Math.Abs(expected - actual);
                 if (delta > Accuracy)
                 {
-                    FormattableString message = $"{Message}Несовпадение по индексу [{i},{j}]\r\n    ожидалось:{expected}; получено:{actual}\r\n      err:{delta:e3}(rel:{delta / expected:e3})\r\n      eps:{Accuracy}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    FormattableString message = $"""
+                     {Message}Несовпадение по индексу [{i},{j}]
+                         ожидалось:{expected}; получено:{actual}
+                           err:{delta:e3}(rel:{delta / expected:e3})
+                           eps:{Accuracy}
+                     """;
+                    throw new AssertFailedException(message.ToStringInvariant());
                 }
 
                 //Assert.AreEqual(expected, actual, Accuracy,
                 //    "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; err:{6}(rel:{7})",
                 //    Message, i, j, expected, actual, Accuracy,
                 //    Math.Abs(expected - actual).ToString("e3", CultureInfo.InvariantCulture),
-                //    (Math.Abs(expected - actual) / expected).ToString(CultureInfo.InvariantCulture));
+                //    (Math.Abs(expected - actual) / expected).ToStringInvariant());
             }
 
         return this;
@@ -94,15 +102,19 @@ public class DoubleDimensionArrayChecker
                 if (ExpectedValue != actual)
                 {
                     var delta = Math.Abs(ExpectedValue - actual);
-                    FormattableString message = $"{Message}Несовпадение по индексу [{i},{j}]\r\n    ожидалось:{ExpectedValue}; получено:{actual}\r\n    err:{delta:e3}(rel:{delta / ExpectedValue:e3})";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    FormattableString message = $"""
+                     {Message}Несовпадение по индексу [{i},{j}]
+                         ожидалось:{ExpectedValue}; получено:{actual}
+                         err:{delta:e3}(rel:{delta / ExpectedValue:e3})
+                     """;
+                    throw new AssertFailedException(message.ToStringInvariant());
                 }
 
                 //Assert.AreEqual(ExpectedValue, actual,
                 //    "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; err:{5}(rel:{6})",
                 //    Message, i, j, ExpectedValue, actual,
                 //    Math.Abs(ExpectedValue - actual).ToString("e3", CultureInfo.InvariantCulture),
-                //    (Math.Abs(ExpectedValue - actual) / ExpectedValue).ToString(CultureInfo.InvariantCulture));
+                //    (Math.Abs(ExpectedValue - actual) / ExpectedValue).ToStringInvariant());
             }
 
         return this;
@@ -123,15 +135,20 @@ public class DoubleDimensionArrayChecker
                 var delta = Math.Abs(ExpectedValue - actual);
                 if (delta > Accuracy)
                 {
-                    FormattableString message = $"{Message}Несовпадение по индексу [{i},{j}]\r\n    ожидалось:{ExpectedValue}; получено:{actual}\r\n    delta:{Accuracy}\r\n    err:{delta:e3}(rel:{delta / ExpectedValue:e3})";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    FormattableString message = $"""
+                     {Message}Несовпадение по индексу [{i},{j}]
+                         ожидалось:{ExpectedValue}; получено:{actual}
+                         delta:{Accuracy}
+                         err:{delta:e3}(rel:{delta / ExpectedValue:e3})
+                     """;
+                    throw new AssertFailedException(message.ToStringInvariant());
                 }
 
                 //Assert.AreEqual(ExpectedValue, actual, Accuracy,
                 //    "{0}Несовпадение по индексу [{1},{2}], ожидалось:{3}; получено:{4}; delta:{5}; err:{6}(rel:{7})",
                 //    Message, i, j, ExpectedValue, actual, Accuracy,
                 //    delta.ToString("e3", CultureInfo.InvariantCulture),
-                //    (delta / ExpectedValue).ToString(CultureInfo.InvariantCulture));
+                //    (delta / ExpectedValue).ToStringInvariant());
             }
 
         return this;
@@ -156,7 +173,7 @@ public class DoubleDimensionArrayChecker
                 if (!Condition(actual))
                 {
                     FormattableString message = $"{Message}err[{i},{j}]:{actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    throw new AssertFailedException(message.ToStringInvariant());
                 }
 
                 //Assert.IsTrue(Condition(actual), "{0}err[{1},{2}]:{3}", Message, i, j, actual);
@@ -185,8 +202,11 @@ public class DoubleDimensionArrayChecker
 
                 if (!Condition(actual, i, j))
                 {
-                    FormattableString message = $"{Message}err[{i},{j}]:\r\n    {actual}";
-                    throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
+                    FormattableString message = $"""
+                     {Message}err[{i},{j}]:
+                         {actual}
+                     """;
+                    throw new AssertFailedException(message.ToStringInvariant());
                 }
 
                 //Assert.IsTrue(Condition(actual, i, j), "{0}err[{1},{2}]:{3}", Message, i, j, actual);

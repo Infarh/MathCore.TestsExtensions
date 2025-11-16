@@ -18,7 +18,12 @@ public sealed class DoubleValueChecker : ValueChecker<double>
     {
         if (Equals(ExpectedValue, ActualValue)) return this;
 
-        FormattableString msg = $"{Message.AddSeparator()} получено значение\r\n    {ActualValue:F18} не равно ожидаемому\r\n    {ExpectedValue:F18}\r\n    err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})";
+        FormattableString msg = $"""
+                                 {Message.AddSeparator()} получено значение
+                                     {ActualValue:F18} не равно ожидаемому
+                                     {ExpectedValue:F18}
+                                     err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})
+                                 """;
         throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
            .AddData("Actual", ActualValue);
@@ -32,7 +37,12 @@ public sealed class DoubleValueChecker : ValueChecker<double>
     {
         if (!Equals(ExpectedValue, ActualValue)) return this;
 
-        FormattableString msg = $"{Message.AddSeparator()} полученное значение\r\n    {ActualValue:F18} равно ожидаемому\r\n    {ExpectedValue:F18}\r\n    err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})";
+        FormattableString msg = $"""
+                                 {Message.AddSeparator()} полученное значение
+                                     {ActualValue:F18} равно ожидаемому
+                                     {ExpectedValue:F18}
+                                     err:{ExpectedValue - ActualValue:e3}(rel.err:{(ExpectedValue - ActualValue) / ExpectedValue:e3})
+                                 """;
         throw new AssertFailedException(msg.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
            .AddData("Actual", ActualValue);

@@ -1,21 +1,22 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [AttributeUsage(AttributeTargets.Method)]
-public class TestMethodHandlerAttribute(string? ExceptionHandlerMethod, string? DisplayName = null)
-    : TestMethodAttribute(DisplayName)
+public class TestMethodHandlerAttribute(string? ExceptionHandlerMethod, bool HandlePassed = false, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1) : TestMethodAttribute(callerFilePath, callerLineNumber)
 {
-    public TestMethodHandlerAttribute() : this(null) { }
+    public TestMethodHandlerAttribute(bool HandlePassed = false, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1) : this(null, HandlePassed, callerFilePath, callerLineNumber) { }
 
     public string? ExceptionHandlerMethod { get; set; } = ExceptionHandlerMethod;
 
-    public bool HandlePassed { get; set; }
+    public bool HandlePassed { get; set; } = HandlePassed;
 
-    public override TestResult[] Execute(ITestMethod Method)
+    public override async Task<TestResult[]> ExecuteAsync(ITestMethod Method)
     {
+
         if (ExceptionHandlerMethod is not { Length: > 0 } handler_method_name)
-            return base.Execute(Method);
+            return await base.ExecuteAsync(Method);
 
         var test_class = Method.MethodInfo.DeclaringType ?? throw new InvalidOperationException("Невозможно определить класс модульного теста");
 
@@ -32,9 +33,9 @@ public class TestMethodHandlerAttribute(string? ExceptionHandlerMethod, string? 
             test_class.GetMethod(handler_method_name, private_static, null, [test_result_type], null);
 
         if (handler_method_info is null)
-            return base.Execute(Method);
+            return await base.ExecuteAsync(Method);
 
-        var result = base.Execute(Method);
+        var result = await base.ExecuteAsync(Method);
 
         var results_to_process = HandlePassed
             ? result

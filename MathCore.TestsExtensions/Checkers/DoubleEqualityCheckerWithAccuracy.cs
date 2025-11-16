@@ -51,8 +51,13 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
             if (delta < Accuracy)
             {
                 var msg = Message.AddSeparator();
-                FormattableString message = $"{msg}  actual:{_ActualValue} ==\r\nexpected:{_ExpectedValue}\r\n      err:{delta:e2}(rel:{delta_rel:e2})\r\n      eps:{Accuracy}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                FormattableString message = $"""
+                                             {msg}  actual:{_ActualValue} ==
+                                             expected:{_ExpectedValue}
+                                                   err:{delta:e2}(rel:{delta_rel:e2})
+                                                   eps:{Accuracy}
+                                             """;
+                throw new AssertFailedException(message.ToStringInvariant())
                    .AddData("Expected", _ExpectedValue)
                    .AddData("Actual", _ActualValue)
                    .AddData(Accuracy);
@@ -72,8 +77,13 @@ public sealed class DoubleEqualityCheckerWithAccuracy : IDisposable
             if (delta > Accuracy)
             {
                 var msg = Message.AddSeparator();
-                FormattableString message = $"{msg} actual:{_ActualValue} !=\r\nexpected:{_ExpectedValue}\r\n      err:{delta:e2}(rel:{delta_rel:e2})\r\n      eps:{Accuracy}";
-                throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
+                FormattableString message = $"""
+                 {msg} actual:{_ActualValue} !=
+                 expected:{_ExpectedValue}
+                       err:{delta:e2}(rel:{delta_rel:e2})
+                       eps:{Accuracy}
+                 """;
+                throw new AssertFailedException(message.ToStringInvariant())
                    .AddData("Expected", _ExpectedValue)
                    .AddData("Actual", _ActualValue)
                    .AddData(Accuracy);

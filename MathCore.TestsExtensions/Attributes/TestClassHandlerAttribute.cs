@@ -27,6 +27,6 @@ public class TestClassHandlerAttribute(string ExceptionHandlerMethod) : TestClas
                     HandlePassed = HandlePassed,
                 };
 
-        return base.GetTestMethodAttribute(Attribute);
+        return base.GetTestMethodAttribute(Attribute!)!;
     }
 }

@@ -31,7 +31,11 @@ public class ValueChecker<T>
         if (Equals(ExpectedValue, ActualValue))
             return this;
 
-        FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
+        FormattableString message = $"""
+         {Message.AddSeparator()}Актуальное значение
+             {ActualValue} не соответствует ожидаемому
+             {ExpectedValue}
+         """;
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
            .AddData("Actual", ActualValue);
@@ -43,10 +47,14 @@ public class ValueChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public ValueChecker<T> IsEqual(T ExpectedValue, IEqualityComparer<T> Comparer, string? Message = null)
     {
-        if (Comparer.Equals(ActualValue, ExpectedValue))
+        if (Comparer.Equals(ActualValue!, ExpectedValue))
             return this;
 
-        FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
+        FormattableString message = $"""
+         {Message.AddSeparator()}Актуальное значение
+             {ActualValue} не соответствует ожидаемому
+             {ExpectedValue}
+         """;
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
            .AddData("Actual", ActualValue);
@@ -64,10 +72,14 @@ public class ValueChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public ValueChecker<T> IsEqual(T ExpectedValue, EqualityComparer Comparer, string? Message = null)
     {
-        if (Comparer(ExpectedValue, ActualValue))
+        if (Comparer(ExpectedValue, ActualValue!))
             return this;
 
-        FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
+        FormattableString message = $"""
+         {Message.AddSeparator()}Актуальное значение
+             {ActualValue} не соответствует ожидаемому
+             {ExpectedValue}
+         """;
 
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
@@ -82,7 +94,11 @@ public class ValueChecker<T>
         if (ReferenceEquals(ActualValue, ExpectedValue))
             return this;
 
-        FormattableString message = $"{Message.AddSeparator()}Объект актуального значения\r\n    {ActualValue} не является ожидаемым\r\n    {ExpectedValue} при сравнении ссылок";
+        FormattableString message = $"""
+         {Message.AddSeparator()}Объект актуального значения
+             {ActualValue} не является ожидаемым
+             {ExpectedValue} при сравнении ссылок
+         """;
 
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
@@ -97,7 +113,11 @@ public class ValueChecker<T>
         if (!Equals(ExpectedValue, ActualValue)) return this;
 
         var msg = Message.AddSeparator();
-        FormattableString message = $"{msg}Актуальное значение\r\n    {ActualValue} соответствует ожидаемому\r\n    {ExpectedValue}";
+        FormattableString message = $"""
+         {msg}Актуальное значение
+             {ActualValue} соответствует ожидаемому
+             {ExpectedValue}
+         """;
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
            .AddData("Actual", ActualValue);
@@ -111,7 +131,11 @@ public class ValueChecker<T>
         if (!ReferenceEquals(ActualValue, ExpectedValue)) return this;
 
         var msg = Message.AddSeparator();
-        FormattableString message = $"{msg}Объект актуального значения\r\n    {ActualValue} является ожидаемым\r\n    {ExpectedValue} при сравнении ссылок";
+        FormattableString message = $"""
+         {msg}Объект актуального значения
+             {ActualValue} является ожидаемым
+             {ExpectedValue} при сравнении ссылок
+         """;
         throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture))
            .AddData("Expected", ExpectedValue)
            .AddData("Actual", ActualValue);
@@ -120,14 +144,14 @@ public class ValueChecker<T>
     /// <summary>Ссылка на значение должна быть пустой</summary>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public void IsNull(string? Message = null) =>
-        Assert.IsNull(ActualValue, "{0}Ссылка на {1} не является пустой", Message.AddSeparator(), ActualValue);
+        Assert.IsNull(ActualValue, $"{Message.AddSeparator()}Ссылка на {ActualValue} не является пустой");
 
     /// <summary>Значение, гарантированно не являющееся пустой ссылкой</summary>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     /// <returns>Значение, гарантированно не являющееся пустой ссылкой</returns>
     public T IsNotNull(string? Message = null)
     {
-        Assert.IsNotNull(ActualValue, "{0}Ссылка является пустой", Message.AddSeparator());
+        Assert.IsNotNull(ActualValue, $"{Message.AddSeparator()}Ссылка является пустой");
         return ActualValue;
     }
 
@@ -150,10 +174,7 @@ public class ValueChecker<T>
         Assert.IsInstanceOfType(
             ActualValue,
             ExpectedType,
-            "{0}Значение {1} не является значением типа {2}",
-            Message.AddSeparator(),
-            ActualValue?.GetType(),
-            ExpectedType);
+            $"{Message.AddSeparator()}Значение {ActualValue?.GetType()} не является значением типа {ExpectedType}");
         return this;
     }
 
@@ -168,10 +189,7 @@ public class ValueChecker<T>
         Assert.IsInstanceOfType(
             ActualValue,
             expected_type,
-            "{0}Значение {1} не является значением типа {2}",
-            Message.AddSeparator(),
-            ActualValue?.GetType(),
-            expected_type);
+            $"{Message.AddSeparator()}Значение {ActualValue?.GetType()} не является значением типа {expected_type}");
         return this;
     }
 
@@ -186,7 +204,11 @@ public class ValueChecker<T>
         if (expected_type.GetTypeInfo().IsAssignableFrom(ActualValue!.GetType().GetTypeInfo()))
             return new((TExpectedType)ActualValue);
 
-        throw new AssertFailedException($"{Message.AddSeparator()}Значение\r\n    {ActualValue?.GetType()} не является значением типа\r\n    {expected_type}")
+        throw new AssertFailedException($"""
+         {Message.AddSeparator()}Значение
+             {ActualValue?.GetType()} не является значением типа
+             {expected_type}
+         """)
            .AddData("ExpectedType", expected_type)
            .AddData("Actual", ActualValue);
     }
@@ -204,10 +226,11 @@ public class ValueChecker<T>
         Assert.IsInstanceOfType(
             ActualValue,
             expected_type,
-            "{0}Значение\r\n    {1} не является значением типа\r\n    {2}",
-            Message.AddSeparator(),
-            ActualValue?.GetType(),
-            expected_type);
+            $"""
+             {Message.AddSeparator()}Значение
+                 {ActualValue?.GetType()} не является значением типа
+                 {expected_type}
+             """);
         return new(Selector((TExpectedType)ActualValue!));
     }
 
@@ -283,12 +306,12 @@ public class ValueChecker<T>
     /// <summary>Проверка действия над значением</summary>
     /// <param name="action">Действие, выполняемое над значением</param>
     /// <returns>Объект проверки действия</returns>
-    public ActionChecker<T> Method(Action<T?> action) => new(action, ActualValue);
+    public ActionChecker<T> Method(Action<T?> action) => new(action, ActualValue!);
 
     /// <summary>Проверка функции над значением</summary>
     /// <param name="function">Функция, выполняемая над значением</param>
     /// <returns>Объект проверки функции</returns>
-    public FunctionChecker<T, TResult> Method<TResult>(Func<T?, TResult> function) => new(function, ActualValue);
+    public FunctionChecker<T, TResult> Method<TResult>(Func<T?, TResult> function) => new(function, ActualValue!);
 
     /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
     /// <param name="Checker">Объект проверки</param>

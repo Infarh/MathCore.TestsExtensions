@@ -18,7 +18,7 @@ public class TestClassIterativeAttribute(int IterationsCount) : TestClassAttribu
     public bool StopAtFirstFail { get; set; }
 
     /// <inheritdoc />
-    public override TestMethodAttribute GetTestMethodAttribute(TestMethodAttribute TestMethodAttribute)
+    public override TestMethodAttribute GetTestMethodAttribute(TestMethodAttribute? TestMethodAttribute)
     {
         var attribute = TestMethodAttribute as TestMethodIterativeAttribute ?? new TestMethodIterativeAttribute(_IterationsCount);
         attribute.StopAtFirstFail = StopAtFirstFail;

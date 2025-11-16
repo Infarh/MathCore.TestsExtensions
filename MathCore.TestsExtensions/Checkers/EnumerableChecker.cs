@@ -13,7 +13,11 @@ internal delegate FormattableString ErrorFormatter(int index, object? Expected, 
 
 internal static class ErrorFormatterBuilder
 {
-    private static FormattableString GetErrorStr(int index, object? Expected, object? Actual) => $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}";
+    private static FormattableString GetErrorStr(int index, object? Expected, object? Actual) => $"""
+         [{index,3}]:
+             ожидалось:{Expected}
+              получено:{Actual}
+         """;
 
     private static FormattableString GetErrorSingleStr(int index, object? Expected, object? Actual)
     {
@@ -23,7 +27,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+        [{index,3}]:
+            ожидалось:{Expected}
+             получено:{Actual}
+                  err:{err:e2}(err.rel:{err_rel:e2})
+        """;
     }
 
     private static FormattableString GetErrorDoubleStr(int index, object? Expected, object? Actual)
@@ -34,7 +43,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorByteStr(int index, object? Expected, object? Actual)
@@ -45,7 +59,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorSByteStr(int index, object? Expected, object? Actual)
@@ -56,7 +75,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorShortStr(int index, object? Expected, object? Actual)
@@ -67,7 +91,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorUShortStr(int index, object? Expected, object? Actual)
@@ -78,7 +107,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorIntStr(int index, object? Expected, object? Actual)
@@ -89,7 +123,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorUIntStr(int index, object? Expected, object? Actual)
@@ -100,7 +139,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - (long?)actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorLongStr(int index, object? Expected, object? Actual)
@@ -111,7 +155,12 @@ internal static class ErrorFormatterBuilder
         var err = expected - actual;
         var err_rel = err / (double?)expected;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err:e2}(err.rel:{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err:e2}(err.rel:{err_rel:e2})
+                """;
     }
 
     private static FormattableString GetErrorULongStr(int index, object? Expected, object? Actual)
@@ -125,7 +174,12 @@ internal static class ErrorFormatterBuilder
 
         var sign = negative ? '-' : (char?)null;
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{sign}{err:e2}(err.rel:{sign}{err_rel:e2})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{sign}{err:e2}(err.rel:{sign}{err_rel:e2})
+                """;
     }
 
 
@@ -133,11 +187,21 @@ internal static class ErrorFormatterBuilder
     {
         var err = Subtraction.Invoke(null, [Expected, Actual]);
         if (Division is null)
-            return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err}";
+            return $"""
+                    [{index,3}]:
+                        ожидалось:{Expected}
+                         получено:{Actual}
+                              err:{err}
+                    """;
 
         var err_rel = Division.Invoke(null, [err, Expected]);
 
-        return $"[{index,3}]:\r\n    ожидалось:{Expected}\r\n     получено:{Actual}\r\n          err:{err}(err.rel:{err_rel})";
+        return $"""
+                [{index,3}]:
+                    ожидалось:{Expected}
+                     получено:{Actual}
+                          err:{err}(err.rel:{err_rel})
+                """;
     };
 
     private static ErrorFormatter GetFormatter(Type type)
@@ -246,7 +310,11 @@ public class EnumerableChecker<T>
             var count_actual = index;
             CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
             CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-            assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+            assert_fails.Add($"""
+              Размеры перечислений не совпадают.
+                  размер актуальной коллекции:{count_actual}
+                   размер ожидаемой коллекции:{count_expected}
+              """);
         }
 
         if (assert_fails.Count == 0) return this;
@@ -302,7 +370,11 @@ public class EnumerableChecker<T>
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -364,7 +436,11 @@ public class EnumerableChecker<T>
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -423,7 +499,11 @@ public class EnumerableChecker<T>
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -482,7 +562,11 @@ public class EnumerableChecker<T>
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -716,7 +800,11 @@ public class EnumerableChecker
                         assert_fails.Add(formatter(index, expected, actual));
                     }
                     else
-                        assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                        assert_fails.Add($"""
+                                          [{index,3}]:
+                                              ожидалось:{expected}
+                                               получено:{actual}
+                                          """);
                     //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                     //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
@@ -731,7 +819,11 @@ public class EnumerableChecker
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -787,7 +879,11 @@ public class EnumerableChecker
                         assert_fails.Add(formatter(index, expected, actual));
                     }
                     else
-                        assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                        assert_fails.Add($"""
+                                          [{index,3}]:
+                                              ожидалось:{expected}
+                                               получено:{actual}
+                                          """);
                     //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                     //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
@@ -805,7 +901,11 @@ public class EnumerableChecker
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -862,7 +962,11 @@ public class EnumerableChecker
                         assert_fails.Add(formatter(index, expected, actual));
                     }
                     else
-                        assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                        assert_fails.Add($"""
+                                          [{index,3}]:
+                                              ожидалось:{expected}
+                                               получено:{actual}
+                                          """);
                     //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                     //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
@@ -877,7 +981,11 @@ public class EnumerableChecker
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;
@@ -926,7 +1034,11 @@ public class EnumerableChecker
                         assert_fails.Add(formatter(index, expected, actual));
                     }
                     else
-                        assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                        assert_fails.Add($"""
+                                          [{index,3}]:
+                                              ожидалось:{expected}
+                                               получено:{actual}
+                                          """);
                     //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                     //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 }
@@ -944,7 +1056,11 @@ public class EnumerableChecker
                 var count_actual = index;
                 CountItems(expected_move_next, expected_collection_enumerator, ref count_expected);
                 CountItems(actual_move_next, actual_collection_enumerator, ref count_actual);
-                assert_fails.Add($"Размеры перечислений не совпадают.\r\n    размер актуальной коллекции:{count_actual}\r\n     размер ожидаемой коллекции:{count_expected}");
+                assert_fails.Add($"""
+                                  Размеры перечислений не совпадают.
+                                      размер актуальной коллекции:{count_actual}
+                                       размер ожидаемой коллекции:{count_expected}
+                                  """);
             }
 
             if (assert_fails.Count == 0) return this;

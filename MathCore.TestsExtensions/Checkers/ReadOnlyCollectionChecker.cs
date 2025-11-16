@@ -46,7 +46,11 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Equals(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                if (!Equals(expected, actual)) assert_fails.Add($"""
+                                                                 [{index,3}]:
+                                                                     ожидалось:{expected}
+                                                                      получено:{actual}
+                                                                 """);
                 //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                 //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.AreEqual(expected, actual, "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
@@ -101,7 +105,12 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                if (!Comparer(expected, actual)) 
+                    assert_fails.Add($"""
+                    [{index,3}]:
+                        ожидалось:{expected}
+                         получено:{actual}
+                    """);
                 //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                 //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer(expected, actual), "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
@@ -155,7 +164,12 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer(expected, actual, index)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                if (!Comparer(expected, actual, index)) 
+                    assert_fails.Add($"""
+                      [{index,3}]:
+                          ожидалось:{expected}
+                           получено:{actual}
+                      """);
                 //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                 //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer(expected, actual, index), "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
@@ -202,7 +216,12 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Comparer.Equals(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                if (!Comparer.Equals(expected, actual)) 
+                    assert_fails.Add($"""
+                      [{index,3}]:
+                          ожидалось:{expected}
+                           получено:{actual}
+                      """);
                 //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                 //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.IsTrue(Comparer.Equals(expected, actual),
@@ -248,7 +267,11 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
 
             var expected = items[index];
             if (!Equals(actual, expected))
-                assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                assert_fails.Add($"""
+                  [{index,3}]:
+                      ожидалось:{expected}
+                       получено:{actual}
+                  """);
             //Assert.That.Value(actual).IsEqual(items[index], $"item[{index}]");
             index++;
         }
@@ -286,7 +309,11 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
 
             var expected = items[index];
             if (!Equals(actual, expected))
-                assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                assert_fails.Add($"""
+                  [{index,3}]:
+                      ожидалось:{expected}
+                       получено:{actual}
+                  """);
             //Assert.That.Value(actual).IsEqual(items[index], $"item[{index}]{Message}");
             index++;
         }
@@ -323,7 +350,12 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
                 var expected = expected_collection_enumerator.Current;
                 var actual = actual_collection_enumerator.Current;
 
-                if (!Equals(expected, actual)) assert_fails.Add($"[{index,3}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}");
+                if (!Equals(expected, actual)) 
+                    assert_fails.Add($"""
+                     [{index,3}]:
+                         ожидалось:{expected}
+                          получено:{actual}
+                     """);
                 //FormattableString message = $"{Message}error[{index}]:\r\n    ожидалось:{expected}\r\n     получено:{actual}";
                 //throw new AssertFailedException(message.ToString(CultureInfo.InvariantCulture));
                 //Assert.AreEqual(expected, actual, "{0}error[{1}]:\r\n    ожидалось:{2}\r\n     получено:{3}", Message, index, expected, actual);
@@ -441,7 +473,7 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
     /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
     public ReadOnlyCollectionChecker<T> Contains(Func<T, bool> Predicate, string? Message = null)
     {
-        Assert.IsTrue(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+        Assert.IsTrue(ActualValue.Any(Predicate), $"{Message.AddSeparator()}Коллекция не содержит элемент, удовлетворяющий заданным параметрам");
         return this;
     }
 
@@ -450,7 +482,7 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public ReadOnlyCollectionChecker<T> NotContains(T item, string? Message = null)
     {
-        Assert.IsTrue(!ActualValue.Contains(item), "{0}Коллекция содержит элемент {1}", Message.AddSeparator(), item);
+        Assert.IsFalse(ActualValue.Contains(item), $"{Message.AddSeparator()}Коллекция содержит элемент {item}");
         return this;
     }
 
@@ -459,7 +491,7 @@ public class ReadOnlyCollectionChecker<T> : IReadOnlyCollection<T>
     /// <param name="Message">Сообщение, выводимое в случае если условие не выполнено</param>
     public ReadOnlyCollectionChecker<T> NotContains(Func<T, bool> Predicate, string? Message = null)
     {
-        Assert.IsFalse(ActualValue.Any(Predicate), "{0}Коллекция не содержит элемент, удовлетворяющий заданным параметрам", Message.AddSeparator());
+        Assert.IsFalse(ActualValue.Any(Predicate), $"{Message.AddSeparator()}Коллекция не содержит элемент, удовлетворяющий заданным параметрам");
         return this;
     }
 

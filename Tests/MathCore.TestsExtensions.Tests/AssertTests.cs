@@ -15,6 +15,7 @@ public abstract class AssertTests
         {
             expected_exception = exception;
         }
+
         if (expected_exception is null)
             throw new AssertFailedException($"Требуемое исключение типа {typeof(TException).Name} выброшено не было");
 
