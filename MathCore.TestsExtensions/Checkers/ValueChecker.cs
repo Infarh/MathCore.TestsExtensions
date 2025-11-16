@@ -43,7 +43,7 @@ public class ValueChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public ValueChecker<T> IsEqual(T ExpectedValue, IEqualityComparer<T> Comparer, string? Message = null)
     {
-        if (Comparer.Equals(ActualValue, ExpectedValue))
+        if (Comparer.Equals(ActualValue!, ExpectedValue))
             return this;
 
         FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
@@ -64,7 +64,7 @@ public class ValueChecker<T>
     /// <param name="Message">Сообщение, выводимое в случае неудачи</param>
     public ValueChecker<T> IsEqual(T ExpectedValue, EqualityComparer Comparer, string? Message = null)
     {
-        if (Comparer(ExpectedValue, ActualValue))
+        if (Comparer(ExpectedValue, ActualValue!))
             return this;
 
         FormattableString message = $"{Message.AddSeparator()}Актуальное значение\r\n    {ActualValue} не соответствует ожидаемому\r\n    {ExpectedValue}";
@@ -283,12 +283,12 @@ public class ValueChecker<T>
     /// <summary>Проверка действия над значением</summary>
     /// <param name="action">Действие, выполняемое над значением</param>
     /// <returns>Объект проверки действия</returns>
-    public ActionChecker<T> Method(Action<T?> action) => new(action, ActualValue);
+    public ActionChecker<T> Method(Action<T?> action) => new(action, ActualValue!);
 
     /// <summary>Проверка функции над значением</summary>
     /// <param name="function">Функция, выполняемая над значением</param>
     /// <returns>Объект проверки функции</returns>
-    public FunctionChecker<T, TResult> Method<TResult>(Func<T?, TResult> function) => new(function, ActualValue);
+    public FunctionChecker<T, TResult> Method<TResult>(Func<T?, TResult> function) => new(function, ActualValue!);
 
     /// <summary>Оператор неявного приведения типа объекта проверки к объекту проверяемого значения, разворачивающий значение</summary>
     /// <param name="Checker">Объект проверки</param>

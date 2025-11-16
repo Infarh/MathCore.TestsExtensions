@@ -141,7 +141,7 @@ internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
     public NotifyPropertyChangedInvocatorAttribute() { }
     public NotifyPropertyChangedInvocatorAttribute(string parameterName) => ParameterName = parameterName;
 
-    public string ParameterName { get; }
+    public string ParameterName { get; } = null!;
 }
 
 /// <summary>
@@ -338,7 +338,7 @@ internal sealed class PublicAPIAttribute : Attribute
     public PublicAPIAttribute() { }
     public PublicAPIAttribute(string comment) => Comment = comment;
 
-    public string Comment { get; }
+    public string Comment { get; } = null!;
 }
 
 /// <summary>
@@ -362,7 +362,7 @@ public class PathReferenceAttribute : Attribute
     public PathReferenceAttribute() { }
     public PathReferenceAttribute([PathReference] string basePath) => BasePath = basePath;
 
-    public string BasePath { get; }
+    public string BasePath { get; } = null!;
 }
 
 /// <summary>Является регулярным выражением</summary>

@@ -12,7 +12,7 @@ public static class ValueCheckerExtensions
     /// <typeparam name="T">Тип проверяемого значения, которое является коллекцией объектов типа <typeparamref name="TItem"/></typeparam>
     /// <typeparam name="TItem">Тип элементов проверяемой коллекции</typeparam>
     /// <returns>Объект проверки коллекции</returns>
-    public static CollectionChecker<TItem> Are<T, TItem>(this ValueChecker<T> Checker) where T : ICollection<TItem> => new(Checker.ActualValue);
+    public static CollectionChecker<TItem> Are<T, TItem>(this ValueChecker<T> Checker) where T : ICollection<TItem> => new(Checker.ActualValue!);
 
     /// <summary>Выполнение проверки элементов коллекции</summary>
     /// <param name="Checker">Объект проверки одиночного значения</param>
@@ -20,7 +20,7 @@ public static class ValueCheckerExtensions
     /// <returns>Исходный объект проверки коллекции</returns>
     public static ValueChecker<T> Items<T, TItem>(this ValueChecker<T> Checker, Action<ValueChecker<TItem>, int> Check) where T : IReadOnlyList<TItem>
     {
-        var collection = Checker.ActualValue;
+        var collection = Checker.ActualValue!;
         var count = collection.Count;
         for (var i = 0; i < count; i++)
             Check(new(collection[i]), i);
@@ -34,7 +34,7 @@ public static class ValueCheckerExtensions
     /// <returns>Исходный объект проверки коллекции</returns>
     public static ValueChecker<T> Items<T, TItem>(this ValueChecker<T> Checker, Action<ValueChecker<TItem>> Check) where T : IReadOnlyList<TItem>
     {
-        foreach (var checker in Checker.ActualValue.Select(c => new ValueChecker<TItem>(c)))
+        foreach (var checker in Checker.ActualValue!.Select(c => new ValueChecker<TItem>(c)))
             Check(checker);
 
         return Checker;
